@@ -1,0 +1,41 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Flower.bundle.scp.css",
+      "PackagePath": "staticwebassets\\Flower.bundle.scp.css"
+    },
+    {
+      "Id": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\app.css",
+      "PackagePath": "staticwebassets\\app.css"
+    },
+    {
+      "Id": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css"
+    },
+    {
+      "Id": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "PackagePath": "staticwebassets\\bootstrap\\bootstrap.min.css.map"
+    },
+    {
+      "Id": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\favicon.png",
+      "PackagePath": "staticwebassets\\favicon.png"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Flower.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Flower.props",
+      "PackagePath": "build\\Flower.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Flower.props",
+      "PackagePath": "buildMultiTargeting\\Flower.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Flower.props",
+      "PackagePath": "buildTransitive\\Flower.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
