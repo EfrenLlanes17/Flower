@@ -34,12 +34,8 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xIb21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/efren/OneDrive/Desktop/Code Projects/Flower/Components/Pages/NewEntry.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xOZXdFbnRyeS5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/efren/OneDrive/Desktop/Code Projects/Flower/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
+[C:/Users/efren/OneDrive/Desktop/Code Projects/Flower/Components/Pages/RecentActions.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZWNlbnRBY3Rpb25zLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/efren/OneDrive/Desktop/Code Projects/Flower/Components/Routes.razor]
@@ -57,3 +53,7 @@ build_metadata.AdditionalFiles.CssScope = b-az7fdr8bms
 [C:/Users/efren/OneDrive/Desktop/Code Projects/Flower/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-7xnz4wvw8f
+
+[C:/Users/efren/OneDrive/Desktop/Code Projects/Flower/Components/Pages/NewEntry.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xOZXdFbnRyeS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-vngcrzk45w

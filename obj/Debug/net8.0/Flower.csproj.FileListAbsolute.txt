@@ -28,3 +28,4 @@ C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\obj\Debug\net8.0\refint\Flo
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\obj\Debug\net8.0\Flower.pdb
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\obj\Debug\net8.0\Flower.genruntimeconfig.cache
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\obj\Debug\net8.0\ref\Flower.dll
+C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\NewEntry.razor.rz.scp.css
