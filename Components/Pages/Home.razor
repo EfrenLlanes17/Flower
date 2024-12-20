@@ -6,5 +6,36 @@
 
 <h6>Get insights on your price changes</h6>
 
-<input type="file" placeholder="UPLOAD">
+<InputFile  OnChange="HandleFileSelected" />
+
+@code {
+    public string? fileContent;
+
+    public void HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        @* // Get the selected file
+        var file = e.File;
+
+        // Optional: Check file type or size
+        if (file.ContentType != "text/plain")
+        {
+            fileContent = "Only text files are supported.";
+            StateHasChanged();
+            return;
+        }
+
+        // Read the file's content
+        using var reader = new StreamReader(file.OpenReadStream());
+        fileContent = await reader.ReadToEndAsync();*@
+        
+        fileContent = "bob";
+        StateHasChanged(); 
+    }
+}
+
+@if (!string.IsNullOrEmpty(fileContent))
+{
+    <pre>@fileContent</pre>
+}
+
 
