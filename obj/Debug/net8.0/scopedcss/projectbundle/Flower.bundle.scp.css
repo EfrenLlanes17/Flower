@@ -141,24 +141,43 @@ main[b-az7fdr8bms] {
     background-size: cover;
 }
 
-.bi-house-door-fill-nav-menu[b-7xnz4wvw8f] {
+.bi-house-door-fill-nav-menu[b-7xnz4wvw8f]{
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1' height='1' fill='white' class='bi bi-house-door-fill' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z'/%3E%3C/svg%3E");
 }
 
-.bi-plus-square-fill-nav-menu[b-7xnz4wvw8f] {
+.bi-plus-square-fill-nav-menu[b-7xnz4wvw8f]{
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-plus-square-fill' viewBox='0 0 16 16'%3E%3Cpath d='M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0z'/%3E%3C/svg%3E");
 }
 
-.bi-list-nested-nav-menu[b-7xnz4wvw8f] {
+.bi-list-nested-nav-menu[b-7xnz4wvw8f]{
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-list-nested' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M4.5 11.5A.5.5 0 0 1 5 11h10a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm-2-4A.5.5 0 0 1 1 3h10a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5z'/%3E%3C/svg%3E");
 }
 
-.bi2-plus-fill-nav-menu[b-7xnz4wvw8f] {
+.bi2-plus-fill-nav-menu[b-7xnz4wvw8f]{
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='66' height='66' fill='white' class='bi bi-plus' viewBox='0 0 16 16'%3E%3Cpath d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z'/%3E%3C/svg%3E");
 }
-.bi2-clock-nav-menu[b-7xnz4wvw8f]{
+.bi-clock-nav-menu[b-7xnz4wvw8f]{
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='66' height='66' fill='white' class='bi bi-clock' viewBox='0 0 16 16'%3E%3Cpath d='M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z'/%3E%3C/svg%3E");
 }
+
+.bi-graph-nav-menu[b-7xnz4wvw8f]{ 
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='66' height='66' fill='white' class='bi bi-graph' viewBox='0 0 16 16'%3E%3Cpath d='M0 0v16h16v-16H0zm14.5 13.5h-2.5v-8H8v-3.5H4v7.5H1.5v-6h3.5v-1H1.5v12.5h12.5v-2.5H14.5zm-3-3h2.5v-6h-2.5v6zm-4-2.5h2.5v-1h-2.5v1zm-4-3h2.5v2.5h-2.5v-2.5z'/%3E%3C/svg%3E"); 
+}
+
+.bi-flower-nav-menu[b-7xnz4wvw8f]{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='66' height='66' fill='white' class='bi bi-flower' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.5C6.83 1.5 5.5 2.35 5.5 4a2.5 2.5 0 0 1 5 0c0 1.65-1.33 2.5-2.5 2.5S6.5 5.65 6.5 4C6.5 2.35 7.17 1.5 8 1.5zm1 10C9 11.17 9 12.5 8 12.5S7 11.17 7 10c0-1.83 0-3.5 1-3.5s1 1.67 1 3.5zm4.5 1.5c-.33 0-.75-.12-1.08-.35-.52-.34-.92-.94-1.36-1.46-.72-.83-1.45-1.17-2.06-.7-.5.4-.55.84-.55 1.25a3.484 3.484 0 0 0 2.06 2.06c.41 0 .85-.05 1.25-.55.48-.61.13-1.34-.7-2.06-.52-.44-1.12-.84-1.46-1.36C11.12 13.25 11 12.83 11 12.5c0-.41.25-1.08.7-1.7.44-.52 1.04-.92 1.46-1.36.34-.52.35-1.08.35-1.46 0-.33-.12-.75-.35-1.08-.34-.52-.94-.92-1.46-1.36-.83-.72-1.17-1.45-.7-2.06.4-.5.84-.55 1.25-.55.82 0 1.73.23 2.5.7C15.78 5.43 16 6.33 16 7c0 1-.83 1.83-2.5 1.83S11 8 11 7c0-.67.22-1.57.7-2.36C12.73 4.23 13.17 4 14 4s1.57.22 2.36.7C16.78 5.23 17 6.17 17 7c0 1-.83 1.83-2.5 1.83S12 8 12 7c0-.67.22-1.57.7-2.36C13.73 4.23 14.17 4 15 4s1.57.22 2.36.7C16.78 5.23 17 6.17 17 7c0 1-.83 1.83-2.5 1.83S11 8 11 7c0-.67.22-1.57.7-2.36C12.73 4.23 13.17 4 14 4s1.57.22 2.36.7C16.78 5.23 17 6.17 17 7c0 1-.83 1.83-2.5 1.83z'/%3E%3C/svg%3E");
+}
+
+.bi-list-nav-menu[b-7xnz4wvw8f]{
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='66' height='66' fill='white' class='bi bi-list' viewBox='0 0 16 16'%3E%3Cpath d='M2.5 12.5a.5.5 0 0 1 0-1H14.5a.5.5 0 0 1 0 1H2.5zM2.5 8a.5.5 0 0 1 0-1H14.5a.5.5 0 0 1 0 1H2.5zM2.5 3.5a.5.5 0 0 1 0-1H14.5a.5.5 0 0 1 0 1H2.5z'/%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 16px;
+    height: 16px;
+}
+
+
+
 
 
 .nav-item[b-7xnz4wvw8f] {

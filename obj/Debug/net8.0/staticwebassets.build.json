@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GmdDimVtNX5/8bMSFgr3P9oHr35M3VROIXqV7IswNjY=",
+  "Hash": "L7PlfELScrLRFdkcHKm1Eid7ho7Ip4V1A1Dn8S/q0pg=",
   "Source": "Flower",
   "BasePath": "_content/Flower",
   "Mode": "Default",
@@ -10,17 +10,17 @@
     {
       "Name": "Flower\\wwwroot",
       "Source": "Flower",
-      "ContentRoot": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\wwwroot\\",
       "BasePath": "_content/Flower",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Flower.styles.css",
+      "Identity": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Flower.styles.css",
       "SourceId": "Flower",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
+      "ContentRoot": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\obj\\Debug\\net8.0\\scopedcss\\bundle\\",
       "BasePath": "_content/Flower",
       "RelativePath": "Flower.styles.css",
       "AssetKind": "All",
@@ -33,13 +33,13 @@
       "AssetTraitValue": "ApplicationBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Flower.styles.css"
+      "OriginalItemSpec": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\obj\\Debug\\net8.0\\scopedcss\\bundle\\Flower.styles.css"
     },
     {
-      "Identity": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Flower.bundle.scp.css",
+      "Identity": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Flower.bundle.scp.css",
       "SourceId": "Flower",
       "SourceType": "Computed",
-      "ContentRoot": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
+      "ContentRoot": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\",
       "BasePath": "_content/Flower",
       "RelativePath": "Flower.bundle.scp.css",
       "AssetKind": "All",
@@ -52,13 +52,13 @@
       "AssetTraitValue": "ProjectBundle",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Flower.bundle.scp.css"
+      "OriginalItemSpec": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\obj\\Debug\\net8.0\\scopedcss\\projectbundle\\Flower.bundle.scp.css"
     },
     {
-      "Identity": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\app.css",
+      "Identity": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\wwwroot\\app.css",
       "SourceId": "Flower",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\wwwroot\\",
       "BasePath": "_content/Flower",
       "RelativePath": "app.css",
       "AssetKind": "All",
@@ -74,10 +74,10 @@
       "OriginalItemSpec": "wwwroot\\app.css"
     },
     {
-      "Identity": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\bootstrap\\bootstrap.min.css",
+      "Identity": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\wwwroot\\bootstrap\\bootstrap.min.css",
       "SourceId": "Flower",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\wwwroot\\",
       "BasePath": "_content/Flower",
       "RelativePath": "bootstrap/bootstrap.min.css",
       "AssetKind": "All",
@@ -93,10 +93,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css"
     },
     {
-      "Identity": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\bootstrap\\bootstrap.min.css.map",
+      "Identity": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\wwwroot\\bootstrap\\bootstrap.min.css.map",
       "SourceId": "Flower",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\wwwroot\\",
       "BasePath": "_content/Flower",
       "RelativePath": "bootstrap/bootstrap.min.css.map",
       "AssetKind": "All",
@@ -112,10 +112,10 @@
       "OriginalItemSpec": "wwwroot\\bootstrap\\bootstrap.min.css.map"
     },
     {
-      "Identity": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\favicon.png",
+      "Identity": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\wwwroot\\favicon.png",
       "SourceId": "Flower",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\wwwroot\\",
+      "ContentRoot": "C:\\Users\\el1101034\\Desktop\\FlowerProj\\Flower\\wwwroot\\",
       "BasePath": "_content/Flower",
       "RelativePath": "favicon.png",
       "AssetKind": "All",
