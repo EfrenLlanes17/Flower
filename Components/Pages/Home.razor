@@ -22,11 +22,13 @@ Keeping this here incase the file upload doesnt work again
 
 <h6>Get insights on your price changes</h6>
 
-<InputFile OnChange="FileUploaded"/>
+<div class="custom-file-upload">
+    <label for="fileInput">UPLOAD</label>
+    <input id="fileInput" type="file" class="hidden-file-input" onchange="FileUploaded()" />
+</div>
 
 
-<p  role="status">File Name: @fileContent</p>
-
+@*<p role="status">File Name: @fileContent</p>*@
 
 @code {
     public string fileContent { get; set;} = "";
