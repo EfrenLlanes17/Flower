@@ -237,6 +237,18 @@ main[b-az7fdr8bms] {
         overflow-y: auto;
     }
 }
+/* _content/Flower/Components/Pages/BouquetRecipes.razor.rz.scp.css */
+*[b-9ppfxaf2lc] {
+    color: #eb3a9b;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1[b-9ppfxaf2lc] {
+    font-weight: bold;
+    padding: 35px;
+    margin-top: 20px;
+}
 /* _content/Flower/Components/Pages/Home.razor.rz.scp.css */
 *[b-t7cec1zovi] {
     color: #eb3a9b;
@@ -354,3 +366,14 @@ select[b-2ps7cp6ykw], h3[b-2ps7cp6ykw] {
     margin-left: 35px;
 }
 /* _content/Flower/Components/Pages/RecentActions.razor.rz.scp.css */
+*[b-xb6q8nrcee] {
+    color: #eb3a9b;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1[b-xb6q8nrcee] {
+    font-weight: bold;
+    padding: 35px;
+    margin-top: 20px;
+}
