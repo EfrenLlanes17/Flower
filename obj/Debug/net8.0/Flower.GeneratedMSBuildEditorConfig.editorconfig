@@ -38,10 +38,6 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xFcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/3picP/OneDrive/Projects/flower-project/Flower/Components/Pages/RecentActions.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZWNlbnRBY3Rpb25zLnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/3picP/OneDrive/Projects/flower-project/Flower/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
@@ -69,3 +65,7 @@ build_metadata.AdditionalFiles.CssScope = b-vngcrzk45w
 [C:/Users/3picP/OneDrive/Projects/flower-project/Flower/Components/Pages/PriceCompare.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xQcmljZUNvbXBhcmUucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = b-2ps7cp6ykw
+
+[C:/Users/3picP/OneDrive/Projects/flower-project/Flower/Components/Pages/RecentActions.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xSZWNlbnRBY3Rpb25zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-xb6q8nrcee

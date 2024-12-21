@@ -155,3 +155,4 @@ C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\refint\F
 C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.pdb
 C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.genruntimeconfig.cache
 C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\ref\Flower.dll
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\RecentActions.razor.rz.scp.css
