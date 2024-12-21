@@ -1,20 +1,40 @@
 ﻿@page "/"
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 
-<h1>Upload File</h1>
+@* 
+
+Keeping this here incase the file upload doesnt work again
+
+<div class="m-4">
+    <input type="file" @oninput="HandleInput"/>
+    <p>@text</p>
+</div>
+@code{
+    string text = "";
+    private void HandleInput(ChangeEventArgs e){
+        text = (string)e.Value;
+    }
+} *@
+
+ <h1>Upload File</h1>
 
 <h6>Get insights on your price changes</h6>
 
-<InputFile  OnChange="HandleFileSelected" />
+<InputFile OnChange="FileUploaded"/>
+
+
+<p  role="status">File Name: @fileContent</p>
+
 
 @code {
-    public string? fileContent;
+    public string fileContent { get; set;} = "";
 
-    public void HandleFileSelected(InputFileChangeEventArgs e)
+    public async Task FileUploaded(InputFileChangeEventArgs e)
     {
-        @* // Get the selected file
-        var file = e.File;
+         // Get the selected file
+        @* var file = e.File;
 
         // Optional: Check file type or size
         if (file.ContentType != "text/plain")
@@ -26,16 +46,18 @@
 
         // Read the file's content
         using var reader = new StreamReader(file.OpenReadStream());
-        fileContent = await reader.ReadToEndAsync();*@
+        fileContent = await reader.ReadToEndAsync(); *@
         
-        fileContent = "bob";
-        StateHasChanged(); 
-    }
-}
+        var browserFile = e.File;
+        if(browserFile != null){
+            fileContent = browserFile.Name;
+            StateHasChanged();
+        }
 
-@if (!string.IsNullOrEmpty(fileContent))
-{
-    <pre>@fileContent</pre>
-}
+        
+    }
+} 
+
+
 
 
