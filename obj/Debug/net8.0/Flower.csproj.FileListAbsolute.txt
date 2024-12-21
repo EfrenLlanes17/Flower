@@ -147,6 +147,7 @@ C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcs
 C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
 C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\Home.razor.rz.scp.css
 C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\NewEntry.razor.rz.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\PriceCompare.razor.rz.scp.css
 C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\bundle\Flower.styles.css
 C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\projectbundle\Flower.bundle.scp.css
 C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.dll

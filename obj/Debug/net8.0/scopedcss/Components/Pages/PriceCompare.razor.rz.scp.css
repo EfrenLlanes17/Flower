@@ -1,0 +1,15 @@
+*[b-2ps7cp6ykw] {
+    color: #eb3a9b;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1[b-2ps7cp6ykw] {
+    font-weight: bold;
+    padding: 35px;
+    margin-top: 20px;
+}
+
+select[b-2ps7cp6ykw], h3[b-2ps7cp6ykw] {
+    margin-left: 35px;
+}
