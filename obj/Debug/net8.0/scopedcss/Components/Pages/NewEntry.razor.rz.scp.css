@@ -1,0 +1,33 @@
+*[b-vngcrzk45w] {
+    color: #eb3a9b;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+ h1[b-vngcrzk45w] {
+    font-weight: bold;
+    padding: 35px;
+    margin-top: 20px;
+}
+
+  h3[b-vngcrzk45w], h5[b-vngcrzk45w], h6[b-vngcrzk45w] {
+    padding-left: 35px;
+  }
+  
+  select[b-vngcrzk45w], input[b-vngcrzk45w] {
+    padding: 5px;
+    margin-left: 35px;
+    border: 1px solid #eb3a9b;
+    border-radius: 5px;
+  }
+  
+  button[b-vngcrzk45w] {
+    padding: 10px;
+    margin-left: 35px;
+    margin-top: 10px;
+  }
+  button:hover[b-vngcrzk45w] {
+    background-color: #c82e7b;
+    cursor: pointer;
+  }
+  

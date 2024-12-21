@@ -1,0 +1,33 @@
+* {
+    color: #eb3a9b;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+ h1 {
+    font-weight: bold;
+    padding: 35px;
+    margin-top: 20px;
+}
+
+  h3, h5, h6 {
+    padding-left: 35px;
+  }
+  
+  select, input {
+    padding: 5px;
+    margin-left: 35px;
+    border: 1px solid #eb3a9b;
+    border-radius: 5px;
+  }
+  
+  button {
+    padding: 10px;
+    margin-left: 35px;
+    margin-top: 10px;
+  }
+  button:hover {
+    background-color: #c82e7b;
+    cursor: pointer;
+  }
+  
