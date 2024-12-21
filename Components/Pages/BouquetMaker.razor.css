@@ -1,0 +1,85 @@
+* {
+    color: #eb3a9b;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.dropdown {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.form-select {
+    padding: 5px;
+    border: 1px solid #eb3a9b;
+    border-radius: 5px;
+}
+
+.recipe-container {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+}
+
+.recipe-details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.recipe-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+}
+
+.add-item {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.cost-summary {
+    font-weight: 600;
+    background-color: #eb3a9b69;
+    font-size: 100px;
+    padding: 25px;
+    border-radius: 8px;
+    border: 1px solid #eb3a9b;
+}
+
+.summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+    font-size: 1rem;
+    color: #000;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 7px;
+    border: 1px solid #eb3a9b;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #eb3a9b;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+
+button:hover {
+    background-color: #d03282;
+}

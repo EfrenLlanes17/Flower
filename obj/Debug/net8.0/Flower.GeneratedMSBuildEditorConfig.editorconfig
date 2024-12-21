@@ -22,10 +22,6 @@ build_property._RazorSourceGeneratorDebug =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/3picP/OneDrive/Projects/flower-project/Flower/Components/Pages/BouquetMaker.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCb3VxdWV0TWFrZXIucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
 [C:/Users/3picP/OneDrive/Projects/flower-project/Flower/Components/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -49,6 +45,10 @@ build_metadata.AdditionalFiles.CssScope = b-az7fdr8bms
 [C:/Users/3picP/OneDrive/Projects/flower-project/Flower/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xMYXlvdXRcTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-7xnz4wvw8f
+
+[C:/Users/3picP/OneDrive/Projects/flower-project/Flower/Components/Pages/BouquetMaker.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCb3VxdWV0TWFrZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-iwixz8xuek
 
 [C:/Users/3picP/OneDrive/Projects/flower-project/Flower/Components/Pages/BouquetRecipes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xCb3VxdWV0UmVjaXBlcy5yYXpvcg==

@@ -3,37 +3,91 @@
 
 <PageTitle>Bouquet Maker</PageTitle>
 
-<h1>Bouquet Maker</h1>
+@page "/bouquetmaker"
+@using System
 
-<input type="text" placeholder="Name">
+<h1>Bouquet Recipes</h1>
+
+<div class="dropdown">
+    <select class="form-select">
+        <option>Cute Jar</option>
+        <option>Option 1</option>
+        <option>Option 2</option>
+    </select>
+</div>
+
+<div class="recipe-container">
+    <div class="recipe-details">
+        <div class="recipe-item">
+            <span>PRIMARY</span>
+            <span>
+                <input class="quantity-input" id="primary" type="number"  onchange="updateValue('primary')">
+            </span>
+        </div>
+        <div class="recipe-item">
+            <span>SECONDARY</span>
+            <span>
+                <input class="quantity-input" id="secondary" type="number"  onchange="updateValue('secondary')">
+            </span>
+        </div>
+        <div class="recipe-item">
+            <span>MISC FILL</span>
+            <span>
+                <input class="quantity-input" id="miscFill" type="number" onchange="updateValue('miscFill')">
+            </span>
+        </div>
+        <div class="recipe-item">
+            <span>GREEN</span>
+            <span>
+                <input class="quantity-input" id="green" type="number"  onchange="updateValue('green')">
+            </span>
+        </div>
+        <div class="recipe-item">
+            <span>GYPS</span>
+            <span>
+                <input class="quantity-input" id="gyps" type="number" onchange="updateValue('gyps')">
+            </span>
+        </div>
+        <div class="recipe-item">
+            <span>JAR 6</span>
+            <span>
+                <input class="quantity-input" id="jar6" type="number"  onchange="updateValue('jar6')">
+            </span>
+        </div>
+
+        <div class="add-item">
+            <input class="form-input" type="text" placeholder="Add a type">
+            <input class="form-input" type="number" placeholder="Quantity">
+            <button class="btn btn-primary">Add</button>
+        </div>
+    </div>
+
+    <div class="cost-summary">
+        <div class="recipe-item">
+            <span>Retail Price:</span>
+            <span>$45.00</span>
+        </div>
+        <div class="recipe-item">
+            <span>Material Cost:</span>
+            <span>$28.45</span>
+        </div>
+        <div class="recipe-item">
+            <span>Labor Cost:</span>
+            <span>$6.00</span>
+        </div>
+        <div class="recipe-item">
+            <span>Misc Loss:</span>
+            <span>$1.00</span>
+        </div>
+        <div class="recipe-item">
+            <span>Total Loaded Cost:</span>
+            <span>$35.45</span>
+        </div>
+        <div class="recipe-item">
+            <span>Net Profit:</span>
+            <span>$45.00</span>
+        </div>
+    </div>
+</div>
 
 
-<input type="text" placeholder="Labor Costs">
-
-<h3>Contents</h3>
-<h3>Amounts</h3>
-<h5><u>Total Indiviual Retail</u></h5>
-
-
-
-<form style="display: flex; align-items: center; gap: 10px;">
-  <select>
-    <option>Option 1</option>
-    <option>Option 2</option>
-    <option>Option 3</option>
-  </select>
-</form>
-
-
-<input type="number" placeholder="Amount 1">
-<h6> 4.50</h6>
-
-<h4><u>Total Cost</u></h4>
-<h6> 15</h6>
-
-<h4><u>Profit</u></h4>
-<h6> 4</h6>
-
-<button>New Line</button>
-
-<button>Save</button>
