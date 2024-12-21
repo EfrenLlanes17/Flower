@@ -237,4 +237,16 @@ main[b-az7fdr8bms] {
         overflow-y: auto;
     }
 }
+/* _content/Flower/Components/Pages/Home.razor.rz.scp.css */
+*[b-t7cec1zovi] {
+    color: #eb3a9b;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+h1[b-t7cec1zovi] {
+    font-weight: bold;
+}
+
 /* _content/Flower/Components/Pages/NewEntry.razor.rz.scp.css */
