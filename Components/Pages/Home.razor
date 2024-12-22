@@ -3,31 +3,19 @@
 
 <PageTitle>Home</PageTitle>
 
-@* 
-
-Keeping this here incase the file upload doesnt work again
-
-<div class="m-4">
-    <input type="file" @oninput="HandleInput"/>
-    <p>@text</p>
-</div>
-@code{
-    string text = "";
-    private void HandleInput(ChangeEventArgs e){
-        text = (string)e.Value;
-    }
-} *@
 
 <h1>Upload File</h1>
 
 <h6>Get insights on your price changes</h6>
 
-@* <div class="custom-file-upload">
-    <label for="fileInput">UPLOAD</label>
-    <input id="fileInput" type="file" class="hidden-file-input" onclick="ReadExcel" />
-</div> *@
+<div class="custom-file-upload">
+    <button @onclick="ReadTxt">Get Data</button>
+</div> 
 
-<button class="btn btn-primary" @onclick="ReadTxt">Click me</button>
+<div class="custom-file-upload">
+    <button @onclick="WriteTxt">Send Data</button>
+</div> 
+
 
 <p>@csvData</p>
 
@@ -40,7 +28,7 @@ Keeping this here incase the file upload doesnt work again
         csvData = "";
          List<string[]> csvData2 = new List<string[]>();
         //change this as needed
-        string filePath = "C:\\Users\\efren\\OneDrive\\Desktop\\bobbert.txt";
+        string filePath = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
 
 
         using (StreamReader reader = new StreamReader(filePath)){
@@ -56,6 +44,18 @@ Keeping this here incase the file upload doesnt work again
             csvData += string.Join(",", row) + "\n";
         }
         
+    }
+
+    public void WriteTxt(){
+         string path = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
+        string content = "Hello, this is a test message!";
+        
+            
+        File.WriteAllText(path, content);
+           
+        
+      
+    }
     }
 
 
