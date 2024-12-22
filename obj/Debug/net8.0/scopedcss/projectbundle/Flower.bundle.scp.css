@@ -360,7 +360,16 @@ p[b-t7cec1zovi] {
     font-weight: 300;
 }
 
-
+.custom-file-upload button[b-t7cec1zovi]{
+    background-color: #eb3a9b;
+    border: none;
+    margin: 10px;
+    margin-left: 35px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
 .hidden-file-input[b-t7cec1zovi] {
     display: none;
 }
