@@ -5,81 +5,65 @@
 }
 
 h1[b-iwixz8xuek] {
-    font-weight: bold;
+    font-size: 2rem;
     margin-bottom: 20px;
 }
 
-.dropdown[b-iwixz8xuek] {
+
+.headers[b-iwixz8xuek] {
     display: flex;
     justify-content: flex-start;
+    align-items: flex-start;
     margin-bottom: 20px;
 }
 
-.form-select[b-iwixz8xuek] {
-    padding: 5px;
-    border: 1px solid #eb3a9b;
-    border-radius: 5px;
+.headers span[b-iwixz8xuek] {
+    flex: 1;
+    text-align: left;
+    margin-right: 20px;
 }
 
-.recipe-container[b-iwixz8xuek] {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 30px;
-}
-
-.recipe-details[b-iwixz8xuek] {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.recipe-item[b-iwixz8xuek] {
+.data-row[b-iwixz8xuek] {
     display: flex;
     justify-content: space-between;
-    font-size: 1rem;
-}
-
-.add-item[b-iwixz8xuek] {
-    margin-top: 20px;
-    display: flex;
     align-items: center;
-    gap: 15px;
+    margin-bottom: 20px;
 }
 
-.cost-summary[b-iwixz8xuek] {
-    font-weight: 600;
-    background-color: #eb3a9b69;
-    font-size: 100px;
-    padding: 25px;
-    border-radius: 8px;
-    border: 1px solid #eb3a9b;
+.data-row input[b-iwixz8xuek] {
+    flex: 1;
+    margin-right: 10px;
+    padding: 5px;
+    border: 1px solid #8B008B;
+    border-radius: 5px;
 }
 
-.summary-item[b-iwixz8xuek] {
+.data-row span[b-iwixz8xuek] {
+    flex: 1;
+    text-align: center;
+}
+
+.totals[b-iwixz8xuek] {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 8px;
-    font-size: 1rem;
-    color: #000;
+    margin-top: 20px;
 }
 
-input[type="text"][b-iwixz8xuek],
-input[type="number"][b-iwixz8xuek] {
-    padding: 7px;
-    border: 1px solid #eb3a9b;
-    border-radius: 5px;
+.totals span[b-iwixz8xuek] {
+    font-weight: bold;
 }
 
 button[b-iwixz8xuek] {
-    background-color: #eb3a9b;
+    background-color: #FF1493;
+    color: #fff;
     border: none;
     padding: 10px 20px;
+    margin: 5px;
     border-radius: 5px;
+    font-size: 1rem;
     cursor: pointer;
-    color: white;
 }
 
-
 button:hover[b-iwixz8xuek] {
-    background-color: #d03282;
+    background-color: #C71585;
 }
