@@ -6,6 +6,31 @@
 
 h1 {
     font-weight: bold;
-    padding: 35px;
-    margin-top: 20px;
+    margin-left: 35px;
+    margin-top: 35px;
+}
+
+#entry button {
+    background-color: #eb3a9b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+#entry {
+    margin-left: 35px;
+    padding-top: 20px;
+}
+#flower-name {
+    
+    font-weight: bold;
+}
+
+#price {
+    
+    font-style: italic;
+}
+#date {
+    text-decoration: underline;
 }

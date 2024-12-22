@@ -6,6 +6,31 @@
 
 h1[b-xb6q8nrcee] {
     font-weight: bold;
-    padding: 35px;
-    margin-top: 20px;
+    margin-left: 35px;
+    margin-top: 35px;
+}
+
+#entry button[b-xb6q8nrcee] {
+    background-color: #eb3a9b;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+}
+
+#entry[b-xb6q8nrcee] {
+    margin-left: 35px;
+    padding-top: 20px;
+}
+#flower-name[b-xb6q8nrcee] {
+    
+    font-weight: bold;
+}
+
+#price[b-xb6q8nrcee] {
+    
+    font-style: italic;
+}
+#date[b-xb6q8nrcee] {
+    text-decoration: underline;
 }
