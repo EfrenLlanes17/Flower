@@ -194,3 +194,8 @@ C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-2\obj\Debug\net8.0\r
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-2\obj\Debug\net8.0\Flower.pdb
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-2\obj\Debug\net8.0\Flower.genruntimeconfig.cache
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-2\obj\Debug\net8.0\ref\Flower.dll
+C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\BouquetMaker.razor.rz.scp.css
+C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\BouquetRecipes.razor.rz.scp.css
+C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\Home.razor.rz.scp.css
+C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\PriceCompare.razor.rz.scp.css
+C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\RecentActions.razor.rz.scp.css

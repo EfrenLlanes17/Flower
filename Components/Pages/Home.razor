@@ -22,43 +22,44 @@ Keeping this here incase the file upload doesnt work again
 
 <h6>Get insights on your price changes</h6>
 
-<div class="custom-file-upload">
+@* <div class="custom-file-upload">
     <label for="fileInput">UPLOAD</label>
-    <input id="fileInput" type="file" class="hidden-file-input" onchange="FileUploaded()" />
-</div>
+    <input id="fileInput" type="file" class="hidden-file-input" onclick="ReadExcel" />
+</div> *@
 
+<button class="btn btn-primary" @onclick="ReadTxt">Click me</button>
 
-@*<p role="status">File Name: @fileContent</p>*@
+<p>@csvData</p>
 
-@code {
-    public string fileContent { get; set;} = "";
+@code{
 
-    public async Task FileUploaded(InputFileChangeEventArgs e)
+    public string csvData = "";
+
+    public void ReadTxt()
     {
-         // Get the selected file
-        @* var file = e.File;
+        csvData = "";
+         List<string[]> csvData2 = new List<string[]>();
+        //change this as needed
+        string filePath = "C:\\Users\\efren\\OneDrive\\Desktop\\bobbert.txt";
 
-        // Optional: Check file type or size
-        if (file.ContentType != "text/plain")
+
+        using (StreamReader reader = new StreamReader(filePath)){
+                string line;
+                while ((line = reader.ReadLine()) != null){
+                    string[] fields = line.Split(',');
+                    csvData2.Add(fields);
+                }
+            }
+
+        foreach (var row in csvData2)
         {
-            fileContent = "Only text files are supported.";
-            StateHasChanged();
-            return;
+            csvData += string.Join(",", row) + "\n";
         }
-
-        // Read the file's content
-        using var reader = new StreamReader(file.OpenReadStream());
-        fileContent = await reader.ReadToEndAsync(); *@
-        
-        var browserFile = e.File;
-        if(browserFile != null){
-            fileContent = browserFile.Name;
-            StateHasChanged();
-        }
-
         
     }
-} 
+
+
+}
 
 
 
