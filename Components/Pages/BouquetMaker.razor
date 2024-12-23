@@ -22,7 +22,7 @@
             <option>Daisy</option>
         </select>
         <input type="number" placeholder="Amount">
-        <span><input type="number" placeholder="0.00" step="0.01"></span>
+        <span>12.00</span>
     </div>
 
     <!-- Second Data Row -->
@@ -33,7 +33,7 @@
             <option>Box 3</option>
         </select>
         <input type="number" placeholder="Amount">
-        <span><input type="number" placeholder="0.00" step="0.01"></span>
+        <span>12.00</span>
     </div>
 
     <!-- Add New Line Button -->
@@ -49,9 +49,9 @@
     <!-- Totals Section -->
     <div class="totals">
         <label>Bouquet Name: <input type="text" placeholder="Name"></label>
-        <span>Total Cost: $<input type="number" placeholder="0.00" step="0.01"></span>
-        <span>Retail Price: $<input type="number" placeholder="0.00" step="0.01"></span>
-        <span>Profit: $<input type="number" placeholder="0.00" step="0.01"></span>
+        <span>Total Cost: $<span id="totalCostText">0.00</span></span>
+        <label>Retail Price: $<input type="number" placeholder="0.00" step="0.01"></label>
+        <span>Profit: $<span id="profitText">0.00</span></span>
     </div>
 
     <!-- Save Recipe Button -->
