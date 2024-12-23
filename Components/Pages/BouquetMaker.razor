@@ -6,23 +6,54 @@
 
 <h1>Bouquet Maker</h1>
 
+
 <div class="container">
     <div class="headers">
-        <span>Name</span>
-        <span>Labor Costs</span>
-        <span>Misc Costs</span>
-        <span>Retail Price</span>
+        <span>Contents</span>
+        <span>Amount</span>
+        <span>Total Retail</span>
     </div>
 
+    <!-- First Data Row -->
     <div class="data-row">
-        <input type="text" placeholder="Contents">
+        <select>
+            <option>Rose</option>
+            <option>Tulip</option>
+            <option>Daisy</option>
+        </select>
         <input type="number" placeholder="Amount">
-        <span>Total Individual Retail</span>
-        <span>Total Cost: 15</span>
-        <span>Profit: 4</span>
+        <span><input type="number" placeholder="0.00" step="0.01"></span>
     </div>
 
+    <!-- Second Data Row -->
+    <div class="data-row">
+        <select>
+            <option>Jar 6</option>
+            <option>Vase 8</option>
+            <option>Box 3</option>
+        </select>
+        <input type="number" placeholder="Amount">
+        <span><input type="number" placeholder="0.00" step="0.01"></span>
+    </div>
+
+    <!-- Add New Line Button -->
     <button id="add-line">New Line</button>
 
+    <!-- Additional Costs Section -->
+    <h2>Additional Costs</h2>
+    <div class="additional-costs">
+        <label>Labor Costs: $<input type="number" placeholder="0.00" step="0.01"></label>
+        <label>Misc Costs: $<input type="number" placeholder="0.00" step="0.01"></label>
+    </div>
+
+    <!-- Totals Section -->
+    <div class="totals">
+        <label>Bouquet Name: <input type="text" placeholder="Name"></label>
+        <span>Total Cost: $<input type="number" placeholder="0.00" step="0.01"></span>
+        <span>Retail Price: $<input type="number" placeholder="0.00" step="0.01"></span>
+        <span>Profit: $<input type="number" placeholder="0.00" step="0.01"></span>
+    </div>
+
+    <!-- Save Recipe Button -->
     <button id="save-recipe">Save To Recipes</button>
 </div>
