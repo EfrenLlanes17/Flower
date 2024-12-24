@@ -6,7 +6,6 @@
 
 <h1>Bouquet Maker</h1>
 
-
 <div class="container">
     <div class="headers">
         <span>Contents</span>
@@ -14,7 +13,7 @@
         <span>Total Retail</span>
     </div>
 
-    <!-- First Data Row -->
+    <!-- Data Rows -->
     <div class="data-row">
         <select>
             <option>Rose</option>
@@ -22,10 +21,8 @@
             <option>Daisy</option>
         </select>
         <input type="number" placeholder="Amount">
-        <span>12.00</span>
+        <span>$12.00</span>
     </div>
-
-    <!-- Second Data Row -->
     <div class="data-row">
         <select>
             <option>Jar 6</option>
@@ -33,27 +30,36 @@
             <option>Box 3</option>
         </select>
         <input type="number" placeholder="Amount">
-        <span>12.00</span>
+        <span>$12.00</span>
     </div>
 
-    <!-- Add New Line Button -->
     <button id="add-line">New Line</button>
 
-    <!-- Additional Costs Section -->
     <h2>Additional Costs</h2>
     <div class="additional-costs">
-        <label>Labor Costs: $<input type="number" placeholder="0.00" step="0.01"></label>
-        <label>Misc Costs: $<input type="number" placeholder="0.00" step="0.01"></label>
+        <label>
+            Labor Costs: $<input type="number" placeholder="0.00" step="0.01">
+        </label>
+        <label>
+            Misc Costs: $<input type="number" placeholder="0.00" step="0.01">
+        </label>
     </div>
 
-    <!-- Totals Section -->
+    <h2>Totals</h2>
     <div class="totals">
-        <label>Bouquet Name: <input type="text" placeholder="Name"></label>
-        <span>Total Cost: $<span id="totalCostText">0.00</span></span>
-        <label>Retail Price: $<input type="number" placeholder="0.00" step="0.01"></label>
-        <span>Profit: $<span id="profitText">0.00</span></span>
+        <label>
+            Bouquet Name: <input type="text" placeholder="Name">
+        </label>
+        <div>
+            <span>Total Cost: </span>$<span id="totalCostText">0.00</span>
+        </div>
+        <label>
+            Retail Price: $<input type="number" placeholder="0.00" step="0.01">
+        </label>
+        <div>
+            <span>Profit: </span>$<span id="profitText">0.00</span>
+        </div>
     </div>
 
-    <!-- Save Recipe Button -->
     <button id="save-recipe">Save To Recipes</button>
 </div>

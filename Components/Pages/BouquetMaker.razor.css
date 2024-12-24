@@ -1,96 +1,142 @@
+/* General Styles */
 * {
-    color: #eb3a9b;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #eb3a9b;
 }
 
+/* Page Title */
 h1 {
-    font-weight: bold;
+    color: #eb3a9b;
     margin: 35px;
+    font-weight: bold;
+    text-align: left; /* Align title to the left */
+}
+
+/* Container */
+.container {
+    width: 80%; /* Maintain a manageable width */
+    max-width: 800px;
+    margin: 35px; /* Align container to the left */
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+/* Headers */
+.headers {
+    display: grid; /* Use grid for consistent alignment */
+    grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #eb3a9b;
+    text-align: left; /* Left-align headers */
+    align-items: center; /* Align titles vertically with the inputs */
+}
+
+
+.headers span {
+    flex: 1;
+    text-align: left;
+}
+
+/* Data Rows */
+.data-row {
+    display: grid; /* Use grid for consistent alignment */
+    grid-template-columns: 1fr 1fr 1fr; /* Match columns to headers */
+    align-items: center; /* Ensure vertical alignment with headers */
+    gap: 10px; /* Add spacing between columns */
     margin-bottom: 15px;
 }
 
-.headers {
-    display: flex;
-    margin-bottom: 20px;
-}
 
-.headers span {
-    flex:1;
-    font-weight: bold;
-    text-align: left;
-    
-}
-
-.data-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.data-row input, .data-row select {
-    flex: 1;
-    margin-right: 10px;
+.data-row select,
+.data-row input {
+    width: 100%; /* Ensure inputs fit within their grid space */
     padding: 5px;
     border: 1px solid #8B008B;
     border-radius: 5px;
+    text-align: center;
 }
-.data-row input{
-    margin-left: 110px;
 
-}
 .data-row span {
-    flex: 2;
-    text-align: left;
-    margin-left: 200px;
+    text-align: left; /* Align text to the left */
 }
 
+/* Additional Costs Section */
 .additional-costs {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    display: grid;
+    gap: 10px;
+    text-align: left;
 }
 
 .additional-costs label {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    gap: 10px;
     font-weight: bold;
 }
 
 .additional-costs input {
+    flex: 0.8;
+    width: 150px;
     padding: 5px;
+    margin-left: 10px;
     border: 1px solid #8B008B;
     border-radius: 5px;
 }
 
+/* Totals Section */
 .totals {
+    margin-top: 20px;
+    display: grid;
+    gap: 10px;
+    text-align: left;
+}
+
+.totals label,
+.totals div {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-right: 120px;
-    margin-top: 40px;
-}
-
-.totals span, .totals label {
-    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
     font-weight: bold;
-    margin-right: 20px;
 }
 
+.totals input {
+    flex: 0.8;
+    width: 150px;
+    padding: 5px;
+    margin-left: 10px;
+    border: 1px solid #8B008B;
+    border-radius: 5px;
+}
+
+/* Buttons */
 button {
+    margin: 20px 0 20px 0; /* Align buttons to the left */
+    padding: 10px 15px;
     background-color: #FF1493;
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    margin-top: 15px;
-    margin-bottom: 15px;
     border-radius: 5px;
     font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
 }
 
 button:hover {
     background-color: #C71585;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    .headers span,
+    .data-row span {
+        font-size: 0.9rem;
+    }
 }
