@@ -552,11 +552,13 @@ p[b-t7cec1zovi] {
 *[b-vngcrzk45w] {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   box-sizing: border-box;
+  color: #eb3a9b;
 }
 input[b-vngcrzk45w]::placeholder {
   color: #eb3a9b;
 }
 button:hover[b-vngcrzk45w] {
+ 
   background-color: #c82e7b;
   cursor: pointer;
 }
