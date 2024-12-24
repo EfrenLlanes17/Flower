@@ -8,8 +8,9 @@
 <h3>Select a Flower or Item</h3>
 
 <!-- ADD Flower OPTIONS HERE-->
+
 <form style="display: flex; align-items: center; gap: 10px;">
-  <select>
+  <select @onchange="OnSelectionChange">
     @foreach (var flower in @getFlowerOptions())
         {
             <option value="@flower">@flower</option>
@@ -17,16 +18,46 @@
   </select>
 </form>
 
+@if (!string.IsNullOrEmpty(selectedFlower))
+{
+    <h1>@selectedFlower</h1>
+    <h3>Stem Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"StemPrice"})</h3>
+    <h3>Retail Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"RetailPrice"})</h3>
+    <h3>Type: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"Type"})</h3>
+}
+else{
+<h1>selectedFlower: @selectedFlower</h1>
+}
+<h1>selectedFlower: @selectedFlower</h1>
+
+
 <!-- Things after Things point will appear after a Flower is selcted >-->
 
-<h1>Flower Name</h1>
-<h3>Stem Price:</h3>
-<h3>Retail Price:</h3>
-<h3>Type:</h3>
+
 
 <!-- Graph goes here >-->
 
 @code{
+  public string selectedFlower { get; set; } = "";
+  public string test { get; set; } = "";
+
+  public string GrabFromData(string data, string[] tags)//Works
+    {
+        string currentData = data;
+
+        foreach (string tag in tags)
+        {
+            int start = currentData.IndexOf("<" + tag + ">");
+            int end = currentData.IndexOf("</" + tag + ">");
+
+            if (start == -1 || end == -1)
+                return "Not Found";
+
+            currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
+        }
+        
+        return currentData;
+    }
   public string ReadTxt()
     {
          List<string[]> csvData2 = new List<string[]>();
@@ -83,5 +114,11 @@
         
     }
 
+private void OnSelectionChange(ChangeEventArgs e)
+  {
+      selectedFlower = e.Value?.ToString();
+      test = "Bob";
+      StateHasChanged();  // Force re-render
+  }
 
 }
