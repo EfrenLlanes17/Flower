@@ -1,45 +1,11 @@
 *[b-vngcrzk45w] {
-    color: #eb3a9b;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
- h1[b-vngcrzk45w] {
-    font-weight: bold;
-    padding: 35px;
-    margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
-
-  h3[b-vngcrzk45w], h5[b-vngcrzk45w], h6[b-vngcrzk45w] {
-    margin: 0px;
-  }
-  
-  h5[b-vngcrzk45w] {
-    font-size: 16px;
-    text-decoration: none;
-  }
-  
-  select[b-vngcrzk45w], input[b-vngcrzk45w] {
-    padding: 5px;
-    margin-left: 30%;
-    border: 1px solid #eb3a9b;
-    border-radius: 5px;
-  }
-  
-  input[b-vngcrzk45w] {
-    width: 80px;
-    padding-left: 5%;
-    margin-right: 10;
-  }
-
-  button[b-vngcrzk45w] {
-    padding: 10px;
-    margin-left: 70px;
-    margin-top: 20px;
-  }
-  
-  button:hover[b-vngcrzk45w] {
-    background-color: #c82e7b;
-    cursor: pointer;
-  }
-  
+input[b-vngcrzk45w]::placeholder {
+  color: #eb3a9b;
+}
+button:hover[b-vngcrzk45w] {
+  background-color: #c82e7b;
+  cursor: pointer;
+}

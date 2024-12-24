@@ -341,10 +341,102 @@ button:hover[b-iwixz8xuek] {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body[b-9ppfxaf2lc] {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
 h1[b-9ppfxaf2lc] {
     font-weight: bold;
-    padding: 35px;
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+}
+
+/* Main container */
+.container[b-9ppfxaf2lc] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 400px;
+    padding: 10px;
+}
+
+/* Dropdown styling */
+select[b-9ppfxaf2lc] {
+    font-size: 16px;
+    padding: 8px 10px;
+    margin-bottom: 20px;
+    border: 1px solid #eb3a9b;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #eb3a9b;
+    width: 100%;
+    text-align: center;
+}
+
+/* Recipe details */
+.details[b-9ppfxaf2lc] {
+    background-color: #eb3a9b;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
     margin-top: 20px;
+    text-align: left;
+}
+
+.details p[b-9ppfxaf2lc] {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+/* Delete button */
+.delete-btn[b-9ppfxaf2lc] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #eb3a9b;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.delete-btn:hover[b-9ppfxaf2lc] {
+    background-color: #d12884;
+}
+
+/* Table-like layout for ingredients */
+.ingredients[b-9ppfxaf2lc] {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.ingredients table[b-9ppfxaf2lc] {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ingredients th[b-9ppfxaf2lc],
+.ingredients td[b-9ppfxaf2lc] {
+    text-align: left;
+    padding: 8px;
+}
+
+.ingredients th[b-9ppfxaf2lc] {
+    background-color: #eb3a9b;
+    color: white;
+}
+
+.ingredients td[b-9ppfxaf2lc] {
+    background-color: #f9f9f9;
 }
 /* _content/Flower/Components/Pages/Home.razor.rz.scp.css */
 *[b-t7cec1zovi] {
@@ -412,50 +504,16 @@ p[b-t7cec1zovi] {
 }
 /* _content/Flower/Components/Pages/NewEntry.razor.rz.scp.css */
 *[b-vngcrzk45w] {
-    color: #eb3a9b;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
- h1[b-vngcrzk45w] {
-    font-weight: bold;
-    padding: 35px;
-    margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
-
-  h3[b-vngcrzk45w], h5[b-vngcrzk45w], h6[b-vngcrzk45w] {
-    margin: 0px;
-  }
-  
-  h5[b-vngcrzk45w] {
-    font-size: 16px;
-    text-decoration: none;
-  }
-  
-  select[b-vngcrzk45w], input[b-vngcrzk45w] {
-    padding: 5px;
-    margin-left: 30%;
-    border: 1px solid #eb3a9b;
-    border-radius: 5px;
-  }
-  
-  input[b-vngcrzk45w] {
-    width: 80px;
-    padding-left: 5%;
-    margin-right: 10;
-  }
-
-  button[b-vngcrzk45w] {
-    padding: 10px;
-    margin-left: 70px;
-    margin-top: 20px;
-  }
-  
-  button:hover[b-vngcrzk45w] {
-    background-color: #c82e7b;
-    cursor: pointer;
-  }
-  
+input[b-vngcrzk45w]::placeholder {
+  color: #eb3a9b;
+}
+button:hover[b-vngcrzk45w] {
+  background-color: #c82e7b;
+  cursor: pointer;
+}
 /* _content/Flower/Components/Pages/PriceCompare.razor.rz.scp.css */
 *[b-2ps7cp6ykw] {
     color: #eb3a9b;
