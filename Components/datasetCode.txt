@@ -1,0 +1,650 @@
+namespace dataStoreCode;
+class Program
+{
+    public string data = "<Flower></Flower><Object></Object><RecentActions></RecentActions><Bouquets></Bouquets>";
+    public string GrabFromData(string[] tags)//Works
+    {
+        string currentData = data;
+        foreach (string tag in tags)
+        {
+            int start = currentData.IndexOf("<" + tag + ">");
+            int end = currentData.IndexOf("</" + tag + ">");
+            if (start == -1 || end == -1)
+                return "Not Found";
+            currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
+        }
+        
+        return currentData;
+    }
+    public void AddNewFlower(string flowerName, string type, string price, string date)     //Works
+{
+    string newFlower = $"<{flowerName}>" +
+                       $"<RetailPrice>{price}</RetailPrice>" + //Retail price is initally set as the lastest price
+                       $"<StemPrice>{price}</StemPrice>" +      //Stem price is initally set as the lastest price
+                       $"<Type>{type}</Type>" +
+                       $"<Purchases>" +
+                           $"<Purchase>" +
+                               $"<Price>{price}</Price>" +
+                               $"<Date>{date}</Date>" +
+                           $"</Purchase>" +
+                       $"</Purchases>" +
+                       $"</{flowerName}>";
+    // Insert the new flower before the closing </Flower> tag
+    int insertPosition = data.IndexOf("</Flower>");
+    if (insertPosition != -1)
+    {
+        data = data.Insert(insertPosition, newFlower);
+    }
+    else
+    {
+        Console.WriteLine("Error: <Flower> tag not found.");
+    }
+}
+public void AddNewBouquet(string BouquetName, string LaborCost, string MiscCost, string RetailPrice, string itemName,string Amount)//works
+{
+    string newFlower = $"<{BouquetName}>" +
+                       $"<LaborCost>{LaborCost}</LaborCost>" +
+                       $"<MiscCost>{MiscCost}</MiscCost>" +
+                        $"<RetailPrice>{RetailPrice}</RetailPrice>" +
+                       $"<Items>" +
+                           $"<Item>" +
+                               $"<Name>{itemName}</Name>" +
+                               $"<Amount>{Amount}</Amount>" +
+                           $"</Item>" +
+                       $"</Items>" +
+                       $"</{BouquetName}>";
+    // Insert the new flower before the closing </Flower> tag
+    int insertPosition = data.IndexOf("</Bouquets>");
+    if (insertPosition != -1)
+    {
+        data = data.Insert(insertPosition, newFlower);
+    }
+    else
+    {
+        Console.WriteLine("Error: <Bouquets> tag not found.");
+    }
+}
+public void RemoveFlower(string flowerName)//works
+{
+    // Find the start and end tag for the specified flower
+    string startTag = $"<{flowerName}>";
+    string endTag = $"</{flowerName}>";
+    int startIndex = data.IndexOf(startTag);
+    int endIndex = data.IndexOf(endTag, startIndex);
+    if (startIndex != -1 && endIndex != -1)
+    {
+        // Calculate the position where the flower data ends (after the closing tag)
+        endIndex += endTag.Length; 
+        // Remove the flower from the data string
+        data = data.Remove(startIndex, endIndex - startIndex);
+    }
+    else
+    {
+        Console.WriteLine($"Error: <{flowerName}> tag not found.");
+    }
+}
+  public void UpdateData(string[] tags, string newValue)//works
+{
+    int position = 0;  // Start from the beginning of the data
+    int startValue = -1;
+    int endValue = -1;
+    foreach (string tag in tags)
+    {
+        int start = data.IndexOf("<" + tag + ">", position);
+        int end = data.IndexOf("</" + tag + ">", position);
+        if (start == -1 || end == -1)
+        {
+            Console.WriteLine(tag + " tag not found");
+            return;
+        }
+        if (tag == tags[tags.Length - 1])  // On the final tag
+        {
+            startValue = start + tag.Length + 2;
+            endValue = end;
+        }
+        else
+        {
+            position = start + tag.Length + 2;  // Move deeper to next tag section
+        }
+    }
+    if (startValue != -1 && endValue != -1)
+    {
+        // Perform the update on the original data
+        data = data.Substring(0, startValue) + newValue + data.Substring(endValue);
+       
+    }
+}
+public void AddNewFlowerPurchase(string flowerName, string price, string date)//works
+{
+    // Build the new purchase entry
+    string newPurchase = $"<Purchase><Price>{price}</Price><Date>{date}</Date></Purchase>";
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases tag within the flower
+    int purchasesStart = flowerData.IndexOf("<Purchases>");
+    int purchasesEnd = flowerData.IndexOf("</Purchases>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("Purchases section not found for " + flowerName);
+        return;
+    }
+    // Insert the new purchase before </Purchases>
+    string updatedFlowerData = flowerData.Insert(purchasesEnd, newPurchase);
+    // Update the main data string
+    data = data.Substring(0, flowerStart) + updatedFlowerData + data.Substring(flowerEnd + flowerName.Length + 3);
+}
+public void AddNewBouquetItem(string flowerName, string name, string Amount)//works
+{
+    // Build the new purchase entry
+    string newPurchase = $"<Item><Name>{name}</Name><Amount>{Amount}</Amount></Item>";
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases tag within the flower
+    int purchasesStart = flowerData.IndexOf("<Items>");
+    int purchasesEnd = flowerData.IndexOf("</Items>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("Items section not found for " + flowerName);
+        return;
+    }
+    // Insert the new purchase before </Purchases>
+    string updatedFlowerData = flowerData.Insert(purchasesEnd, newPurchase);
+    // Update the main data string
+    data = data.Substring(0, flowerStart) + updatedFlowerData + data.Substring(flowerEnd + flowerName.Length + 3);
+}
+public List<string> GetFlowerPurchases(string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Purchases>");
+    int purchasesEnd = flowerData.IndexOf("</Purchases>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No purchases found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 11, purchasesEnd - (purchasesStart + 11));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Purchase>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Purchase>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 11) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 11;
+    }
+    return purchases;
+}
+public List<string> GetBouquetItems(string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Items>");
+    int purchasesEnd = flowerData.IndexOf("</Items>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No Items found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 7, purchasesEnd - (purchasesStart + 7));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Item>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Item>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 7) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 7;
+    }
+    return purchases;
+}
+public string GetFlower(string flowerName)//works
+{
+    
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return "Not Found";
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    return flowerData;
+    
+}
+public string GetObject(string objectName)//works
+{
+    
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + objectName + ">");
+    int flowerEnd = data.IndexOf("</" + objectName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(objectName + " not found");
+        return "Not Found";
+    }
+    
+    string flowerData = data.Substring(flowerStart, (flowerEnd + objectName.Length + 3) - flowerStart);
+    return flowerData;
+    
+}
+public void AddNewObject(string objectName, string price)//works
+{
+    string newObject = $"<{objectName}>" +
+                               $"<Price>{price}</Price>" +
+                       $"</{objectName}>";
+    
+    int insertPosition = data.IndexOf("</Object>");
+    if (insertPosition != -1)
+    {
+        data = data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <Object> tag not found.");
+    }
+}
+ public List<string> GetAllFlowers()//works
+    {
+        int startIndex2 = data.IndexOf("<Flower>");
+        int endIndex2 = data.IndexOf("</Flower>") + "</Flower>".Length; // End after </Object>
+        string usingData = data;
+        
+    
+        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
+        List<string> flowerNames = new List<string>();
+        int startIndex = 0;
+        
+        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
+        {
+            int endIndex = usingData.IndexOf(">", startIndex);
+            if (endIndex == -1) break;
+            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
+            
+            if (!tag.Contains("/") && !tag.Contains("Price") && !tag.Contains("Amount") && !tag.Contains("Purchases") && !tag.Contains("Purchase") && !tag.Contains("Date")&& !tag.Contains("Type") && !tag.Contains("Flower"))
+            {
+                flowerNames.Add(tag);
+            }
+            startIndex = endIndex + 1;
+        }
+        return flowerNames;
+    }
+    
+public List<string> GetAllBouquets()//works
+    {
+        int startIndex2 = data.IndexOf("<Bouquets>");
+        int endIndex2 = data.IndexOf("</Bouquets>") + "</Bouquets>".Length; // End after </Object>
+        string usingData = data;
+        
+    
+        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
+        List<string> flowerNames = new List<string>();
+        int startIndex = 0;
+        
+        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
+        {
+            int endIndex = usingData.IndexOf(">", startIndex);
+            if (endIndex == -1) break;
+            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
+            
+            if (!tag.Contains("/") && !tag.Contains("LaborCost") && !tag.Contains("Bouquets") && !tag.Contains("Amount") && !tag.Contains("MiscCost") && !tag.Contains("RetailPrice") && !tag.Contains("Item")&& !tag.Contains("Items") && !tag.Contains("Name"))
+            {
+                flowerNames.Add(tag);
+            }
+            startIndex = endIndex + 1;
+        }
+        return flowerNames;
+    }
+    
+public void RemoveObject(string ObjectName)//works
+{
+    // Find the start and end tag for the specified flower
+    string startTag = $"<{ObjectName}>";
+    string endTag = $"</{ObjectName}>";
+    int startIndex = data.IndexOf(startTag);
+    int endIndex = data.IndexOf(endTag, startIndex);
+    if (startIndex != -1 && endIndex != -1)
+    {
+        // Calculate the position where the flower data ends (after the closing tag)
+        endIndex += endTag.Length; 
+        // Remove the flower from the data string
+        data = data.Remove(startIndex, endIndex - startIndex);
+    }
+    else
+    {
+        Console.WriteLine($"Error: <{ObjectName}> tag not found.");
+    }
+}  
+    
+ public List<string> GetAllObjects()//works
+    {
+        int startIndex2 = data.IndexOf("<Object>");
+        int endIndex2 = data.IndexOf("</Object>") + "</Object>".Length; // End after </Object>
+        string usingData = data;
+        
+    
+        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
+    
+        List<string> objectNames = new List<string>();
+        int startIndex = 0;
+        
+        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
+        {
+            int endIndex = usingData.IndexOf(">", startIndex);
+            if (endIndex == -1) break;
+            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
+            
+            if (!tag.Contains("/") && !tag.Contains("Price") && !tag.Contains("Object"))
+            {
+                objectNames.Add(tag);
+            }
+            startIndex = endIndex + 1;
+        }
+        return objectNames;
+    }
+public void AddNewRecentAction(string type, string name, string amountOrRetail, string costOrAmountofItems, string date)//works
+{
+    if(type.Equals("Entry")){
+    string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<Amount>{amountOrRetail}</Amount>" +
+                               $"<Cost>{costOrAmountofItems}</Cost>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        data = data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+    else{
+        string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<RetailPrice>{amountOrRetail}</RetailPrice>" +
+                               $"<NumberOfItems>{costOrAmountofItems}</NumberOfItems>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        data = data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+}
+public List<string> GetRecentActions(string type)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + "RecentActions" + ">");
+    int flowerEnd = data.IndexOf("</" + "RecentActions" + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine("RecentActions" + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + ("</" + "RecentActions" + ">").Length) - flowerStart);
+    // Extract the Purchases section
+    string purchasesSection = flowerData;
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    if(type.Equals("Entry")){
+    while ((purchaseStart = purchasesSection.IndexOf("<Entry>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Entry>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 8) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 8;
+    }
+    return purchases;
+    }
+    else{
+        while ((purchaseStart = purchasesSection.IndexOf("<BouquetEntry>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</BouquetEntry>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 15) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 15;
+    }
+    return purchases;
+    }
+}
+public void RemoveBouquet(string flowerName)//works
+{
+    // Find the start and end tag for the specified flower
+    string startTag = $"<{flowerName}>";
+    string endTag = $"</{flowerName}>";
+    int startIndex = data.IndexOf(startTag);
+    int endIndex = data.IndexOf(endTag, startIndex);
+    if (startIndex != -1 && endIndex != -1)
+    {
+        // Calculate the position where the flower data ends (after the closing tag)
+        endIndex += endTag.Length; 
+        // Remove the flower from the data string
+        data = data.Remove(startIndex, endIndex - startIndex);
+    }
+    else
+    {
+        Console.WriteLine($"Error: <{flowerName}> tag not found.");
+    }
+}
+public void RemoveFlowerPurchase(string flowerName, string date)//works
+{
+    string flowerTag = "<" + flowerName + ">";
+    string purchaseTag = "<Purchase>";
+    // Find the start and end of the flower section
+    int flowerStart = data.IndexOf(flowerTag);
+    if (flowerStart == -1)
+    {
+        Console.WriteLine(flowerName + " not found.");
+        return;
+    }
+    int flowerEnd = data.IndexOf("</" + flowerName + ">", flowerStart);
+    if (flowerEnd == -1)
+    {
+        Console.WriteLine("End tag for " + flowerName + " not found.");
+        return;
+    }
+    // Extract the flower data
+    string flowerData = data.Substring(flowerStart, (flowerEnd + ("</" + flowerName + ">").Length) - flowerStart);
+    // Locate the purchase by date
+    int purchaseStart = 0;
+    while ((purchaseStart = flowerData.IndexOf(purchaseTag, purchaseStart)) != -1)
+    {
+        int purchaseEnd = flowerData.IndexOf("</Purchase>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        string purchase = flowerData.Substring(purchaseStart, (purchaseEnd + 11) - purchaseStart);
+        if (purchase.Contains("<Date>" + date + "</Date>"))
+        {
+            // Remove the purchase
+            flowerData = flowerData.Remove(purchaseStart, purchase.Length);
+            data = data.Remove(flowerStart, flowerEnd - flowerStart + ("</" + flowerName + ">").Length)
+                        .Insert(flowerStart, flowerData);
+            return;
+        }
+        purchaseStart = purchaseEnd + 11;
+    }
+    Console.WriteLine("Purchase with date " + date + " not found for " + flowerName + ".");
+}
+    static void Main(string[] args)
+    {
+        Program p1 = new Program();
+        // p1.updateData("Flower", "Daisy", "Price", "9.52");
+        // Console.WriteLine(p1.grabFromData("Flower","Daisy", "Price"));
+        // p1.UpdateData(new string[] {"Flower","Roses","Purchases","Purchase","Price"},"12.85");
+        // Console.WriteLine(p1.GrabFromData(new string[] {"Flower","Roses","Purchases","Purchase","Date"}));
+        // Console.WriteLine(p1.GrabFromData(new string[] {"Flower","Roses","Purchases","Purchase","Price"}));
+        // p1.AddNewFlower("Tulip","Primary", "3.60", "12/14/22");
+        // // p1.AddNewFlower("Grass","Primary", "3.60", "12/14/22");
+        // // p1.AddNewFlower("Weed","Primary", "3.60", "12/14/22");
+        // // p1.AddNewFlower("Baby Breath","Primary", "3.60", "12/14/22");
+        // // p1.AddNewFlower("Dogwood","Primary", "3.60", "12/14/22");
+        // p1.AddNewFlowerPurchase("Tulip", "3.45", "12/16/22");
+        // p1.AddNewFlowerPurchase("Tulip", "2.41", "12/18/22");
+        //Console.WriteLine(p1.data);
+        //Console.WriteLine(p1.GrabFromData(new string[] {"Flower","Tulip","RetailPrice"}));
+        // foreach (var purchase in p1.GetFlowerPurchases("Tulip")){
+        // Console.WriteLine(purchase);
+        // }
+        //Console.WriteLine(p1.GetFlower("Roses"));
+        
+        // foreach (var purchase in p1.GetAllFlowers()){
+        // Console.WriteLine(purchase);
+        // }
+        // Console.WriteLine(p1.data);
+        // p1.RemoveFlower("Roses");
+        // p1.RemoveFlower("Sunflowers");
+        // p1.RemoveFlower("Daisy");
+        // p1.RemoveFlower("Tulip");
+        // Console.WriteLine(p1.data);
+        // p1.AddNewObject("Jar3","41.50");
+        // Console.WriteLine(p1.GrabFromData(new string[] {"Object","Jar3","Price"}));
+        // Console.WriteLine(p1.data);
+        // p1.RemoveObject("Jar3");
+        // Console.WriteLine(p1.data);
+        
+        // foreach (var obj in p1.GetAllObjects()){
+        // Console.WriteLine(obj);
+        // }
+        // Console.WriteLine("Flowers:");
+        // foreach (var obj in p1.GetAllFlowers()){
+        // Console.WriteLine(obj);
+        // }
+        
+        // p1.AddNewRecentAction("BouquetEntry","Grass","15","5.23","01/02/23");
+        // p1.AddNewRecentAction("BouquetEntry","leaf","15","5.23","01/02/23");
+        // p1.AddNewRecentAction("BouquetEntry","twig","15","5.23","01/02/23");
+        // p1.AddNewRecentAction("BouquetEntry","rock","15","5.23","01/02/23");
+        // p1.AddNewRecentAction("BouquetEntry","block","15","5.23","01/02/23");
+        // p1.AddNewRecentAction("BouquetEntry","paper","15","5.23","01/02/23");
+        // p1.AddNewRecentAction("BouquetEntry","sissor","15","5.23","01/02/23");
+        // p1.AddNewRecentAction("BouquetEntry","My Gf","100","15","01/15/23");
+        //Console.WriteLine(p1.data);
+        
+        // foreach (var obj in p1.GetRecentActions("BouquetEntry")){
+        // Console.WriteLine(obj);
+        // }
+        //Console.WriteLine(p1.GrabFromData(new string[] {"RecentActions","Entry","Name"}));
+        
+        // p1.AddNewBouquet("My Gf's Flowers", "6", "1", "100", "PurpleFlower","10");
+        // Console.WriteLine(p1.data);
+        // p1.AddNewBouquetItem("My Gf's Flowers","Sunflowers","22");
+        // p1.AddNewBouquetItem("My Gf's Flowers","Dog","54");
+        
+        // foreach (var obj in p1.GetBouquetItems("My Gf's Flowers")){
+        // Console.WriteLine(obj);
+        //}
+        // Console.WriteLine("After");
+        // p1.RemoveBouquet("My Gf's Flowers");
+        // Console.WriteLine(p1.data);
+        // p1.AddNewFlowerPurchase("Roses", "5.25", "15/89/54");
+        // foreach (var obj in p1.GetFlowerPurchases("Roses")){
+        //         Console.WriteLine(obj);
+        //         }
+        // Console.WriteLine("After");
+        // p1.RemoveFlowerPurchase("Roses", "15/89/54");
+        //  foreach (var obj in p1.GetFlowerPurchases("Roses")){
+        //         Console.WriteLine(obj);
+        //         }
+        //Testing
+        p1.AddNewFlower("Tulip", "Primary", "5.42", "12/23/22");
+        p1.AddNewFlower("Grass", "Filler", "0.23", "1/12/24");
+        p1.AddNewFlower("Sunflower", "Primary", "8.56", "7/12/24");
+        p1.UpdateData(new string[] {"Flower","Tulip","Price"}, "6.55");
+        // Console.WriteLine(p1.data);
+        // p1.RemoveFlower("Tulip");
+        // Console.WriteLine("After");
+        //Console.WriteLine(p1.data);
+        p1.AddNewFlowerPurchase("Grass", "0.11", "12/11/11");
+        
+        p1.AddNewBouquet("Banana Bouquet", "6", "1", "1000", "Grass","55");
+        p1.AddNewBouquet("Apple Bouquet", "6", "1", "1000", "Grass","55");
+        p1.AddNewBouquet("Orange Bouquet", "6", "1", "1000", "Grass","55");
+        p1.AddNewBouquetItem("Banana Bouquet", "Sunflowers", "100");
+        
+        p1.RemoveBouquet("Banana Bouquet");
+        p1.RemoveFlowerPurchase("Grass", "12/11/11");
+       
+       p1.AddNewRecentAction("Entry", "E1", "1", "1", "1");
+       p1.AddNewRecentAction("Entry", "E2", "1", "1", "1");
+       p1.AddNewRecentAction("Entry", "E3", "1", "1", "1");
+       p1.AddNewRecentAction("BouquetEntry", "B1", "1", "1", "1");
+       p1.AddNewRecentAction("BouquetEntry", "B2", "1", "1", "1");
+       p1.AddNewRecentAction("BouquetEntry", "B3", "1", "1", "1");
+       
+        p1.AddNewObject("Jarrrr", "25");
+        p1.AddNewObject("Jarrrr2", "55");
+        p1.AddNewObject("Jarrrr3", "105");
+        p1.RemoveObject("Jarrrr2");
+       foreach (var obj in p1.GetAllObjects()){
+                Console.WriteLine(obj);
+                }
+   
+    }
+}

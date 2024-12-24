@@ -13,11 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Flower")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e2914fede1d01576e5556ec874f91a3a11d666c")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1af78e0e4023b20b64fcb6f93475f76ac92136e4")]
->>>>>>> parent of f053f2b (tried to get selected flower to update UI data, did not work)
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4dd552cacc758da1af84cc8513c536f2538cc7e3")]
 [assembly: System.Reflection.AssemblyProductAttribute("Flower")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Flower")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
