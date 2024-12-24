@@ -10,8 +10,78 @@
 <!-- ADD Flower OPTIONS HERE-->
 <form style="display: flex; align-items: center; gap: 10px;">
   <select>
-    <option>Flower 1</option>
-    <option>Flower 2</option>
-    <option>Flower 3</option>
+    @foreach (var flower in @getFlowerOptions())
+        {
+            <option value="@flower">@flower</option>
+        }
   </select>
 </form>
+
+<!-- Things after Things point will appear after a Flower is selcted >-->
+
+<h1>Flower Name</h1>
+<h3>Stem Price:</h3>
+<h3>Retail Price:</h3>
+<h3>Type:</h3>
+
+<!-- Graph goes here >-->
+
+@code{
+  public string ReadTxt()
+    {
+         List<string[]> csvData2 = new List<string[]>();
+        //change this as needed
+        string filePath = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
+
+
+        using (StreamReader reader = new StreamReader(filePath)){
+                string line;
+                while ((line = reader.ReadLine()) != null){
+                    string[] fields = line.Split(',');
+                    csvData2.Add(fields);
+                }
+            }
+
+        foreach (var row in csvData2)
+        {
+            return string.Join(",", row) + "\n";
+        }
+        return "";
+    }
+
+ public List<string> GetAllFlowers(string data)//works
+    {
+
+        int startIndex2 = data.IndexOf("<Flower>");
+        int endIndex2 = data.IndexOf("</Flower>") + "</Flower>".Length; // End after </Object>
+        string usingData = data;
+        
+    
+        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
+
+        List<string> flowerNames = new List<string>();
+        int startIndex = 0;
+        
+        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
+        {
+            int endIndex = usingData.IndexOf(">", startIndex);
+            if (endIndex == -1) break;
+
+            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
+            
+            if (!tag.Contains("/") && !tag.Contains("Price") && !tag.Contains("Amount") && !tag.Contains("Purchases") && !tag.Contains("Purchase") && !tag.Contains("Date")&& !tag.Contains("Type") && !tag.Contains("Flower"))
+            {
+                flowerNames.Add(tag);
+            }
+            startIndex = endIndex + 1;
+        }
+
+        return flowerNames;
+    }
+    public string[] getFlowerOptions(){
+        return GetAllFlowers(ReadTxt()).ToArray();
+        
+    }
+
+
+}
