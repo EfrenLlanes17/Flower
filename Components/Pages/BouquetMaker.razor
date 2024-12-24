@@ -6,7 +6,6 @@
 
 <h1>Bouquet Maker</h1>
 
-
 <div class="container">
     <div class="headers">
         <span>Contents</span>
@@ -14,19 +13,16 @@
         <span>Total Retail</span>
     </div>
 
-    <!-- First Data Row -->
+    <!-- Data Rows -->
     <div class="data-row">
         <select>
-            @foreach (var flower in @getFlowerOptions())
-        {
-            <option value="@flower">@flower</option>
-        }
+            <option>Rose</option>
+            <option>Tulip</option>
+            <option>Daisy</option>
         </select>
         <input type="number" placeholder="Amount">
-        <span>12.00</span>
+        <span>$12.00</span>
     </div>
-
-    <!-- Second Data Row -->
     <div class="data-row">
         <select>
             <option>Jar 6</option>
@@ -34,86 +30,36 @@
             <option>Box 3</option>
         </select>
         <input type="number" placeholder="Amount">
-        <span>12.00</span>
+        <span>$12.00</span>
     </div>
 
-    <!-- Add New Line Button -->
     <button id="add-line">New Line</button>
 
-    <!-- Additional Costs Section -->
     <h2>Additional Costs</h2>
     <div class="additional-costs">
-        <label>Labor Costs: $<input type="number" placeholder="0.00" step="0.01"></label>
-        <label>Misc Costs: $<input type="number" placeholder="0.00" step="0.01"></label>
+        <label>
+            Labor Costs: $<input type="number" placeholder="0.00" step="0.01">
+        </label>
+        <label>
+            Misc Costs: $<input type="number" placeholder="0.00" step="0.01">
+        </label>
     </div>
 
-    <!-- Totals Section -->
+    <h2>Totals</h2>
     <div class="totals">
-        <label>Bouquet Name: <input type="text" placeholder="Name"></label>
-        <span>Total Cost: $<span id="totalCostText">0.00</span></span>
-        <label>Retail Price: $<input type="number" placeholder="0.00" step="0.01"></label>
-        <span>Profit: $<span id="profitText">0.00</span></span>
+        <label>
+            Bouquet Name: <input type="text" placeholder="Name">
+        </label>
+        <div>
+            <span>Total Cost: </span>$<span id="totalCostText">0.00</span>
+        </div>
+        <label>
+            Retail Price: $<input type="number" placeholder="0.00" step="0.01">
+        </label>
+        <div>
+            <span>Profit: </span>$<span id="profitText">0.00</span>
+        </div>
     </div>
 
-    <!-- Save Recipe Button -->
     <button id="save-recipe">Save To Recipes</button>
 </div>
-
-
-@code{
-   public string ReadTxt()
-    {
-         List<string[]> csvData2 = new List<string[]>();
-        //change this as needed
-        string filePath = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
-
-
-        using (StreamReader reader = new StreamReader(filePath)){
-                string line;
-                while ((line = reader.ReadLine()) != null){
-                    string[] fields = line.Split(',');
-                    csvData2.Add(fields);
-                }
-            }
-
-        foreach (var row in csvData2)
-        {
-            return string.Join(",", row) + "\n";
-        }
-        return "";
-    }
-
- public List<string> GetAllFlowers(string data)//works
-    {
-
-        int startIndex2 = data.IndexOf("<Flower>");
-        int endIndex2 = data.IndexOf("</Flower>") + "</Flower>".Length; // End after </Object>
-        string usingData = data;
-        
-    
-        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
-
-        List<string> flowerNames = new List<string>();
-        int startIndex = 0;
-        
-        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
-        {
-            int endIndex = usingData.IndexOf(">", startIndex);
-            if (endIndex == -1) break;
-
-            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
-            
-            if (!tag.Contains("/") && !tag.Contains("Price") && !tag.Contains("Amount") && !tag.Contains("Purchases") && !tag.Contains("Purchase") && !tag.Contains("Date")&& !tag.Contains("Type") && !tag.Contains("Flower"))
-            {
-                flowerNames.Add(tag);
-            }
-            startIndex = endIndex + 1;
-        }
-
-        return flowerNames;
-    }
-    public string[] getFlowerOptions(){
-        return GetAllFlowers(ReadTxt()).ToArray();
-        
-    }
-}

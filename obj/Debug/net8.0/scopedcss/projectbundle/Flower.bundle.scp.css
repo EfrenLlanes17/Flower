@@ -238,101 +238,147 @@ main[b-az7fdr8bms] {
     }
 }
 /* _content/Flower/Components/Pages/BouquetMaker.razor.rz.scp.css */
+/* General Styles */
 *[b-iwixz8xuek] {
-    color: #eb3a9b;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #eb3a9b;
 }
 
+/* Page Title */
 h1[b-iwixz8xuek] {
-    font-weight: bold;
+    color: #eb3a9b;
     margin: 35px;
+    font-weight: bold;
+    text-align: left; /* Align title to the left */
+}
+
+/* Container */
+.container[b-iwixz8xuek] {
+    width: 80%; /* Maintain a manageable width */
+    max-width: 800px;
+    margin: 35px; /* Align container to the left */
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+}
+
+/* Headers */
+.headers[b-iwixz8xuek] {
+    display: grid; /* Use grid for consistent alignment */
+    grid-template-columns: 1fr 1fr 1fr; /* Three equal columns */
+    margin-bottom: 10px;
+    font-weight: bold;
+    color: #eb3a9b;
+    text-align: left; /* Left-align headers */
+    align-items: center; /* Align titles vertically with the inputs */
+}
+
+
+.headers span[b-iwixz8xuek] {
+    flex: 1;
+    text-align: left;
+}
+
+/* Data Rows */
+.data-row[b-iwixz8xuek] {
+    display: grid; /* Use grid for consistent alignment */
+    grid-template-columns: 1fr 1fr 1fr; /* Match columns to headers */
+    align-items: center; /* Ensure vertical alignment with headers */
+    gap: 10px; /* Add spacing between columns */
     margin-bottom: 15px;
 }
 
-.headers[b-iwixz8xuek] {
-    display: flex;
-    margin-bottom: 20px;
-}
 
-.headers span[b-iwixz8xuek] {
-    flex:1;
-    font-weight: bold;
-    text-align: left;
-    
-}
-
-.data-row[b-iwixz8xuek] {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.data-row input[b-iwixz8xuek], .data-row select[b-iwixz8xuek] {
-    flex: 1;
-    margin-right: 10px;
+.data-row select[b-iwixz8xuek],
+.data-row input[b-iwixz8xuek] {
+    width: 100%; /* Ensure inputs fit within their grid space */
     padding: 5px;
     border: 1px solid #8B008B;
     border-radius: 5px;
+    text-align: center;
 }
-.data-row input[b-iwixz8xuek]{
-    margin-left: 110px;
 
-}
 .data-row span[b-iwixz8xuek] {
-    flex: 2;
-    text-align: left;
-    margin-left: 200px;
+    text-align: left; /* Align text to the left */
 }
 
+/* Additional Costs Section */
 .additional-costs[b-iwixz8xuek] {
-    display: flex;
-    gap: 20px;
-    margin-bottom: 20px;
+    margin-top: 20px;
+    display: grid;
+    gap: 10px;
+    text-align: left;
 }
 
 .additional-costs label[b-iwixz8xuek] {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    gap: 10px;
     font-weight: bold;
 }
 
 .additional-costs input[b-iwixz8xuek] {
+    flex: 0.8;
+    width: 150px;
     padding: 5px;
+    margin-left: 10px;
     border: 1px solid #8B008B;
     border-radius: 5px;
 }
 
+/* Totals Section */
 .totals[b-iwixz8xuek] {
+    margin-top: 20px;
+    display: grid;
+    gap: 10px;
+    text-align: left;
+}
+
+.totals label[b-iwixz8xuek],
+.totals div[b-iwixz8xuek] {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin-right: 120px;
-    margin-top: 40px;
-}
-
-.totals span[b-iwixz8xuek], .totals label[b-iwixz8xuek] {
-    flex: 1;
+    justify-content: flex-start;
+    align-items: center;
     font-weight: bold;
-    margin-right: 20px;
 }
 
+.totals input[b-iwixz8xuek] {
+    flex: 0.8;
+    width: 150px;
+    padding: 5px;
+    margin-left: 10px;
+    border: 1px solid #8B008B;
+    border-radius: 5px;
+}
+
+/* Buttons */
 button[b-iwixz8xuek] {
+    margin: 20px 0 20px 0; /* Align buttons to the left */
+    padding: 10px 15px;
     background-color: #FF1493;
     color: #fff;
     border: none;
-    padding: 10px 20px;
-    margin-top: 15px;
-    margin-bottom: 15px;
     border-radius: 5px;
     font-size: 1rem;
+    font-weight: bold;
     cursor: pointer;
 }
 
 button:hover[b-iwixz8xuek] {
     background-color: #C71585;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container[b-iwixz8xuek] {
+        width: 95%;
+    }
+
+    .headers span[b-iwixz8xuek],
+    .data-row span[b-iwixz8xuek] {
+        font-size: 0.9rem;
+    }
 }
 /* _content/Flower/Components/Pages/BouquetRecipes.razor.rz.scp.css */
 *[b-9ppfxaf2lc] {
@@ -341,10 +387,102 @@ button:hover[b-iwixz8xuek] {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+body[b-9ppfxaf2lc] {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+}
+
 h1[b-9ppfxaf2lc] {
     font-weight: bold;
-    padding: 35px;
+    padding: 20px;
+    margin: 0;
+    text-align: center;
+}
+
+/* Main container */
+.container[b-9ppfxaf2lc] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 400px;
+    padding: 10px;
+}
+
+/* Dropdown styling */
+select[b-9ppfxaf2lc] {
+    font-size: 16px;
+    padding: 8px 10px;
+    margin-bottom: 20px;
+    border: 1px solid #eb3a9b;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #eb3a9b;
+    width: 100%;
+    text-align: center;
+}
+
+/* Recipe details */
+.details[b-9ppfxaf2lc] {
+    background-color: #eb3a9b;
+    color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
     margin-top: 20px;
+    text-align: left;
+}
+
+.details p[b-9ppfxaf2lc] {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+/* Delete button */
+.delete-btn[b-9ppfxaf2lc] {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #eb3a9b;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+}
+
+.delete-btn:hover[b-9ppfxaf2lc] {
+    background-color: #d12884;
+}
+
+/* Table-like layout for ingredients */
+.ingredients[b-9ppfxaf2lc] {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.ingredients table[b-9ppfxaf2lc] {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.ingredients th[b-9ppfxaf2lc],
+.ingredients td[b-9ppfxaf2lc] {
+    text-align: left;
+    padding: 8px;
+}
+
+.ingredients th[b-9ppfxaf2lc] {
+    background-color: #eb3a9b;
+    color: white;
+}
+
+.ingredients td[b-9ppfxaf2lc] {
+    background-color: #f9f9f9;
 }
 /* _content/Flower/Components/Pages/Home.razor.rz.scp.css */
 *[b-t7cec1zovi] {
@@ -412,50 +550,16 @@ p[b-t7cec1zovi] {
 }
 /* _content/Flower/Components/Pages/NewEntry.razor.rz.scp.css */
 *[b-vngcrzk45w] {
-    color: #eb3a9b;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  }
-  
- h1[b-vngcrzk45w] {
-    font-weight: bold;
-    padding: 35px;
-    margin-top: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-sizing: border-box;
 }
-
-  h3[b-vngcrzk45w], h5[b-vngcrzk45w], h6[b-vngcrzk45w] {
-    margin: 0px;
-  }
-  
-  h5[b-vngcrzk45w] {
-    font-size: 16px;
-    text-decoration: none;
-  }
-  
-  select[b-vngcrzk45w], input[b-vngcrzk45w] {
-    padding: 5px;
-    margin-left: 30%;
-    border: 1px solid #eb3a9b;
-    border-radius: 5px;
-  }
-  
-  input[b-vngcrzk45w] {
-    width: 80px;
-    padding-left: 5%;
-    margin-right: 10;
-  }
-
-  button[b-vngcrzk45w] {
-    padding: 10px;
-    margin-left: 70px;
-    margin-top: 20px;
-  }
-  
-  button:hover[b-vngcrzk45w] {
-    background-color: #c82e7b;
-    cursor: pointer;
-  }
-  
+input[b-vngcrzk45w]::placeholder {
+  color: #eb3a9b;
+}
+button:hover[b-vngcrzk45w] {
+  background-color: #c82e7b;
+  cursor: pointer;
+}
 /* _content/Flower/Components/Pages/PriceCompare.razor.rz.scp.css */
 *[b-2ps7cp6ykw] {
     color: #eb3a9b;
