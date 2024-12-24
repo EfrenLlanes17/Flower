@@ -9,14 +9,11 @@
 <h6>Get insights on your price changes</h6>
 
 <div class="custom-file-upload">
-    <button @onclick="getData">Get Data</button>
-</div> 
-<div class="custom-file-upload">
-    <button @onclick="addRose">Add Rose</button>
+    <button @onclick="ReadTxt">Get Data</button>
 </div> 
 
 <div class="custom-file-upload">
-    <button @onclick="removeRose">Remove Rose</button>
+    <button @onclick="WriteTxt">Send Data</button>
 </div> 
 
 
@@ -26,60 +23,7 @@
 
     public string csvData = "";
 
-     public string AddNewFlower(string data,string flowerName, string type, string price, string date)     //Works
-{
-    string newFlower = $"<{flowerName}>" +
-                       $"<RetailPrice>{price}</RetailPrice>" + //Retail price is initally set as the lastest price
-                       $"<StemPrice>{price}</StemPrice>" +      //Stem price is initally set as the lastest price
-                       $"<Type>{type}</Type>" +
-                       $"<Purchases>" +
-                           $"<Purchase>" +
-                               $"<Price>{price}</Price>" +
-                               $"<Date>{date}</Date>" +
-                           $"</Purchase>" +
-                       $"</Purchases>" +
-                       $"</{flowerName}>";
-
-    // Insert the new flower before the closing </Flower> tag
-    int insertPosition = data.IndexOf("</Flower>");
-
-    if (insertPosition != -1)
-    {
-        data = data.Insert(insertPosition, newFlower);
-
-    }
-    else
-    {
-        Console.WriteLine("Error: <Flower> tag not found.");
-    }
-
-    return data;
-}
-
-public string RemoveFlower(string data, string flowerName)//works
-{
-    // Find the start and end tag for the specified flower
-    string startTag = $"<{flowerName}>";
-    string endTag = $"</{flowerName}>";
-
-    int startIndex = data.IndexOf(startTag);
-    int endIndex = data.IndexOf(endTag, startIndex);
-
-    if (startIndex != -1 && endIndex != -1)
-    {
-        // Calculate the position where the flower data ends (after the closing tag)
-        endIndex += endTag.Length; 
-
-        // Remove the flower from the data string
-        data = data.Remove(startIndex, endIndex - startIndex);
-    }
-    else
-    {
-        Console.WriteLine($"Error: <{flowerName}> tag not found.");
-    }
-    return data;
-}
-    public string ReadTxt()
+    public void ReadTxt()
     {
         csvData = "";
          List<string[]> csvData2 = new List<string[]>();
@@ -97,30 +41,14 @@ public string RemoveFlower(string data, string flowerName)//works
 
         foreach (var row in csvData2)
         {
-            return string.Join(",", row) + "\n";
+            csvData += string.Join(",", row) + "\n";
         }
-        return "";
-    }
-
-    public void getData(){
-        csvData = ReadTxt();
-    }
-
-    public void addRose(){
-        WriteTxt(AddNewFlower(ReadTxt(),"Rose","Primary","5.55","12/25,23"));
-
-    }
-
-    public void removeRose(){
-        WriteTxt(RemoveFlower(ReadTxt(),"Rose"));
-
-    }
-
-
-
-    public void WriteTxt(string content){
-         string path = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
         
+    }
+
+    public void WriteTxt(){
+         string path = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
+        string content = "Hello, this is a test message!";
         
             
         File.WriteAllText(path, content);
