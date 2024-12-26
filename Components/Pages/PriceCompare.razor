@@ -1,7 +1,8 @@
 @page "/pricecompare"
-@attribute [StreamRendering]
-
+@rendermode InteractiveServer
 <PageTitle>Price Compare</PageTitle>
+
+
 
 <h1>Price Compare</h1>
 
@@ -9,7 +10,7 @@
 
 <!-- ADD Flower OPTIONS HERE-->
 <form style="display: flex; align-items: center; gap: 10px;">
-  <select @onchange="OnSelectionChange">
+  <select  @bind="selectedFlower">
     @foreach (var flower in @getFlowerOptions())
         {
             <option value="@flower">@flower</option>
@@ -17,8 +18,10 @@
   </select>
 </form>
 
+
 @if (!string.IsNullOrEmpty(selectedFlower))
 {
+    // This does not work, I have no idea why
     <h1>@selectedFlower</h1>
     <h3>Stem Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"StemPrice"})</h3>
     <h3>Retail Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"RetailPrice"})</h3>
@@ -26,7 +29,7 @@
 }
 else{
 <h1>selectedFlower: @selectedFlower</h1>
-}
+} 
 <h1>selectedFlower: @selectedFlower</h1>
 
 
@@ -37,7 +40,7 @@ else{
 <!-- Graph goes here >-->
 
 @code{
-  public string selectedFlower { get; set; } = "";
+  public string? selectedFlower { get; set; }
   public string test { get; set; } = "";
 
   public string GrabFromData(string data, string[] tags)//Works
@@ -113,17 +116,43 @@ public string[] getFlowerOptions(){
         try{
          returnThis = GetAllFlowers(ReadTxt()).ToArray();
         }
-        catch (Exception ex){
+        catch{
             returnThis = new string[] {"Option1", "Option2","option3"};
         }
         return returnThis;
     }
 
 private void OnSelectionChange(ChangeEventArgs e)
-  {
-      selectedFlower = e.Value?.ToString();
-      test = "Bob";
-      StateHasChanged();  // Force re-render
-  }
+{
+    selectedFlower = e.Value?.ToString();
+    StateHasChanged();  // Force re-render
+}
+
+private void OnSelectionChange51()
+{
+    selectedFlower = "Tulip";
+    StateHasChanged();  // Force re-render
+}
+
 
 }
+
+ 
+@* 
+<div>
+    <h3>Counter</h3>
+    
+    <button @onclick="IncrementCount">Click me</button>
+
+    <p>Count is: @currentCount</p>
+</div>
+
+@code {
+    int currentCount = 0;
+
+    void IncrementCount()
+    {
+        currentCount++;
+    }
+} *@
+

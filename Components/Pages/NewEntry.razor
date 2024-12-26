@@ -16,12 +16,15 @@
 
   <!-- Entry Rows -->
   <!-- Row 1 -->
-  <select style="width: 90%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;">
-    @foreach (var flower in @getFlowerOptions())
-        {
-            <option value="@flower">@flower</option>
-        }
-  </select>
+  <select style="width: 90%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="selectedFlower">
+    <option value="">Select a flower</option>
+
+    @foreach (var flower in getFlowerOptions())
+    {
+        <option value="@flower">@flower</option>
+    }
+</select>
+
   <input type="number" placeholder="Units" style="width: 70%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;">
   <input type="number" placeholder="Cost" style="width: 70%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;">
   <input type="date" style="width: 80%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;">
@@ -52,7 +55,7 @@
 </div>
 
 @code{
-  public string selectedFlower { get; set; } = "";
+  public string selectedFlower { get; set; }
   public string test { get; set; } = "";
 
   public string GrabFromData(string data, string[] tags)//Works
@@ -134,11 +137,11 @@ public string[] getFlowerOptions(){
         return returnThis;
     }
 
-private void OnSelectionChange(ChangeEventArgs e)
-  {
-      selectedFlower = e.Value?.ToString();
-      test = "Bob";
-      StateHasChanged();  // Force re-render
-  }
+private void HandleChange(ChangeEventArgs e)
+    {
+        selectedFlower = e.Value.ToString();
+        StateHasChanged();
+    }
 
 }
+
