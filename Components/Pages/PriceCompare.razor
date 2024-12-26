@@ -108,9 +108,15 @@ else{
 
         return flowerNames;
     }
-    public string[] getFlowerOptions(){
-        return GetAllFlowers(ReadTxt()).ToArray();
-        
+public string[] getFlowerOptions(){
+        string[] returnThis = new string[] {};
+        try{
+         returnThis = GetAllFlowers(ReadTxt()).ToArray();
+        }
+        catch (Exception ex){
+            returnThis = new string[] {"Option1", "Option2","option3"};
+        }
+        return returnThis;
     }
 
 private void OnSelectionChange(ChangeEventArgs e)
