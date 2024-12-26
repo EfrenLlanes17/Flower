@@ -21,11 +21,15 @@
 
 @if (!string.IsNullOrEmpty(selectedFlower))
 {
-    // This does not work, I have no idea why
+    try{
     <h1>@selectedFlower</h1>
     <h3>Stem Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"StemPrice"})</h3>
     <h3>Retail Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"RetailPrice"})</h3>
     <h3>Type: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"Type"})</h3>
+    }
+    catch{
+         <h1>DatabaseNot found</h1>
+    }
 }
 else{
 <h1>selectedFlower: @selectedFlower</h1>
