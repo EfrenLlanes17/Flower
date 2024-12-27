@@ -235,42 +235,6 @@ C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-7\obj\Debug\net8.0\r
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-7\obj\Debug\net8.0\Flower.pdb
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-7\obj\Debug\net8.0\Flower.genruntimeconfig.cache
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-7\obj\Debug\net8.0\ref\Flower.dll
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\appsettings.Development.json
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\appsettings.json
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.staticwebassets.runtime.json
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.exe
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.deps.json
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.runtimeconfig.json
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.dll
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.pdb
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.AssemblyInfoInputs.cache
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.AssemblyInfo.cs
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.csproj.CoreCompileInputs.cache
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.MvcApplicationPartsAssemblyInfo.cache
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.sourcelink.json
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets.build.json
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets.development.json
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets\msbuild.Flower.Microsoft.AspNetCore.StaticWebAssets.props
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets\msbuild.build.Flower.props
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Flower.props
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Flower.props
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets.pack.json
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\BouquetMaker.razor.rz.scp.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\BouquetRecipes.razor.rz.scp.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\Home.razor.rz.scp.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\NewEntry.razor.rz.scp.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\PriceCompare.razor.rz.scp.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\RecentActions.razor.rz.scp.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\bundle\Flower.styles.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\projectbundle\Flower.bundle.scp.css
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.dll
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\refint\Flower.dll
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.pdb
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.genruntimeconfig.cache
-C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\ref\Flower.dll
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-3\bin\Debug\net8.0\appsettings.Development.json
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-3\bin\Debug\net8.0\appsettings.json
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-3\bin\Debug\net8.0\Flower.staticwebassets.runtime.json
@@ -343,3 +307,39 @@ C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-5\obj\Debug\net8.0\r
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-5\obj\Debug\net8.0\Flower.pdb
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-5\obj\Debug\net8.0\Flower.genruntimeconfig.cache
 C:\Users\efren\OneDrive\Desktop\Code Projects\Flower\Flower-5\obj\Debug\net8.0\ref\Flower.dll
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\appsettings.Development.json
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\appsettings.json
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.staticwebassets.runtime.json
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.exe
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.deps.json
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.runtimeconfig.json
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.dll
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\bin\Debug\net8.0\Flower.pdb
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.AssemblyInfoInputs.cache
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.AssemblyInfo.cs
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.csproj.CoreCompileInputs.cache
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.sourcelink.json
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets.build.json
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets.development.json
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets\msbuild.Flower.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets\msbuild.build.Flower.props
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets\msbuild.buildMultiTargeting.Flower.props
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Flower.props
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\staticwebassets.pack.json
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\BouquetMaker.razor.rz.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\BouquetRecipes.razor.rz.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\Home.razor.rz.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\NewEntry.razor.rz.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\PriceCompare.razor.rz.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\RecentActions.razor.rz.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\bundle\Flower.styles.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\scopedcss\projectbundle\Flower.bundle.scp.css
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.dll
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\refint\Flower.dll
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.pdb
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\Flower.genruntimeconfig.cache
+C:\Users\3picP\OneDrive\Projects\flower-project\Flower\obj\Debug\net8.0\ref\Flower.dll
