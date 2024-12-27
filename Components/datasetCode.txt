@@ -117,6 +117,7 @@ public void RemoveFlower(string flowerName)//works
 public void AddNewFlowerPurchase(string flowerName, string price, string date)//works
 {
     // Build the new purchase entry
+    //Needs to update retail price
     string newPurchase = $"<Purchase><Price>{price}</Price><Date>{date}</Date></Purchase>";
     // Find the flower tag
     int flowerStart = data.IndexOf("<" + flowerName + ">");
