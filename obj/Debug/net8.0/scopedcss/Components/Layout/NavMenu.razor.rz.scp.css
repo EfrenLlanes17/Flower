@@ -17,11 +17,12 @@
 
 .top-row[b-7xnz4wvw8f] {
     height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    
 }
 
 .navbar-brand[b-7xnz4wvw8f] {
-    font-size: 1.1rem;
+    font-size: 1.5rem;
+    
 }
 
 .bi[b-7xnz4wvw8f] {
@@ -119,6 +120,7 @@
 
 .nav-scrollable[b-7xnz4wvw8f] {
     display: none;
+    
 }
 
 .navbar-toggler:checked ~ .nav-scrollable[b-7xnz4wvw8f] {
