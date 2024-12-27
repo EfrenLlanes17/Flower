@@ -26,6 +26,9 @@
     <h3>Stem Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"StemPrice"})</h3>
     <h3>Retail Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"RetailPrice"})</h3>
     <h3>Type: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"Type"})</h3>
+    foreach (var price in @GetFlowerPurchases(ReadTxt(),selectedFlower)){
+        <h3>@price</h3>
+    }
     }
     catch{
          <h1>DatabaseNot found</h1>
@@ -138,6 +141,44 @@ private void OnSelectionChange51()
     StateHasChanged();  // Force re-render
 }
 
+public List<string> GetFlowerPurchases(string data,string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Purchases>");
+    int purchasesEnd = flowerData.IndexOf("</Purchases>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No purchases found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 11, purchasesEnd - (purchasesStart + 11));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Purchase>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Purchase>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 11) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 11;
+    }
+    return purchases;
+}
 
 }
 
@@ -177,6 +218,8 @@ private void OnSelectionChange51()
 
     private List<Point> DataPoints = new List<Point>
     {
+        //data points go here
+        //Needs at least two data points to work
        
         new Point { X = DateTime.Parse("07/25/23", CultureInfo.InvariantCulture), Y = 5.35},
         new Point { X = DateTime.Parse("08/25/23", CultureInfo.InvariantCulture), Y = 5.05},
