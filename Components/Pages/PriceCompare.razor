@@ -11,6 +11,7 @@
 <!-- ADD Flower OPTIONS HERE-->
 <form style="display: flex; align-items: center; gap: 10px;">
   <select  @bind="selectedFlower">
+    <option value="">Select a Flower</option>
     @foreach (var flower in @getFlowerOptions())
         {
             <option value="@flower">@flower</option>
@@ -26,9 +27,18 @@
     <h3>Stem Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"StemPrice"})</h3>
     <h3>Retail Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"RetailPrice"})</h3>
     <h3>Type: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"Type"})</h3>
-    foreach (var price in @GetFlowerPurchases(ReadTxt(),selectedFlower)){
-        <h3>@price</h3>
+    DataPoints.Clear();
+    foreach (var purchase in @GetFlowerPurchases(ReadTxt(),selectedFlower)){
+        try{
+        AddDataPoint(GetDate(purchase),GetPrice(purchase));
+        }
+        catch(Exception e){
+            <h1>@e.Message</h1>
+        }
+        
     }
+    <h3>Line Graph with Axes</h3>
+        @((MarkupString)GenerateSvgContent())
     }
     catch{
          <h1>DatabaseNot found</h1>
@@ -205,8 +215,7 @@ public List<string> GetFlowerPurchases(string data,string flowerName)//works
 @using System.Text
 @using System.Globalization
 
-<h3>Line Graph with Axes</h3>
-@((MarkupString)GenerateSvgContent())
+
 
 @code {
     public class Point
@@ -215,15 +224,60 @@ public List<string> GetFlowerPurchases(string data,string flowerName)//works
         public double Y { get; set; }
     }
 
+    public void AddDataPoint(string newDate,string newValue) { 
+        var newPoint = new Point 
+        { 
+            X = DateTime.Parse(newDate, CultureInfo.InvariantCulture), 
+            Y = double.Parse(newValue, CultureInfo.InvariantCulture)}; 
+            // Add the new point to the DataPoints list 
+            DataPoints.Add(newPoint);
+            // Refresh the graph 
+            //StateHasChanged();
+             }
 
-    private List<Point> DataPoints = new List<Point>
+    public string GetPrice(string xml)
+{
+    var startTag = "<Price>";
+    var endTag = "</Price>";
+
+    var startIndex = xml.IndexOf(startTag) + startTag.Length;
+    var endIndex = xml.IndexOf(endTag);
+
+    if (startIndex >= 0 && endIndex > startIndex)
+    {
+        return xml.Substring(startIndex, endIndex - startIndex);
+    }
+    
+    return null; // Or handle as needed
+}
+
+public string GetDate(string xml)
+{
+    var startTag = "<Date>";
+    var endTag = "</Date>";
+
+    var startIndex = xml.IndexOf(startTag) + startTag.Length;
+    var endIndex = xml.IndexOf(endTag);
+
+    if (startIndex >= 0 && endIndex > startIndex)
+    {
+        return xml.Substring(startIndex, endIndex - startIndex);
+    }
+
+    return null; // Or handle as needed
+}
+
+
+
+    public List<Point> DataPoints = new List<Point>
     {
         //data points go here
         //Needs at least two data points to work
        
-        new Point { X = DateTime.Parse("07/25/23", CultureInfo.InvariantCulture), Y = 5.35},
+        @* new Point { X = DateTime.Parse("07/25/23", CultureInfo.InvariantCulture), Y = 5.35},
         new Point { X = DateTime.Parse("08/25/23", CultureInfo.InvariantCulture), Y = 5.05},
-        
+        new Point { X = DateTime.Parse("09/25/23", CultureInfo.InvariantCulture), Y = 5.05},
+         *@
     };
 
     private string GenerateSvgContent()
