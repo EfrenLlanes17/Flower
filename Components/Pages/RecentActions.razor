@@ -1,87 +1,42 @@
 @page "/recentactions"
-@attribute [StreamRendering]
+@rendermode InteractiveServer
 
 <PageTitle>Recent Actions</PageTitle>
 
 <h1>Recent Actions</h1>
-
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
+<div id="entries">
+    @foreach (var entry in Entries)
+    {
+        <div class="entry">
+            <button class="undo-button" style="background-color: #eb3a9b; color: white; padding: 8px 15px; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; margin-left:35px; margin-top:15px;" @onclick="() => RemoveEntry(entry)">Undo</button>
+            <span class="flower-name">@entry.Name</span>
+            <span class="quantity">@entry.Quantity</span>
+            <span class="price">@entry.Price</span>
+            <span class="date">@entry.Date</span>
+        </div>
+    }
 </div>
 
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
-</div>
+@code {
+    private List<Entry> Entries = new List<Entry>
+    {
+        new Entry { Name = "Rose", Quantity = 4, Price = "$4.23", Date = "12/22/24" },
+        new Entry { Name = "Rose", Quantity = 4, Price = "$4.23", Date = "12/22/24" },
+        new Entry { Name = "Rose", Quantity = 4, Price = "$4.23", Date = "12/22/24" },
+        // Add more entries here
+    };
 
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
-</div>
+    private void RemoveEntry(Entry entry)
+    {
+        Entries.Remove(entry);
+        StateHasChanged(); // Notify Blazor of the state change
+    }
 
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
-</div>
-
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
-</div>
-
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
-</div>
-
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
-</div>
-
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
-</div>
-
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
-</div>
-
-<div id="entry">
-    <button class="undo-button" onclick="undoChange('flower-name')">Undo</button>
-    <span id="flower-name">Rose</span>
-    <span id="quantity">4</span>
-    <span id="price">$4.23</span>
-    <span id="date">12/22/24</span>
-</div>
-
+    private class Entry
+    {
+        public string Name { get; set; }
+        public int Quantity { get; set; }
+        public string Price { get; set; }
+        public string Date { get; set; }
+    }
+}
