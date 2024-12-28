@@ -10,7 +10,7 @@
 
 <!-- ADD Flower OPTIONS HERE-->
 <form style="display: flex; align-items: center; gap: 10px;">
-  <select  @bind="selectedFlower">
+  <select style="width: 20%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="selectedFlower" >
     <option value="">Select a Flower</option>
     @foreach (var flower in @getFlowerOptions())
         {
