@@ -44,6 +44,7 @@
 <div style="text-align: left;">
     <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px;" @onclick="SaveEntries">Save</button>
 </div>
+@using System.Globalization
 
 @code{
   public string selectedFlower { get; set; }
@@ -87,6 +88,7 @@
         }
         return "";
     }
+
 
  public List<string> GetAllFlowers(string data)//works
     {
@@ -158,12 +160,70 @@ private void HandleChange(ChangeEventArgs e)
         return new List<string> { "Rose", "Tulip", "Lily", "Daisy" };
     }
 
+    
+
     private class EntryRow
     {
         public string? SelectedFlower { get; set; }
         public int? Units { get; set; }
         public decimal? Cost { get; set; }
         public decimal StemCost => Units.HasValue && Cost.HasValue ? Cost.Value / Units.Value : 0;
-        public decimal ChangeSinceLastEntry => 0; // Placeholder for actual calculation
+        public decimal ChangeSinceLastEntry => Units.HasValue && Cost.HasValue? ((StemCost/decimal.Parse(GrabFromData2(ReadTxt2(),new string[] {"Flower",SelectedFlower,"StemPrice"}), CultureInfo.InvariantCulture)-1)) : 0;// Placeholder for actual calculation
+
+        
+
+    }
+
+public static string GrabFromData2(string data, string[] tags)//Works
+    {
+        try{
+        string currentData = data;
+
+        foreach (string tag in tags)
+        {
+            int start = currentData.IndexOf("<" + tag + ">");
+            int end = currentData.IndexOf("</" + tag + ">");
+
+            if (start == -1 || end == -1)
+                return "Not Found";
+
+            currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
+        }
+        
+        return currentData;
+        }
+        catch{
+            return "1.0";
+        }
+    }
+  public static string ReadTxt2()
+    {
+        try{
+         List<string[]> csvData2 = new List<string[]>();
+        //change this as needed
+        string filePath = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
+        //change this
+
+        using (StreamReader reader = new StreamReader(filePath)){
+                string line;
+                while ((line = reader.ReadLine()) != null){
+                    string[] fields = line.Split(',');
+                    csvData2.Add(fields);
+                }
+            }
+
+        foreach (var row in csvData2)
+        {
+            return string.Join(",", row) + "\n";
+        }
+        return "";
+        }
+        catch{
+            return "<Flower><Eucalyptus, Blue><RetailPrice>1.30</RetailPrice><StemPrice>1.25</StemPrice><Type>Greens</Type><Purchases><Purchase><Price>1.25</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.55</Price><Date>06/23/24</Date></Purchase><Purchase><Price>1.30</Price><Date>12/23/24</Date></Purchase></Purchases></Eucalyptus, Blue><Eucalyptus, Seeded><RetailPrice>1.20</RetailPrice><StemPrice>1.15</StemPrice><Type>Greens</Type><Purchases><Purchase><Price>1.15</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.20</Price><Date>12/23/24</Date></Purchase></Purchases></Eucalyptus, Seeded><Gyp Import, Baby Breath><RetailPrice>2.35</RetailPrice><StemPrice>2.30</StemPrice><Type>Greens</Type><Purchases><Purchase><Price>2.30</Price><Date>06/23/23</Date></Purchase><Purchase><Price>2.50</Price><Date>06/23/24</Date></Purchase><Purchase><Price>2.35</Price><Date>12/23/24</Date></Purchase></Purchases></Gyp Import, Baby Breath><Israeli Ruscus><RetailPrice>1.09</RetailPrice><StemPrice>1.04</StemPrice><Type>Greens</Type><Purchases><Purchase><Price>1.04</Price><Date>06/23/23</Date></Purchase><Purchase><Price>0.74</Price><Date>06/23/24</Date></Purchase><Purchase><Price>1.09</Price><Date>12/23/24</Date></Purchase></Purchases></Israeli Ruscus><Italian Ruscus><RetailPrice>2.15</RetailPrice><StemPrice>2.10</StemPrice><Type>Greens</Type><Purchases><Purchase><Price>2.10</Price><Date>06/23/23</Date></Purchase><Purchase><Price>2.76</Price><Date>06/23/24</Date></Purchase><Purchase><Price>2.15</Price><Date>12/23/24</Date></Purchase></Purchases></Italian Ruscus><Mysty><RetailPrice>2.05</RetailPrice><StemPrice>2.00</StemPrice><Type>Fill</Type><Purchases><Purchase><Price>2.00</Price><Date>06/23/23</Date></Purchase><Purchase><Price>2.05</Price><Date>12/23/24</Date></Purchase></Purchases></Mysty><Basket,12in Dbl Peanut><RetailPrice>9.25</RetailPrice><StemPrice>9.20</StemPrice><Type>Material</Type><Purchases><Purchase><Price>9.20</Price><Date>06/23/23</Date></Purchase><Purchase><Price>9.20</Price><Date>06/23/24</Date></Purchase><Purchase><Price>9.25</Price><Date>12/23/24</Date></Purchase></Purchases></Basket,12in Dbl Peanut><Basket,6in White><RetailPrice>5.46</RetailPrice><StemPrice>5.41</StemPrice><Type>Material</Type><Purchases><Purchase><Price>5.41</Price><Date>06/23/23</Date></Purchase><Purchase><Price>5.46</Price><Date>12/23/24</Date></Purchase></Purchases></Basket,6in White><Box, Shipping><RetailPrice>1.10</RetailPrice><StemPrice>1.05</StemPrice><Type>Material</Type><Purchases><Purchase><Price>1.05</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.10</Price><Date>12/23/24</Date></Purchase></Purchases></Box, Shipping><Card Sticks><RetailPrice>0.16</RetailPrice><StemPrice>0.10</StemPrice><Type>Material</Type><Purchases><Purchase><Price>0.10</Price><Date>06/23/23</Date></Purchase><Purchase><Price>0.14</Price><Date>06/23/24</Date></Purchase><Purchase><Price>0.16</Price><Date>12/23/24</Date></Purchase></Purchases></Card Sticks><Liquid Crowning Spray (240 vases)><RetailPrice>0.10</RetailPrice><StemPrice>0.05</StemPrice><Type>Material</Type><Purchases><Purchase><Price>0.05</Price><Date>06/23/23</Date></Purchase><Purchase><Price>0.10</Price><Date>12/23/24</Date></Purchase></Purchases></Liquid Crowning Spray (240 vases)><Oasis Foam><RetailPrice>0.95</RetailPrice><StemPrice>0.9</StemPrice><Type>Material</Type><Purchases><Purchase><Price>0.9</Price><Date>06/23/23</Date></Purchase><Purchase><Price>0.95</Price><Date>12/23/24</Date></Purchase></Purchases></Oasis Foam><Powder, Crystal Clear 300 (320 Packs)><RetailPrice>0.19</RetailPrice><StemPrice>0.14</StemPrice><Type>Material</Type><Purchases><Purchase><Price>0.14</Price><Date>06/23/23</Date></Purchase><Purchase><Price>0.16</Price><Date>06/23/24</Date></Purchase><Purchase><Price>0.19</Price><Date>12/23/24</Date></Purchase></Purchases></Powder, Crystal Clear 300 (320 Packs)><#9 Sheer Ribbon><RetailPrice>0.28</RetailPrice><StemPrice>0.22</StemPrice><Type>Material</Type><Purchases><Purchase><Price>0.22</Price><Date>06/23/23</Date></Purchase><Purchase><Price>0.43</Price><Date>06/23/24</Date></Purchase><Purchase><Price>0.28</Price><Date>12/23/24</Date></Purchase></Purchases></#9 Sheer Ribbon><Vase 8 5/8in Std clear><RetailPrice>4.01</RetailPrice><StemPrice>4.01</StemPrice><Type>Material</Type><Purchases><Purchase><Price>4.01</Price><Date>06/23/24</Date></Purchase></Purchases></Vase 8 5/8in Std clear><Vase 10 5/8in Std clear><RetailPrice>4.29</RetailPrice><StemPrice>4.24</StemPrice><Type>Material</Type><Purchases><Purchase><Price>4.24</Price><Date>06/23/23</Date></Purchase><Purchase><Price>5.23</Price><Date>06/23/24</Date></Purchase><Purchase><Price>4.29</Price><Date>12/23/24</Date></Purchase></Purchases></Vase 10 5/8in Std clear><Vase 8in ORCHARD Color><RetailPrice>4.58</RetailPrice><StemPrice>4.53</StemPrice><Type>Material</Type><Purchases><Purchase><Price>4.53</Price><Date>06/23/23</Date></Purchase><Purchase><Price>4.58</Price><Date>12/23/24</Date></Purchase></Purchases></Vase 8in ORCHARD Color><Vase 9.25in Std clear><RetailPrice>3.33</RetailPrice><StemPrice>3.27</StemPrice><Type>Material</Type><Purchases><Purchase><Price>3.27</Price><Date>06/23/23</Date></Purchase><Purchase><Price>3.33</Price><Date>12/23/24</Date></Purchase></Purchases></Vase 9.25in Std clear><Delphinium><RetailPrice>1.60</RetailPrice><StemPrice>1.55</StemPrice><Type>Premium Flower</Type><Purchases><Purchase><Price>1.55</Price><Date>06/23/23</Date></Purchase><Purchase><Price>2.40</Price><Date>06/23/24</Date></Purchase><Purchase><Price>1.60</Price><Date>12/23/24</Date></Purchase></Purchases></Delphinium><Lily, Oriental Color><RetailPrice>3.60</RetailPrice><StemPrice>3.55</StemPrice><Type>Premium Flower</Type><Purchases><Purchase><Price>3.55</Price><Date>06/23/23</Date></Purchase><Purchase><Price>3.60</Price><Date>12/23/24</Date></Purchase></Purchases></Lily, Oriental Color><Lily, Oriental White><RetailPrice>3.60</RetailPrice><StemPrice>3.55</StemPrice><Type>Premium Flower</Type><Purchases><Purchase><Price>3.55</Price><Date>06/23/23</Date></Purchase><Purchase><Price>3.60</Price><Date>12/23/24</Date></Purchase></Purchases></Lily, Oriental White><Peonies><RetailPrice>8.85</RetailPrice><StemPrice>8.80</StemPrice><Type>Premium Flower</Type><Purchases><Purchase><Price>8.80</Price><Date>06/23/23</Date></Purchase><Purchase><Price>8.85</Price><Date>12/23/24</Date></Purchase></Purchases></Peonies><Snapdraggons><RetailPrice>1.74</RetailPrice><StemPrice>1.69</StemPrice><Type>Premium Flower</Type><Purchases><Purchase><Price>1.69</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.74</Price><Date>12/23/24</Date></Purchase></Purchases></Snapdraggons><Hydrangea, Blue/White><RetailPrice>3.25</RetailPrice><StemPrice>3.25</StemPrice><Type>Primary Flower</Type><Purchases><Purchase><Price>3.25</Price><Date>06/23/23</Date></Purchase></Purchases></Hydrangea, Blue/White><Hydrangea, mini><RetailPrice>1.84</RetailPrice><StemPrice>1.79</StemPrice><Type>Primary Flower</Type><Purchases><Purchase><Price>1.79</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.84</Price><Date>12/23/24</Date></Purchase></Purchases></Hydrangea, mini><Roses - Freedom Premium><RetailPrice>1.81</RetailPrice><StemPrice>1.76</StemPrice><Type>Primary Flower</Type><Purchases><Purchase><Price>1.76</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.81</Price><Date>12/23/24</Date></Purchase><Purchase><Price>1.81</Price><Date>12/23/24</Date></Purchase></Purchases></Roses - Freedom Premium><Roses - Freedom Premium><RetailPrice>1.76</RetailPrice><StemPrice>1.76</StemPrice><Type>Primary Flower</Type><Purchases><Purchase><Price>1.76</Price><Date>06/23/23</Date></Purchase></Purchases></Roses - Freedom Premium><Roses - Freedom Std><RetailPrice>1.47</RetailPrice><StemPrice>1.42</StemPrice><Type>Primary Flower</Type><Purchases><Purchase><Price>1.42</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.52</Price><Date>06/23/24</Date></Purchase><Purchase><Price>1.47</Price><Date>12/23/24</Date></Purchase></Purchases></Roses - Freedom Std><Roses - Imported><RetailPrice>1.70</RetailPrice><StemPrice>1.65</StemPrice><Type>Primary Flower</Type><Purchases><Purchase><Price>1.65</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.76</Price><Date>06/23/24</Date></Purchase><Purchase><Price>1.70</Price><Date>12/23/24</Date></Purchase></Purchases></Roses - Imported><Carnations, Mini><RetailPrice>0.88</RetailPrice><StemPrice>0.82</StemPrice><Type>Secondary Flower</Type><Purchases><Purchase><Price>0.82</Price><Date>06/23/23</Date></Purchase><Purchase><Price>0.77</Price><Date>06/23/24</Date></Purchase><Purchase><Price>0.88</Price><Date>12/23/24</Date></Purchase></Purchases></Carnations, Mini><Carnations, South Amer><RetailPrice>0.59</RetailPrice><StemPrice>0.54</StemPrice><Type>Secondary Flower</Type><Purchases><Purchase><Price>0.54</Price><Date>06/23/23</Date></Purchase><Purchase><Price>0.74</Price><Date>06/23/24</Date></Purchase><Purchase><Price>0.59</Price><Date>12/23/24</Date></Purchase></Purchases></Carnations, South Amer><Mums Cremon Disbud or White ZONAR><RetailPrice>1.50</RetailPrice><StemPrice>1.45</StemPrice><Type>Secondary Flower</Type><Purchases><Purchase><Price>1.45</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.67</Price><Date>06/23/24</Date></Purchase><Purchase><Price>1.50</Price><Date>12/23/24</Date></Purchase></Purchases></Mums Cremon Disbud or White ZONAR><Mums, Pompon><RetailPrice>0.72</RetailPrice><StemPrice>0.66</StemPrice><Type>Secondary Flower</Type><Purchases><Purchase><Price>0.66</Price><Date>06/23/23</Date></Purchase><Purchase><Price>0.74</Price><Date>06/23/24</Date></Purchase><Purchase><Price>0.72</Price><Date>12/23/24</Date></Purchase></Purchases></Mums, Pompon><Mums, Spider><RetailPrice>1.26</RetailPrice><StemPrice>1.21</StemPrice><Type>Secondary Flower</Type><Purchases><Purchase><Price>1.21</Price><Date>06/23/23</Date></Purchase><Purchase><Price>1.26</Price><Date>12/23/24</Date></Purchase></Purchases></Mums, Spider></Flower><Object></Object><RecentActions></RecentActions><Bouquets></Bouquets>";
+        }
+    }
+
+
+
     }
 }
