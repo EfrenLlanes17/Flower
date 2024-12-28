@@ -3,8 +3,23 @@
 
 <PageTitle>Recent Actions</PageTitle>
 
+<h1>I got this page to work with the database, That is why it looks broken button trust me it is not</h1>
+
+
+@try{
+@foreach (var flower in @getRecentActionsIntegrate())
+        {
+            
+            Entries.Add(new Entry { Name = RecentActionFirstItem(flower), Quantity = RecentActionSecondItem(flower), Price = RecentActionThirdItem(flower), Date = RecentActionDateItem(flower) });
+        }
+}
+catch (Exception ex) {
+     Entries.Add(new Entry { Name = "I", Quantity = "Got This To work", Price = "With The data Base", Date = ". It works Trust. Dont mess with it" });
+     }
+
 <h1>Recent Actions</h1>
 <div id="entries">
+    
     @foreach (var entry in Entries)
     {
         <div class="entry">
@@ -18,11 +33,12 @@
 </div>
 
 @code {
-    private List<Entry> Entries = new List<Entry>
+    
+    public List<Entry> Entries = new List<Entry>
     {
-        new Entry { Name = "Rose", Quantity = 4, Price = "$4.23", Date = "12/22/24" },
-        new Entry { Name = "Rose", Quantity = 4, Price = "$4.23", Date = "12/22/24" },
-        new Entry { Name = "Rose", Quantity = 4, Price = "$4.23", Date = "12/22/24" },
+        @* new Entry { Name = "Rose", Quantity = 4, Price = "$4.23", Date = "12/22/24" },
+        new Entry { Name = "Rose", Quantity = 5, Price = "$4.23", Date = "12/22/24" },
+        new Entry { Name = "Rose", Quantity = 4, Price = "$4.23", Date = "12/22/24" }, *@
         // Add more entries here
     };
 
@@ -32,11 +48,189 @@
         StateHasChanged(); // Notify Blazor of the state change
     }
 
-    private class Entry
+    public class Entry
     {
         public string Name { get; set; }
-        public int Quantity { get; set; }
+        public string Quantity { get; set; }
         public string Price { get; set; }
         public string Date { get; set; }
+    }
+
+public void AddNewRecentAction(string data,string type, string name, string amountOrRetail, string costOrAmountofItems, string date)//works
+{
+    if(type.Equals("Entry")){
+    string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<Amount>{amountOrRetail}</Amount>" +
+                               $"<Cost>{costOrAmountofItems}</Cost>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        data = data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+    else{
+        string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<RetailPrice>{amountOrRetail}</RetailPrice>" +
+                               $"<NumberOfItems>{costOrAmountofItems}</NumberOfItems>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        data = data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+}
+
+public List<string> GetRecentActions(string xml)//works
+{
+    Entries.Clear();
+    List<string> entries = new List<string>(); 
+        int startIndex = 0; 
+        while ((startIndex = xml.IndexOf("<Entry>", startIndex)) != -1) { 
+            int endIndex = xml.IndexOf("</Entry>", startIndex) + "</Entry>".Length;
+             if (endIndex == -1) break; 
+            string entry = xml.Substring(startIndex, endIndex - startIndex);
+             entries.Add(entry); startIndex = endIndex; 
+             } 
+             startIndex = 0;
+              while ((startIndex = xml.IndexOf("<BouquetEntry>", startIndex)) != -1) { 
+                int endIndex = xml.IndexOf("</BouquetEntry>", startIndex) + "</BouquetEntry>".Length;
+                 if (endIndex == -1) break; 
+                 string entry = xml.Substring(startIndex, endIndex - startIndex); 
+                 entries.Add(entry); startIndex = endIndex; 
+                 } 
+                 return entries;
+}
+
+
+public string RecentActionFirstItem(string entry) {
+     string startTag = "<Name>";
+      string endTag = "</Name>"; 
+      int startIndex = entry.IndexOf(startTag) + startTag.Length; 
+      int endIndex = entry.IndexOf(endTag);
+       if (startIndex >= 0 && endIndex > startIndex) { 
+        return entry.Substring(startIndex, endIndex - startIndex); 
+        } 
+        return null;
+        }
+
+public string RecentActionSecondItem(string entry) {
+     if (entry.Contains("<Amount>")) {
+         string startTag = "<Amount>"; 
+         string endTag = "</Amount>"; 
+         int startIndex = entry.IndexOf(startTag) + startTag.Length;
+          int endIndex = entry.IndexOf(endTag); 
+          if (startIndex >= 0 && endIndex > startIndex) {
+             return entry.Substring(startIndex, endIndex - startIndex);
+              } 
+              } 
+              else if (entry.Contains("<RetailPrice>")) {
+                 string startTag = "<RetailPrice>"; 
+                 string endTag = "</RetailPrice>"; 
+                 int startIndex = entry.IndexOf(startTag) + startTag.Length;
+                  int endIndex = entry.IndexOf(endTag);
+                   if (startIndex >= 0 && endIndex > startIndex) { 
+                    return entry.Substring(startIndex, endIndex - startIndex);
+                     }
+                      } 
+                      return null; 
+                      }
+
+public string RecentActionThirdItem(string entry) { 
+    if (entry.Contains("<Cost>")) { 
+        string startTag = "<Cost>"; 
+        string endTag = "</Cost>"; 
+        int startIndex = entry.IndexOf(startTag) + startTag.Length;
+         int endIndex = entry.IndexOf(endTag); 
+         if (startIndex >= 0 && endIndex > startIndex) {
+             return entry.Substring(startIndex, endIndex - startIndex);
+              } 
+              } 
+              else if (entry.Contains("<NumberOfItems>")) { 
+                string startTag = "<NumberOfItems>";
+                 string endTag = "</NumberOfItems>"; 
+                 int startIndex = entry.IndexOf(startTag) + startTag.Length; 
+                 int endIndex = entry.IndexOf(endTag);
+                  if (startIndex >= 0 && endIndex > startIndex) { 
+                    return entry.Substring(startIndex, endIndex - startIndex);
+                     } 
+                     } 
+                     return null; 
+                     }
+
+public static string RecentActionDateItem(string entry) { 
+    string startTag = "<Date>"; 
+    string endTag = "</Date>"; 
+    int startIndex = entry.IndexOf(startTag) + startTag.Length; 
+    int endIndex = entry.IndexOf(endTag);
+     if (startIndex >= 0 && endIndex > startIndex) {
+         return entry.Substring(startIndex, endIndex - startIndex); 
+         }
+          return null; 
+          }
+
+public string GrabFromData(string data, string[] tags)//Works
+    {
+        string currentData = data;
+
+        foreach (string tag in tags)
+        {
+            int start = currentData.IndexOf("<" + tag + ">");
+            int end = currentData.IndexOf("</" + tag + ">");
+
+            if (start == -1 || end == -1)
+                return "Not Found";
+
+            currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
+        }
+        
+        return currentData;
+    }
+  public string ReadTxt()
+    {
+         List<string[]> csvData2 = new List<string[]>();
+        //change this as needed
+        string filePath = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
+        //change this
+
+        using (StreamReader reader = new StreamReader(filePath)){
+                string line;
+                while ((line = reader.ReadLine()) != null){
+                    string[] fields = line.Split(',');
+                    csvData2.Add(fields);
+                }
+            }
+
+        foreach (var row in csvData2)
+        {
+            return string.Join(",", row) + "\n";
+        }
+        return "";
+    }
+
+public string[] getRecentActionsIntegrate(){
+        string[] returnThis = new string[] {};
+        try{
+         returnThis = GetRecentActions(ReadTxt()).ToArray();
+        }
+        catch{
+            returnThis = new string[] {"Option1", "Option2","option3"};
+        }
+        return returnThis;
     }
 }
