@@ -21,7 +21,7 @@
         <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 10px;">
             <select style="width: 90%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="row.SelectedFlower">
                 <option value="">Select a flower</option>
-                @foreach (var flower in getsFlowerOptions())
+                @foreach (var flower in getFlowerOptions())
                 {
                     <option value="@flower">@flower</option>
                 }
