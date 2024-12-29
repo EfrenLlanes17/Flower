@@ -45,11 +45,15 @@ catch (Exception ex) {
 
     private void RemoveEntry(Entry entry)
     {
-        
+        try{
         WriteTxt(RemoveRecentAction(ReadTxt(),entry.Name, entry.Quantity, entry.Price, entry.Date));
         Entries.Remove(entry);
         StateHasChanged(); 
         // Notify Blazor of the state change
+        }
+        catch{
+            
+        }
     }
 
     public class Entry
@@ -331,7 +335,10 @@ public string[] getRecentActionsIntegrate(){
     }
 
  public void WriteTxt(string content){
-         string path = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string path = Path.Combine(desktopPath, fileName);
+        
        
         
             
