@@ -29,9 +29,7 @@
                 </select>
                 <input type="number" placeholder="Amount" @bind="row.Amount">
                 <span>@Convert.ToString(row.Amount * decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Flower",@row.selectedFlower2,"RetailPrice"}),CultureInfo.InvariantCulture))</span>
-                @* <span>@decimal.Parse("9.50",CultureInfo.InvariantCulture)</span> *@
-                @* <span>@GrabFromData(ReadTxt(),new string[] {"Flower",@row.selectedFlower2,"RetailPrice"})</span> *@
-                @* <span>@row.selectedFlower2</span> *@
+
 
             </div>
         }
@@ -94,7 +92,9 @@
     {
          List<string[]> csvData2 = new List<string[]>();
         //change this as needed
-        string filePath = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string filePath = Path.Combine(desktopPath, fileName);
         //change this
 
         using (StreamReader reader = new StreamReader(filePath)){

@@ -10,8 +10,12 @@
     <!-- Dropdown -->
     <div class="dropdown-container">
         <label for="recipe-select">Select the bouquet you would like to view</label>
-        <select id="recipe-select">
-            <option value="cute-jar">Cute Jar</option>
+        <select id="recipe-select" @bind="BouquetName">
+           <option>Select Bouquet</option>
+                    @foreach (var option in @GetAllBouquets(ReadTxt()))
+                    {
+                        <option>@option</option>
+                    }
         </select>
     </div>
 
@@ -25,32 +29,15 @@
                         <th>Item</th>
                         <th>Quantity</th>
                     </tr>
+                    
                 </thead>
                 <tbody>
+                     @foreach(var bouquetItem in @GetBouquetItems(ReadTxt(),BouquetName)){
                     <tr>
-                        <td>Primary</td>
-                        <td>4</td>
+                        <td>@GetItemName(bouquetItem)</td>
+                        <td>@GetItemAmount(bouquetItem)</td>
                     </tr>
-                    <tr>
-                        <td>Secondary</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>Misc Fill</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td>Green</td>
-                        <td>3</td>
-                    </tr>
-                    <tr>
-                        <td>Gyps</td>
-                        <td>1</td>
-                    </tr>
-                    <tr>
-                        <td>Jar 6</td>
-                        <td>1</td>
-                    </tr>
+                   }
                 </tbody>
             </table>
         </div>
@@ -66,7 +53,7 @@
         </div>
     </div>
 
-    <!-- Add Items -->
+    @* <!-- Add Items -->
     <div class="add-section">
         <label for="add-type">Add a type:</label>
         <select id="add-type">
@@ -79,8 +66,139 @@
         <label for="quantity">Quantity:</label>
         <input id="quantity" type="number" value="1" min="1">
         <button class="add-btn">Add</button>
-    </div>
+    </div> *@
 
     <!-- Delete Button -->
     <button class="delete-btn">Delete Recipe</button>
 </div>
+
+@code{
+
+public string BouquetName { get; set; }
+
+    public List<string> GetAllBouquets(string data)//works
+    {
+        int startIndex2 = data.IndexOf("<Bouquets>");
+        int endIndex2 = data.IndexOf("</Bouquets>") + "</Bouquets>".Length; // End after </Object>
+        string usingData = data;
+        
+    
+        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
+        List<string> flowerNames = new List<string>();
+        int startIndex = 0;
+        
+        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
+        {
+            int endIndex = usingData.IndexOf(">", startIndex);
+            if (endIndex == -1) break;
+            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
+            
+            if (!tag.Contains("/") && !tag.Contains("LaborCost") && !tag.Contains("Bouquets") && !tag.Contains("Amount") && !tag.Contains("MiscCost") && !tag.Contains("RetailPrice") && !tag.Contains("Item")&& !tag.Contains("Items") && !tag.Contains("Name"))
+            {
+                flowerNames.Add(tag);
+            }
+            startIndex = endIndex + 1;
+        }
+        return flowerNames;
+    }
+
+public List<string> GetBouquetItems(string data,string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Items>");
+    int purchasesEnd = flowerData.IndexOf("</Items>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No Items found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 7, purchasesEnd - (purchasesStart + 7));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Item>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Item>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 7) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 7;
+    }
+    return purchases;
+}
+
+public static string GetItemName(string xml)
+{
+    string startTag = "<Name>";
+    string endTag = "</Name>";
+
+    int startIndex = xml.IndexOf(startTag) + startTag.Length;
+    int endIndex = xml.IndexOf(endTag);
+
+    if (startIndex >= 0 && endIndex > startIndex)
+    {
+        return xml.Substring(startIndex, endIndex - startIndex);
+    }
+
+    return null;
+}
+
+public static int GetItemAmount(string xml)
+{
+    string startTag = "<Amount>";
+    string endTag = "</Amount>";
+
+    int startIndex = xml.IndexOf(startTag) + startTag.Length;
+    int endIndex = xml.IndexOf(endTag);
+
+    if (startIndex >= 0 && endIndex > startIndex)
+    {
+        string amountString = xml.Substring(startIndex, endIndex - startIndex);
+        if (int.TryParse(amountString, out int amount))
+        {
+            return amount;
+        }
+    }
+
+    return 0; // Return a default value in case of an error
+}
+
+
+ public string ReadTxt()
+    {
+         List<string[]> csvData2 = new List<string[]>();
+        //change this as needed
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string filePath = Path.Combine(desktopPath, fileName);
+        //change this
+
+        using (StreamReader reader = new StreamReader(filePath)){
+                string line;
+                while ((line = reader.ReadLine()) != null){
+                    string[] fields = line.Split(',');
+                    csvData2.Add(fields);
+                }
+            }
+
+        foreach (var row in csvData2)
+        {
+            return string.Join(",", row) + "\n";
+        }
+        return "";
+    }
+}
