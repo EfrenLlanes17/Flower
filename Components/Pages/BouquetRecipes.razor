@@ -7,56 +7,80 @@
 <h1>Bouquet Recipes</h1>
 
 <div class="container">
-    <label for="recipe-select">Select the bouquet you would like to view</label>
-    <select id="recipe-select">
-        <option value="my-jar">My Jar</option>
-    </select>
-
-    <div class="ingredients">
-        <table>
-            <thead>
-                <tr>
-                    <th>Item</th>
-                    <th>Quantity</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>Rose</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>Flower</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>Flower</td>
-                    <td>4</td>
-                </tr>
-                <tr>
-                    <td>Flower</td>
-                    <td>3</td>
-                </tr>
-                <tr>
-                    <td>Flower</td>
-                    <td>1</td>
-                </tr>
-                <tr>
-                    <td>Jar 6</td>
-                    <td>1</td>
-                </tr>
-            </tbody>
-        </table>
+    <!-- Dropdown -->
+    <div class="dropdown-container">
+        <label for="recipe-select">Select the bouquet you would like to view</label>
+        <select id="recipe-select">
+            <option value="cute-jar">Cute Jar</option>
+        </select>
     </div>
 
-    <div class="details">
-        <p><strong>Retail Price:</strong> $45.00</p>
-        <p><strong>Material Cost:</strong> $28.45</p>
-        <p><strong>Labor Cost:</strong> $6.00</p>
-        <p><strong>Misc Loss:</strong> $1.00</p>
-        <p><strong>Total Loaded Cost:</strong> $35.45</p>
-        <p><strong>Net Profit:</strong> $45.00</p>
+    <!-- Main content: Ingredients and Details -->
+    <div class="main-content">
+        <!-- Ingredients Section -->
+        <div class="ingredients">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Primary</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Secondary</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Misc Fill</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>Green</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>Gyps</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Jar 6</td>
+                        <td>1</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Details Section -->
+        <div style="color: #fff; border: ;"class="details">
+            <p><strong>Retail Price:</strong> $45.00</p>
+            <p><strong>Material Cost:</strong> $28.45</p>
+            <p><strong>Labor Cost:</strong> $6.00</p>
+            <p><strong>Misc Loss:</strong> $1.00</p>
+            <p><strong>Total Loaded Cost:</strong> $35.45</p>
+            <p><strong>Net Profit:</strong> $45.00</p>
+        </div>
     </div>
 
+    <!-- Add Items -->
+    <div class="add-section">
+        <label for="add-type">Add a type:</label>
+        <select id="add-type">
+            <option>Primary</option>
+            <option>Secondary</option>
+            <option>Misc Fill</option>
+            <option>Green</option>
+            <option>Gyps</option>
+        </select>
+        <label for="quantity">Quantity:</label>
+        <input id="quantity" type="number" value="1" min="1">
+        <button class="add-btn">Add</button>
+    </div>
+
+    <!-- Delete Button -->
     <button class="delete-btn">Delete Recipe</button>
 </div>
