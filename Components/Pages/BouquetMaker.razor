@@ -13,19 +13,26 @@
         <span>Total Retail</span>
     </div>
 
+@using System.Globalization
+
     <!-- Data Rows -->
     <div id="data-rows">
         @foreach (var row in Rows)
         {
             <div class="data-row">
-                <select>
-                    @foreach (var option in FlowerOptions)
+                <select  @bind="row.selectedFlower2">
+                    <option>Select Flower</option>
+                    @foreach (var option in @GetAllFlowers(ReadTxt()))
                     {
                         <option>@option</option>
                     }
                 </select>
                 <input type="number" placeholder="Amount" @bind="row.Amount">
-                <span>$@row.RetailPrice</span>
+                <span>@Convert.ToString(row.Amount * decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Flower",@row.selectedFlower2,"RetailPrice"}),CultureInfo.InvariantCulture))</span>
+                @* <span>@decimal.Parse("9.50",CultureInfo.InvariantCulture)</span> *@
+                @* <span>@GrabFromData(ReadTxt(),new string[] {"Flower",@row.selectedFlower2,"RetailPrice"})</span> *@
+                @* <span>@row.selectedFlower2</span> *@
+
             </div>
         }
     </div>
@@ -66,7 +73,7 @@
      public string selectedFlower { get; set; } = "";
   public string test { get; set; } = "";
 
-  public string GrabFromData(string data, string[] tags)//Works
+  public string GrabFromData(string data, string[] tags)//Works changed to work with total retail
     {
         string currentData = data;
 
@@ -76,7 +83,7 @@
             int end = currentData.IndexOf("</" + tag + ">");
 
             if (start == -1 || end == -1)
-                return "Not Found";
+                return "0";
 
             currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
         }
@@ -161,6 +168,7 @@ private void OnSelectionChange(ChangeEventArgs e)
     // Row data structure
     private class RowData
     {
+        public string selectedFlower2 { get; set; }
         public int Amount { get; set; } = 0;
         public decimal RetailPrice { get; set; } = 12.00m; // Default price
     }
@@ -191,4 +199,10 @@ private void OnSelectionChange(ChangeEventArgs e)
         // Logic to save the recipe
         Console.WriteLine($"Saved Recipe: {BouquetName}");
     }
+
+
+    
+
+
+
 }

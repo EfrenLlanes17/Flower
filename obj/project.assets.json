@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-1\\Flower.csproj",
+      "projectUniqueName": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-2\\Flower.csproj",
       "projectName": "Flower",
-      "projectPath": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-1\\Flower.csproj",
+      "projectPath": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-2\\Flower.csproj",
       "packagesPath": "C:\\Users\\efren\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-1\\obj\\",
+      "outputPath": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\efren\\AppData\\Roaming\\NuGet\\NuGet.Config",
