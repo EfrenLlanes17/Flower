@@ -3,7 +3,7 @@
 
 <PageTitle>Recent Actions</PageTitle>
 
-<h1>I got this page to work with the database, That is why it looks broken button trust me it is not</h1>
+
 
 
 @try{
@@ -14,7 +14,6 @@
         }
 }
 catch (Exception ex) {
-     Entries.Add(new Entry { Name = "I", Quantity = "Got This To work", Price = "With The data Base", Date = ". It works Trust. Dont mess with it" });
      }
 
 <h1>Recent Actions</h1>
@@ -32,7 +31,14 @@ catch (Exception ex) {
     }
 </div>
 
+@if (selectedEntry != null) { 
+    <h1>@selectedEntry.Name - @selectedEntry.Quantity - @selectedEntry.Price - @selectedEntry.Date</h1> 
+    <h1>@RemoveRecentAction(ReadTxt(),selectedEntry.Name, selectedEntry.Quantity, selectedEntry.Price, selectedEntry.Date)</h1>
+    
+    }
+
 @code {
+    public Entry selectedEntry = null;
     
     public List<Entry> Entries = new List<Entry>
     {
@@ -44,6 +50,7 @@ catch (Exception ex) {
 
     private void RemoveEntry(Entry entry)
     {
+        selectedEntry = entry;
         Entries.Remove(entry);
         StateHasChanged(); // Notify Blazor of the state change
     }
@@ -93,6 +100,94 @@ public void AddNewRecentAction(string data,string type, string name, string amou
     {
         Console.WriteLine("Error: <RecentActions> tag not found.");
     }
+    }
+}
+
+
+public static string RemoveRecentAction(string xml, string name, string amountOrRetail, string costOrAmountofItems, string date) {
+     if (xml.Contains("<Entry><Name>" + name)) {
+                 xml = RemoveFlowerPurchase(xml,name, date); 
+                
+                 } 
+                 else if (xml.Contains("<BouquetEntry><Name>" + name)) {
+                xml = RemoveBouquet(xml,name); 
+               
+                     }
+     string[] possibleEntries = { $"<Entry><Name>{name}</Name><Amount>{amountOrRetail}</Amount><Cost>{costOrAmountofItems}</Cost><Date>{date}</Date></Entry>", $"<BouquetEntry><Name>{name}</Name><RetailPrice>{amountOrRetail}</RetailPrice><NumberOfItems>{costOrAmountofItems}</NumberOfItems><Date>{date}</Date></BouquetEntry>" }; 
+     foreach (string entry in possibleEntries) { 
+        int startIndex = xml.IndexOf(entry); 
+        if (startIndex != -1) {
+             int endIndex = startIndex + entry.Length;
+              xml = xml.Remove(startIndex, endIndex - startIndex); 
+             break; // Remove only the first matching entry 
+             } 
+             } 
+             //return xml;
+            return xml;
+
+           
+              }
+
+public static string RemoveFlowerPurchase(string data, string flowerName, string date)//works
+{
+    string flowerTag = "<" + flowerName + ">";
+    string purchaseTag = "<Purchase>";
+    // Find the start and end of the flower section
+    int flowerStart = data.IndexOf(flowerTag);
+    if (flowerStart == -1)
+    {
+        Console.WriteLine(flowerName + " not found.");
+        return data;
+    }
+    int flowerEnd = data.IndexOf("</" + flowerName + ">", flowerStart);
+    if (flowerEnd == -1)
+    {
+        Console.WriteLine("End tag for " + flowerName + " not found.");
+        return data;
+    }
+    // Extract the flower data
+    string flowerData = data.Substring(flowerStart, (flowerEnd + ("</" + flowerName + ">").Length) - flowerStart);
+    // Locate the purchase by date
+    int purchaseStart = 0;
+    while ((purchaseStart = flowerData.IndexOf(purchaseTag, purchaseStart)) != -1)
+    {
+        int purchaseEnd = flowerData.IndexOf("</Purchase>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        string purchase = flowerData.Substring(purchaseStart, (purchaseEnd + 11) - purchaseStart);
+        if (purchase.Contains("<Date>" + date + "</Date>"))
+        {
+            // Remove the purchase
+            flowerData = flowerData.Remove(purchaseStart, purchase.Length);
+            data = data.Remove(flowerStart, flowerEnd - flowerStart + ("</" + flowerName + ">").Length)
+                        .Insert(flowerStart, flowerData);
+            return data;
+        }
+        purchaseStart = purchaseEnd + 11;
+    }
+    Console.WriteLine("Purchase with date " + date + " not found for " + flowerName + ".");
+    return data;
+}
+
+public static string RemoveBouquet(string data, string flowerName)//works
+{
+    // Find the start and end tag for the specified flower
+    string startTag = $"<{flowerName}>";
+    string endTag = $"</{flowerName}>";
+    int startIndex = data.IndexOf(startTag);
+    int endIndex = data.IndexOf(endTag, startIndex);
+    if (startIndex != -1 && endIndex != -1)
+    {
+        // Calculate the position where the flower data ends (after the closing tag)
+        endIndex += endTag.Length; 
+        // Remove the flower from the data string
+        data = data.Remove(startIndex, endIndex - startIndex);
+        return data;
+    }
+    else
+    {
+        Console.WriteLine($"Error: <{flowerName}> tag not found.");
+        return data;
+        
     }
 }
 
@@ -226,6 +321,7 @@ public string GrabFromData(string data, string[] tags)//Works
         return "";
     }
 
+
 public string[] getRecentActionsIntegrate(){
         string[] returnThis = new string[] {};
         try{
@@ -236,4 +332,16 @@ public string[] getRecentActionsIntegrate(){
         }
         return returnThis;
     }
+
+ public void WriteTxt(string content){
+         string path = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
+       
+        
+            
+        File.WriteAllText(path, content);
+           
+        
+      
+    }
+
 }

@@ -47,9 +47,10 @@
         
     }
 
-    public void WriteTxt(){
-         string path = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
-        string content = "Hello, this is a test message!";
+    public void WriteTxt(string content){
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string path = Path.Combine(desktopPath, fileName);
         
             
         File.WriteAllText(path, content);
