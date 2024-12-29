@@ -31,11 +31,6 @@ catch (Exception ex) {
     }
 </div>
 
-@if (selectedEntry != null) { 
-    <h1>@selectedEntry.Name - @selectedEntry.Quantity - @selectedEntry.Price - @selectedEntry.Date</h1> 
-    <h1>@RemoveRecentAction(ReadTxt(),selectedEntry.Name, selectedEntry.Quantity, selectedEntry.Price, selectedEntry.Date)</h1>
-    
-    }
 
 @code {
     public Entry selectedEntry = null;
@@ -50,9 +45,11 @@ catch (Exception ex) {
 
     private void RemoveEntry(Entry entry)
     {
-        selectedEntry = entry;
+        
+        WriteTxt(RemoveRecentAction(ReadTxt(),entry.Name, entry.Quantity, entry.Price, entry.Date));
         Entries.Remove(entry);
-        StateHasChanged(); // Notify Blazor of the state change
+        StateHasChanged(); 
+        // Notify Blazor of the state change
     }
 
     public class Entry
