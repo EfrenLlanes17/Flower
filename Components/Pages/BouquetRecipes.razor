@@ -19,6 +19,8 @@
         </select>
     </div>
 
+    @using System.Globalization
+
     <!-- Main content: Ingredients and Details -->
     <div class="main-content">
         <!-- Ingredients Section -->
@@ -36,6 +38,7 @@
                     <tr>
                         <td>@GetItemName(bouquetItem)</td>
                         <td>@GetItemAmount(bouquetItem)</td>
+                    
                     </tr>
                    }
                 </tbody>
@@ -44,11 +47,12 @@
 
         <!-- Details Section -->
         <div style="color: #fff; border: ;"class="details">
-            <p><strong>Retail Price:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"})</p>
-            <p><strong>Total Loaded Cost:</strong> $35.45</p>
-            <p><strong>Net Profit:</strong> $45.00</p>
             <p><strong>Labor Cost:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"})</p>
             <p><strong>Misc Loss:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"})</p>
+            <p><strong>Total Loaded Cost:</strong> $@updateTotalCost(BouquetName)</p>
+            <p><strong>Retail Price:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"})</p>
+            <p><strong>Net Profit:</strong> $@updateNetProfit(BouquetName,GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"}),updateTotalCost(BouquetName))</p>
+            
             
         </div>
     </div>
@@ -74,7 +78,22 @@
 
 @code{
 
-public string BouquetName { get; set; }
+public static string updateTotalCost(string BouquetName2){
+    decimal sum = 0; 
+    foreach (var bouquetItem in GetBouquetItems2(ReadTxt2(), BouquetName2)) {
+         sum += decimal.Parse(GrabFromData2(ReadTxt2(), new string[] { "Flower", GetItemName(bouquetItem), "RetailPrice" }), CultureInfo.InvariantCulture) * @GetItemAmount(bouquetItem);
+          } 
+          return sum.ToString(CultureInfo.InvariantCulture);
+}
+//public decimal totalCost { get; set; } = updateTotalCost();
+
+public string updateNetProfit(string BouquetName2, string retail, string total){
+    string unneeded = BouquetName2;
+    decimal diff = decimal.Parse(retail) - decimal.Parse(total);
+    return diff.ToString(CultureInfo.InvariantCulture);
+}
+
+public static string BouquetName { get; set; }
 
     public List<string> GetAllBouquets(string data)//works
     {
@@ -103,6 +122,45 @@ public string BouquetName { get; set; }
     }
 
 public List<string> GetBouquetItems(string data,string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Items>");
+    int purchasesEnd = flowerData.IndexOf("</Items>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No Items found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 7, purchasesEnd - (purchasesStart + 7));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Item>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Item>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 7) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 7;
+    }
+    return purchases;
+}
+
+public static List<string> GetBouquetItems2(string data,string flowerName)//works
 {
     List<string> purchases = new List<string>();
     // Find the flower tag
@@ -202,8 +260,50 @@ public static int GetItemAmount(string xml)
         return "";
     }
 
+    public static string ReadTxt2()
+    {
+         List<string[]> csvData2 = new List<string[]>();
+        //change this as needed
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string filePath = Path.Combine(desktopPath, fileName);
+        //change this
+
+        using (StreamReader reader = new StreamReader(filePath)){
+                string line;
+                while ((line = reader.ReadLine()) != null){
+                    string[] fields = line.Split(',');
+                    csvData2.Add(fields);
+                }
+            }
+
+        foreach (var row in csvData2)
+        {
+            return string.Join(",", row) + "\n";
+        }
+        return "";
+    }
+
 
 public string GrabFromData(string data, string[] tags)//Works changed to work with total retail
+    {
+        string currentData = data;
+
+        foreach (string tag in tags)
+        {
+            int start = currentData.IndexOf("<" + tag + ">");
+            int end = currentData.IndexOf("</" + tag + ">");
+
+            if (start == -1 || end == -1)
+                return "0";
+
+            currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
+        }
+        
+        return currentData;
+    }
+
+    public static string GrabFromData2(string data, string[] tags)//Works changed to work with total retail
     {
         string currentData = data;
 
