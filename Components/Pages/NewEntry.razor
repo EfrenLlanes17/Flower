@@ -5,7 +5,7 @@
 
 
 <h1 style="color: #eb3a9b; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:35px; font-weight: bold; padding-top: 10px; text-align: left;">Add New Entry</h1>
-<input type="date" style="width: 20%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;">
+<input type="date" @bind="selectedDate" style="width: 20%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;">
 <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 20px;">
     <!-- Column Titles -->
     <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Flowers</h3>
@@ -47,6 +47,8 @@
 @using System.Globalization
 
 @code{
+
+  public DateTime selectedDate { get; set; } = DateTime.Today;
   public string selectedFlower { get; set; }
   public string test { get; set; } = "";
 
@@ -150,9 +152,55 @@ private void HandleChange(ChangeEventArgs e)
 
     private void SaveEntries()
     {
+        foreach(var r in rows){
+        WriteTxt(AddNewFlowerPurchase(ReadTxt(), r.SelectedFlower, r.StemCost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+        WriteTxt(AddNewRecentAction(ReadTxt(),"Entry", r.SelectedFlower, r.Units.ToString(), r.Cost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+        
+        }
         rows.Clear();
         rows.Add(new EntryRow());
     }
+
+public string AddNewRecentAction(string data,string type, string name, string amountOrRetail, string costOrAmountofItems, string date)//works
+{
+    if(type.Equals("Entry")){
+    string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<Amount>{amountOrRetail}</Amount>" +
+                               $"<Cost>{costOrAmountofItems}</Cost>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        return data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+    else{
+        string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<RetailPrice>{amountOrRetail}</RetailPrice>" +
+                               $"<NumberOfItems>{costOrAmountofItems}</NumberOfItems>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        return data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+    return data;
+}
 
     private IEnumerable<string> getsFlowerOptions()
     {
@@ -195,6 +243,37 @@ public static string GrabFromData2(string data, string[] tags)//Works
             return "1.0";
         }
     }
+
+
+public string AddNewFlowerPurchase(string data, string flowerName, string price, string date)//works
+{
+    // Build the new purchase entry
+    //Needs to update retail price
+    string newPurchase = $"<Purchase><Price>{price}</Price><Date>{date}</Date></Purchase>";
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return data;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases tag within the flower
+    int purchasesStart = flowerData.IndexOf("<Purchases>");
+    int purchasesEnd = flowerData.IndexOf("</Purchases>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("Purchases section not found for " + flowerName);
+        return data;
+    }
+    // Insert the new purchase before </Purchases>
+    string updatedFlowerData = flowerData.Insert(purchasesEnd, newPurchase);
+    // Update the main data string
+    return data.Substring(0, flowerStart) + updatedFlowerData + data.Substring(flowerEnd + flowerName.Length + 3);
+}
+
   public static string ReadTxt2()
     {
         try{
@@ -225,7 +304,17 @@ public static string GrabFromData2(string data, string[] tags)//Works
         }
     }
 
-
+ public void WriteTxt(string content){
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string path = Path.Combine(desktopPath, fileName);
+        
+            
+        File.WriteAllText(path, content);
+           
+        
+      
+    }
 
     }
 }

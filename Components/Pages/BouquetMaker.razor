@@ -166,7 +166,7 @@ private void OnSelectionChange(ChangeEventArgs e)
     private List<string> FlowerOptions = new() { "Rose", "Tulip", "Daisy", "Sunflower" };
 
     // Row data structure
-    private class RowData
+    public class RowData
     {
         public string selectedFlower2 { get; set; }
         public int Amount { get; set; } = 0;
@@ -174,7 +174,7 @@ private void OnSelectionChange(ChangeEventArgs e)
     }
 
     // Rows collection
-    private List<RowData> Rows = new() { new RowData() };
+    public List<RowData> Rows = new() { new RowData() };
 
     // Additional costs
     private decimal LaborCost { get; set; } = 0.00m;
@@ -197,7 +197,11 @@ private void OnSelectionChange(ChangeEventArgs e)
     private void SaveRecipe()
     {
         // Logic to save the recipe
-        Console.WriteLine($"Saved Recipe: {BouquetName}");
+        foreach(var r in Rows){
+        Console.WriteLine($"Saved Recipe: {r.Amount}");
+        }
+        Console.WriteLine("Done");
+        
     }
 
 
