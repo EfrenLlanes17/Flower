@@ -53,7 +53,7 @@
             Bouquet Name: <input type="text" placeholder="Name" @bind="BouquetName">
         </label>
         <div>
-            <span>Total Cost: </span>$<span id="totalCostText">@TotalCost</span>
+            <span>Total Cost: </span>$<span id="totalCostText"> @(getSum(LaborCost)+ LaborCost + MiscCost)</span>
         </div>
         <label>
             Retail Price: $<input type="number" placeholder="0.00" step="0.01" @bind="RetailPrice">
@@ -170,7 +170,7 @@ private void OnSelectionChange(ChangeEventArgs e)
     {
         public string selectedFlower2 { get; set; }
         public int Amount { get; set; } = 0;
-        public decimal RetailPrice { get; set; } = 12.00m; // Default price
+        public decimal RetailPrice { get; set; } = 0; // Default price
     }
 
     // Rows collection
@@ -184,8 +184,17 @@ private void OnSelectionChange(ChangeEventArgs e)
     private string BouquetName { get; set; } = string.Empty;
     private decimal RetailPrice { get; set; } = 0.00m;
 
-    private decimal TotalCost => Rows.Sum(r => r.Amount * r.RetailPrice) + LaborCost + MiscCost;
+    private decimal TotalCost => getSum(LaborCost) + LaborCost + MiscCost;
     private decimal Profit => RetailPrice - TotalCost;
+
+    public decimal getSum(decimal lc){
+        decimal unnded = lc;
+        decimal sum = 0;
+         foreach(var r in Rows){
+        sum += r.Amount * decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Flower",r.selectedFlower2,"RetailPrice"}),CultureInfo.InvariantCulture);
+        } 
+        return sum;
+    }
 
     // Add a new row
     private void AddRow()
@@ -197,9 +206,16 @@ private void OnSelectionChange(ChangeEventArgs e)
     private void SaveRecipe()
     {
         // Logic to save the recipe
-        foreach(var r in Rows){
-        Console.WriteLine($"Saved Recipe: {r.Amount}");
-        }
+
+        Console.WriteLine($"Labor Cost: {LaborCost}");
+        Console.WriteLine($"Misc Cost: {MiscCost}");
+        Console.WriteLine($"Name: {BouquetName}");
+        Console.WriteLine($"Total: {TotalCost}");
+        Console.WriteLine($"Retail: {RetailPrice}");
+        Console.WriteLine($"Profit: {Profit}");
+         foreach(var r in Rows){
+        Console.WriteLine($"ItemName: {r.selectedFlower2}  Amount: {r.Amount}");
+        } 
         Console.WriteLine("Done");
         
     }

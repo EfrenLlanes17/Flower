@@ -47,6 +47,7 @@ catch (Exception ex) {
     {
         try{
         WriteTxt(RemoveRecentAction(ReadTxt(),entry.Name, entry.Quantity, entry.Price, entry.Date));
+        //WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",r.SelectedFlower, "StemPrice"}, r.StemCost.ToString())); does not update stemprice after removal
         Entries.Remove(entry);
         StateHasChanged(); 
         // Notify Blazor of the state change
@@ -55,6 +56,39 @@ catch (Exception ex) {
             
         }
     }
+
+     public string UpdateData(string data,string[] tags, string newValue)//works
+{
+    int position = 0;  // Start from the beginning of the data
+    int startValue = -1;
+    int endValue = -1;
+    foreach (string tag in tags)
+    {
+        int start = data.IndexOf("<" + tag + ">", position);
+        int end = data.IndexOf("</" + tag + ">", position);
+        if (start == -1 || end == -1)
+        {
+            Console.WriteLine(tag + " tag not found");
+            return data;
+        }
+        if (tag == tags[tags.Length - 1])  // On the final tag
+        {
+            startValue = start + tag.Length + 2;
+            endValue = end;
+        }
+        else
+        {
+            position = start + tag.Length + 2;  // Move deeper to next tag section
+        }
+    }
+    if (startValue != -1 && endValue != -1)
+    {
+        // Perform the update on the original data
+        return data.Substring(0, startValue) + newValue + data.Substring(endValue);
+       
+    }
+    return data;
+}
 
     public class Entry
     {
