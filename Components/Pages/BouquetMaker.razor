@@ -29,7 +29,7 @@
                         <option>@option</option>
                     }
                 </select>
-                <input type="number" placeholder="Amount" @bind="row.Amount">
+                <input type="number" placeholder="Amount" min="0" @bind="row.Amount">
                 <span>@Convert.ToString(row.Amount * decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Flower",@row.selectedFlower2,"RetailPrice"}),CultureInfo.InvariantCulture))</span>
 
 
@@ -42,10 +42,10 @@
     <h2>Additional Costs</h2>
     <div class="additional-costs">
         <label>
-            Labor Costs: $<input type="number" placeholder="0.00" step="0.01" @bind="LaborCost">
+            Labor Costs: $<input type="number" min="0" placeholder="0.00" step="0.01" @bind="LaborCost">
         </label>
         <label>
-            Misc Costs: $<input type="number" placeholder="0.00" step="0.01" @bind="MiscCost">
+            Misc Costs: $<input type="number" min="0" placeholder="0.00" step="0.01" @bind="MiscCost">
         </label>
     </div>
 
@@ -58,7 +58,7 @@
             <span>Total Cost: </span>$<span id="totalCostText"> @(getSum(LaborCost)+ LaborCost + MiscCost)</span>
         </div>
         <label>
-            Retail Price: $<input type="number" placeholder="0.00" step="0.01" @bind="RetailPrice">
+            Retail Price: $<input type="number" placeholder="0.00" min="0" step="0.01" @bind="RetailPrice">
         </label>
         <div>
             <span>Profit: </span>$<span id="profitText">@Profit</span>
@@ -186,7 +186,24 @@ private void OnSelectionChange(ChangeEventArgs e)
     public class RowData
     {
         public string selectedFlower2 { get; set; }
-        public int Amount { get; set; } = 0;
+        private int amount;
+
+        public int Amount
+        {
+            get => amount;
+            set
+            {
+                if (value >= 0)
+                {
+                    amount = value;
+                }
+                else
+                {
+                    amount = 0;
+                }
+            }
+        }
+
         public decimal RetailPrice { get; set; } = 0; // Default price
     }
 
@@ -194,12 +211,66 @@ private void OnSelectionChange(ChangeEventArgs e)
     public List<RowData> Rows = new() { new RowData() };
 
     // Additional costs
-    public decimal LaborCost { get; set; } = 0.00m;
-    public decimal MiscCost { get; set; } = 0.00m;
+    private decimal laborCost = 0.00m;
+
+    public decimal LaborCost
+    {
+        get => laborCost;
+        set
+        {
+            if (value >= 0)
+            {
+                laborCost = value;
+            }
+            else
+            {
+                // Optionally, you can throw an exception or handle the negative value in another way
+                laborCost = 0.00m;
+            }
+        }
+    }
+
+
+    
+        private decimal miscCost = 0.00m;
+
+    public decimal MiscCost
+    {
+        get => miscCost;
+        set
+        {
+            if (value >= 0)
+            {
+                miscCost = value;
+            }
+            else
+            {
+                miscCost = 0.00m;
+            }
+        }
+    }
+
 
     // Totals
     public string BouquetName { get; set; } = string.Empty;
-    public decimal RetailPrice { get; set; } = 0.00m;
+    private decimal retailPrice = 0.00m;
+
+    public decimal RetailPrice
+    {
+        get => retailPrice;
+        set
+        {
+            if (value >= 0)
+            {
+                retailPrice = value;
+            }
+            else
+            {
+                retailPrice = 0.00m;
+            }
+        }
+    }
+
 
     public decimal TotalCost => getSum(LaborCost) + LaborCost + MiscCost;
     public decimal Profit => RetailPrice - TotalCost;
@@ -328,6 +399,7 @@ public string AddNewRecentAction(string data,string type, string name, string am
          foreach (var r in Rows.Take(Rows.Count - 1)) {
             amountOfItems +=1;
              WriteTxt(AddNewBouquetItem(ReadTxt(), BouquetName,r.selectedFlower2, r.Amount.ToString()));
+             ErrorMessage = "";
         }
         WriteTxt(AddNewRecentAction(ReadTxt(),"BouquetEntry", BouquetName, RetailPrice.ToString(), amountOfItems.ToString(), DateTime.Today.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
         LaborCost = 0;
@@ -335,6 +407,7 @@ public string AddNewRecentAction(string data,string type, string name, string am
         BouquetName = "";
         RetailPrice = 0;
         Rows.Clear();
+        ErrorMessage = "";
         //TotalCost = 0;
         Rows.Add(new RowData());
         }

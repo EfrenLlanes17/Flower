@@ -228,8 +228,46 @@ public string AddNewRecentAction(string data,string type, string name, string am
     private class EntryRow
     {
         public string? SelectedFlower { get; set; }
-        public int? Units { get; set; }
-        public decimal? Cost { get; set; }
+
+        private int? units;
+
+        public int? Units
+        {
+            get => units;
+            set
+            {
+                if (value >= 0)
+                {
+                    units = value;
+                }
+                else
+                {
+                    units = 0;
+                }
+            }
+        }
+
+        
+
+
+        private decimal? cost;
+
+                public decimal? Cost
+                {
+                    get => cost;
+                    set
+                    {
+                        if (value >= 0)
+                        {
+                            cost = value;
+                        }
+                        else
+                        {
+                            cost = 0;
+                        }
+                    }
+                }
+
         public decimal StemCost => Units.HasValue && Cost.HasValue ? Cost.Value / Units.Value : 0;
         public decimal ChangeSinceLastEntry => Units.HasValue && Cost.HasValue && !string.IsNullOrEmpty(SelectedFlower)? ((StemCost/decimal.Parse(GrabFromData2(ReadTxt2(),new string[] {"Flower",SelectedFlower,"StemPrice"}), CultureInfo.InvariantCulture)-1)) : 0;// Placeholder for actual calculation
 
