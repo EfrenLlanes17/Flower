@@ -67,8 +67,42 @@
 
   public Boolean showNewFlowerInput = false;
 
-  public decimal newFlowerCost { get; set; }
-  public decimal newFlowerUnit { get; set; }
+  private decimal _newFlowerCost;
+
+public decimal newFlowerCost
+{
+    get => _newFlowerCost;
+    set
+    {
+        if (value >= 0)
+        {
+            _newFlowerCost = value;
+        }
+        else
+        {
+            _newFlowerCost = 0.00m;
+        }
+    }
+}
+
+  private decimal _newFlowerUnit;
+
+public decimal newFlowerUnit
+{
+    get => _newFlowerUnit;
+    set
+    {
+        if (value >= 0)
+        {
+            _newFlowerUnit = value;
+        }
+        else
+        {
+            _newFlowerUnit = 0.00m;
+        }
+    }
+}
+
 
   public string newFlowerName { get; set; } = "";
 

@@ -29,6 +29,9 @@
     <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px;" @onclick="changeEdtTxtBoxBool">Edit Retail Price</button>
     @if(showEdtInput){
         <input type="number" class="input-field" placeholder="Retail Price" @bind="newRetailPrice"  min="0" step="0.01">
+        @if(newRetailPrice < 0){
+            newRetailPrice = 0;
+        }
         <button class="input-field" @onclick="changeRetailBtn">Save</button>
     }
     <h3>Type: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"Type"})</h3>
@@ -76,7 +79,25 @@
   public Boolean showEdtInput = false;
   public string test { get; set; } = "";
 
-  public decimal newRetailPrice { get; set; } = 0.00m;
+ private decimal newretailprice = 0.00m;
+
+public decimal newRetailPrice
+{
+    get => newretailprice;
+    set
+    {
+        if (value >= 0)
+        {
+            newretailprice = value;
+        }
+        else
+        {
+            newretailprice = 0.00m;
+        }
+    }
+}
+
+
 
   public void changeEdtTxtBoxBool(){
     showEdtInput = true;
