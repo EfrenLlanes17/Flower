@@ -27,13 +27,24 @@
     <h3>Stem Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"StemPrice"})</h3>
     <h3>Retail Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"RetailPrice"})</h3>
     <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin-left:35px; margin-right: 10px; margin-top:15px; margin-bottom:15px;font-weight: bold;" @onclick="changeEdtTxtBoxBool">Edit Retail Price</button>
-    @if(showEdtInput){
-        <input type="number" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field" placeholder="Retail Price" @bind="newRetailPrice"  min="0" step="0.01">
-        @if(newRetailPrice < 0){
+    
+    @if (showEdtInput)
+    {
+        <input type="number" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" 
+            class="input-field" placeholder="Retail Price" @bind="newRetailPrice" min="0" step="0.01">
+        
+        @if (newRetailPrice < 0)
+        {
             newRetailPrice = 0;
         }
-        <button class="input-field" style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; font-weight: bold;" @onclick="changeRetailBtn">Save</button>
+
+        <button class="input-field" 
+                style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; font-weight: bold;" 
+                @onclick="changeRetailBtn">
+            Save
+        </button>
     }
+
     <h3>Type: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"Type"})</h3>
     DataPoints.Clear();
     foreach (var purchase in @GetFlowerPurchases(ReadTxt(),selectedFlower)){
@@ -46,13 +57,13 @@
         
     }
     if(DataPoints.Count > 1){
-    <h4>Price Change Over Time</h4>
+    <h4 style="margin-left:35px; margin-top:30px; margin-bottom: -10px; font-weight: bold;">Price Change Over Time</h4>
         <div class="svg-container"> @((MarkupString)GenerateSvgContent()) </div>
         }
     else{
         <h3>Only one Purchase value Avaiable</h3>
     }
-    <h4><u>All Entries of @selectedFlower</u></h4>
+    <h4 style="margin-left:35px; margin-top:10px;"><u>All Entries of @selectedFlower</u></h4>
     foreach (var purchase in @GetFlowerPurchases(ReadTxt(),selectedFlower)){
         <h3>Price: @GetPrice(purchase) Date: @GetDate(purchase)</h3>
     }
@@ -74,6 +85,9 @@
 
 
 @code{
+
+    private bool showEditButton = true; // Determines whether the Edit button is shown
+
   public string? selectedFlower { get; set; }
 
   public Boolean showEdtInput = false;
@@ -101,12 +115,15 @@ public decimal newRetailPrice
 
   public void changeEdtTxtBoxBool(){
     showEdtInput = true;
+    showEditButton = false; // Hide Edit button
   }
 
  public void changeRetailBtn(){
     if(newRetailPrice != 0 ){
     WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",selectedFlower,"RetailPrice"}, newRetailPrice.ToString()));
     newRetailPrice = 0;
+    showEdtInput = false;
+    showEditButton = true;
     }
   }
 
