@@ -96,9 +96,14 @@ public static decimal updateTotalCost2(string BouquetName2){
 //public decimal totalCost { get; set; } = updateTotalCost();
 
 public string updateNetProfit(string BouquetName2, string retail, string total){
+    try{
     string unneeded = BouquetName2;
     decimal diff = decimal.Parse(retail) - decimal.Parse(total);
     return diff.ToString(CultureInfo.InvariantCulture);
+    }
+    catch{
+        return "Error, Please Delete Bouquet and Remake it";
+    }
 }
 
 public static string BouquetName { get; set; }
