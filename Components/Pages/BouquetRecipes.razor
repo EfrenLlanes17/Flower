@@ -49,9 +49,9 @@
         <div style="color: #fff; border: ;"class="details">
             <p><strong>Labor Cost:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"})</p>
             <p><strong>Misc Loss:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"})</p>
-            <p><strong>Total Loaded Cost:</strong> $@updateTotalCost(BouquetName)</p>
+            <p><strong>Total Loaded Cost:</strong> $@(updateTotalCost2(BouquetName) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"}), CultureInfo.InvariantCulture))</p>
             <p><strong>Retail Price:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"})</p>
-            <p><strong>Net Profit:</strong> $@updateNetProfit(BouquetName,GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"}),updateTotalCost(BouquetName))</p>
+            <p><strong>Net Profit:</strong> $@updateNetProfit(BouquetName,GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"}), ((updateTotalCost2(BouquetName) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"}), CultureInfo.InvariantCulture).ToString()) ) )</p>
             
             
         </div>
@@ -84,6 +84,14 @@ public static string updateTotalCost(string BouquetName2){
          sum += decimal.Parse(GrabFromData2(ReadTxt2(), new string[] { "Flower", GetItemName(bouquetItem), "RetailPrice" }), CultureInfo.InvariantCulture) * @GetItemAmount(bouquetItem);
           } 
           return sum.ToString(CultureInfo.InvariantCulture);
+}
+
+public static decimal updateTotalCost2(string BouquetName2){
+    decimal sum = 0; 
+    foreach (var bouquetItem in GetBouquetItems2(ReadTxt2(), BouquetName2)) {
+         sum += decimal.Parse(GrabFromData2(ReadTxt2(), new string[] { "Flower", GetItemName(bouquetItem), "RetailPrice" }), CultureInfo.InvariantCulture) * @GetItemAmount(bouquetItem);
+          } 
+          return sum;
 }
 //public decimal totalCost { get; set; } = updateTotalCost();
 
