@@ -26,6 +26,11 @@
     <h1>@selectedFlower</h1>
     <h3>Stem Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"StemPrice"})</h3>
     <h3>Retail Price: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"RetailPrice"})</h3>
+    <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px;" @onclick="changeEdtTxtBoxBool">Edit Retail Price</button>
+    @if(showEdtInput){
+        <input type="number" class="input-field" placeholder="Retail Price" @bind="newRetailPrice"  min="0" step="0.01">
+        <button class="input-field" @onclick="changeRetailBtn">Save</button>
+    }
     <h3>Type: @GrabFromData(ReadTxt(),new string[] {"Flower",selectedFlower,"Type"})</h3>
     DataPoints.Clear();
     foreach (var purchase in @GetFlowerPurchases(ReadTxt(),selectedFlower)){
@@ -67,7 +72,67 @@
 
 @code{
   public string? selectedFlower { get; set; }
+
+  public Boolean showEdtInput = false;
   public string test { get; set; } = "";
+
+  public decimal newRetailPrice { get; set; } = 0.00m;
+
+  public void changeEdtTxtBoxBool(){
+    showEdtInput = true;
+  }
+
+ public void changeRetailBtn(){
+    if(newRetailPrice != 0 ){
+    WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",selectedFlower,"RetailPrice"}, newRetailPrice.ToString()));
+    newRetailPrice = 0;
+    }
+  }
+
+   public string UpdateData(string data,string[] tags, string newValue)//works
+{
+    int position = 0;  // Start from the beginning of the data
+    int startValue = -1;
+    int endValue = -1;
+    foreach (string tag in tags)
+    {
+        int start = data.IndexOf("<" + tag + ">", position);
+        int end = data.IndexOf("</" + tag + ">", position);
+        if (start == -1 || end == -1)
+        {
+            Console.WriteLine(tag + " tag not found");
+            return data;
+        }
+        if (tag == tags[tags.Length - 1])  // On the final tag
+        {
+            startValue = start + tag.Length + 2;
+            endValue = end;
+        }
+        else
+        {
+            position = start + tag.Length + 2;  // Move deeper to next tag section
+        }
+    }
+    if (startValue != -1 && endValue != -1)
+    {
+        // Perform the update on the original data
+        return data.Substring(0, startValue) + newValue + data.Substring(endValue);
+       
+    }
+    return data;
+}
+
+  public void WriteTxt(string content){
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string path = Path.Combine(desktopPath, fileName);
+        
+            
+        File.WriteAllText(path, content);
+           
+        
+      
+    }
 
   public string GrabFromData(string data, string[] tags)//Works
     {
