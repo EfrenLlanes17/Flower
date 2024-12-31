@@ -21,7 +21,7 @@
         {
             <div class="data-row">
                 <select  @bind="row.selectedFlower2">
-                    <option>Select Flower</option>
+                    <option value="">Select Flower</option>
                     @foreach (var option in @GetAllFlowers(ReadTxt()))
                     {
                         <option>@option</option>
@@ -217,6 +217,14 @@ private void OnSelectionChange(ChangeEventArgs e)
         Console.WriteLine($"ItemName: {r.selectedFlower2}  Amount: {r.Amount}");
         } 
         Console.WriteLine("Done");
+
+        LaborCost = 0;
+        MiscCost = 0;
+        BouquetName = "";
+        RetailPrice = 0;
+        Rows.Clear();
+        //TotalCost = 0;
+        Rows.Add(new RowData());
         
     }
 
