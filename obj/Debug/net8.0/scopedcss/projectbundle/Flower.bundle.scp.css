@@ -673,10 +673,16 @@ button:hover[b-vngcrzk45w] {
 }
 
 .error-red[b-vngcrzk45w] {
+  font-weight: bold;
+  size: 45px;
+  padding: 10px;
   color: crimson;
 }
 
 .error-green[b-vngcrzk45w] {
+  font-weight: bold;
+  size: 45px;
+  padding: 10px;
   color: green;
 }
 /* _content/Flower/Components/Pages/PriceCompare.razor.rz.scp.css */
