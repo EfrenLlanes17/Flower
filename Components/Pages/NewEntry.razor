@@ -44,12 +44,16 @@
 <div style="text-align: left;">
     <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px;" @onclick="SaveEntries">Save</button>
 </div>
+
+<h1 style="color: crimson;">@ErrorMessage</h1>
 @using System.Globalization
 
 @code{
 
+  public string ErrorMessage { get; set; } = "";
+
   public DateTime selectedDate { get; set; } = DateTime.Today;
-  public string selectedFlower { get; set; }
+  public string selectedFlower { get; set; } ="";
   public string test { get; set; } = "";
 
   public string GrabFromData(string data, string[] tags)//Works
@@ -62,7 +66,7 @@
             int end = currentData.IndexOf("</" + tag + ">");
 
             if (start == -1 || end == -1)
-                return "Not Found";
+                return "1";
 
             currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
         }
@@ -152,13 +156,25 @@ private void HandleChange(ChangeEventArgs e)
 
     private void SaveEntries()
     {
+        if(!string.IsNullOrEmpty(rows[0].SelectedFlower) && rows[0].Units.HasValue && rows[0].Cost.HasValue){
         foreach(var r in rows){
+        if(!string.IsNullOrEmpty(r.SelectedFlower) && r.Units.HasValue && r.Cost.HasValue){
         WriteTxt(AddNewFlowerPurchase(ReadTxt(), r.SelectedFlower, r.StemCost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
         WriteTxt(AddNewRecentAction(ReadTxt(),"Entry", r.SelectedFlower, r.Units.ToString(), r.Cost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
         WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",r.SelectedFlower, "StemPrice"}, r.StemCost.ToString()));
+        ErrorMessage = "";
+        }
+        else{
+            ErrorMessage = "Missing Infomormation in Entry, Redo Entries";
+        }
         }
         rows.Clear();
         rows.Add(new EntryRow());
+
+        }
+        else{
+            ErrorMessage = "Not All Infomation is filled";
+        }
     }
 
 public string AddNewRecentAction(string data,string type, string name, string amountOrRetail, string costOrAmountofItems, string date)//works
@@ -215,7 +231,7 @@ public string AddNewRecentAction(string data,string type, string name, string am
         public int? Units { get; set; }
         public decimal? Cost { get; set; }
         public decimal StemCost => Units.HasValue && Cost.HasValue ? Cost.Value / Units.Value : 0;
-        public decimal ChangeSinceLastEntry => Units.HasValue && Cost.HasValue? ((StemCost/decimal.Parse(GrabFromData2(ReadTxt2(),new string[] {"Flower",SelectedFlower,"StemPrice"}), CultureInfo.InvariantCulture)-1)) : 0;// Placeholder for actual calculation
+        public decimal ChangeSinceLastEntry => Units.HasValue && Cost.HasValue && !string.IsNullOrEmpty(SelectedFlower)? ((StemCost/decimal.Parse(GrabFromData2(ReadTxt2(),new string[] {"Flower",SelectedFlower,"StemPrice"}), CultureInfo.InvariantCulture)-1)) : 0;// Placeholder for actual calculation
 
         
 
@@ -230,9 +246,9 @@ public static string GrabFromData2(string data, string[] tags)//Works
         {
             int start = currentData.IndexOf("<" + tag + ">");
             int end = currentData.IndexOf("</" + tag + ">");
-
+ 
             if (start == -1 || end == -1)
-                return "Not Found";
+                return "1";
 
             currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
         }

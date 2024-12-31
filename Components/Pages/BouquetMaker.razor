@@ -6,6 +6,8 @@
 
 <h1>Bouquet Maker</h1>
 
+
+
 <div class="container">
     <div class="headers">
         <span>Contents</span>
@@ -63,10 +65,13 @@
         </div>
     </div>
 
+    <h3 style="color: crimson;">@ErrorMessage</h3>
+
     <button @onclick="SaveRecipe">Save To Recipes</button>
 </div>
 
 @code{
+    public string ErrorMessage { get; set; } = "";
 
      public string selectedFlower { get; set; } = "";
   public string test { get; set; } = "";
@@ -189,15 +194,15 @@ private void OnSelectionChange(ChangeEventArgs e)
     public List<RowData> Rows = new() { new RowData() };
 
     // Additional costs
-    private decimal LaborCost { get; set; } = 0.00m;
-    private decimal MiscCost { get; set; } = 0.00m;
+    public decimal LaborCost { get; set; } = 0.00m;
+    public decimal MiscCost { get; set; } = 0.00m;
 
     // Totals
-    private string BouquetName { get; set; } = string.Empty;
-    private decimal RetailPrice { get; set; } = 0.00m;
+    public string BouquetName { get; set; } = string.Empty;
+    public decimal RetailPrice { get; set; } = 0.00m;
 
-    private decimal TotalCost => getSum(LaborCost) + LaborCost + MiscCost;
-    private decimal Profit => RetailPrice - TotalCost;
+    public decimal TotalCost => getSum(LaborCost) + LaborCost + MiscCost;
+    public decimal Profit => RetailPrice - TotalCost;
 
     public decimal getSum(decimal lc){
         decimal unnded = lc;
@@ -313,6 +318,7 @@ public string AddNewRecentAction(string data,string type, string name, string am
     // Save the recipe (placeholder for logic)
     private void SaveRecipe()
     {
+        if(!string.IsNullOrEmpty(Rows[0].selectedFlower2) && !string.IsNullOrEmpty(BouquetName) && RetailPrice != 0){
         // Logic to save the recipe
         var lastItem = Rows.Last(); 
        
@@ -324,10 +330,6 @@ public string AddNewRecentAction(string data,string type, string name, string am
              WriteTxt(AddNewBouquetItem(ReadTxt(), BouquetName,r.selectedFlower2, r.Amount.ToString()));
         }
         WriteTxt(AddNewRecentAction(ReadTxt(),"BouquetEntry", BouquetName, RetailPrice.ToString(), amountOfItems.ToString(), DateTime.Today.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
-
-
-
-
         LaborCost = 0;
         MiscCost = 0;
         BouquetName = "";
@@ -335,6 +337,10 @@ public string AddNewRecentAction(string data,string type, string name, string am
         Rows.Clear();
         //TotalCost = 0;
         Rows.Add(new RowData());
+        }
+        else{
+            ErrorMessage = "Not All Infomation is filled";
+        }
         
     }
 
