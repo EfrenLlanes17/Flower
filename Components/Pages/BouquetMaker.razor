@@ -88,6 +88,18 @@
         
         return currentData;
     }
+
+    public void WriteTxt(string content){
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string path = Path.Combine(desktopPath, fileName);
+        
+            
+        File.WriteAllText(path, content);
+           
+        
+      
+    }
   public string ReadTxt()
     {
          List<string[]> csvData2 = new List<string[]>();
@@ -202,21 +214,119 @@ private void OnSelectionChange(ChangeEventArgs e)
         Rows.Add(new RowData());
     }
 
+
+public string AddNewBouquetItem(string data , string flowerName, string name, string Amount)//works
+{
+    // Build the new purchase entry
+    string newPurchase = $"<Item><Name>{name}</Name><Amount>{Amount}</Amount></Item>";
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return data;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases tag within the flower
+    int purchasesStart = flowerData.IndexOf("<Items>");
+    int purchasesEnd = flowerData.IndexOf("</Items>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("Items section not found for " + flowerName);
+        return data;
+    }
+    // Insert the new purchase before </Purchases>
+    string updatedFlowerData = flowerData.Insert(purchasesEnd, newPurchase);
+    // Update the main data string
+    return data.Substring(0, flowerStart) + updatedFlowerData + data.Substring(flowerEnd + flowerName.Length + 3);
+}
+
+public string AddNewBouquet(string data, string BouquetName, string LaborCost, string MiscCost, string RetailPrice, string itemName,string Amount)//works
+{
+    string newFlower = $"<{BouquetName}>" +
+                       $"<LaborCost>{LaborCost}</LaborCost>" +
+                       $"<MiscCost>{MiscCost}</MiscCost>" +
+                        $"<RetailPrice>{RetailPrice}</RetailPrice>" +
+                       $"<Items>" +
+                           $"<Item>" +
+                               $"<Name>{itemName}</Name>" +
+                               $"<Amount>{Amount}</Amount>" +
+                           $"</Item>" +
+                       $"</Items>" +
+                       $"</{BouquetName}>";
+    // Insert the new flower before the closing </Flower> tag
+    int insertPosition = data.IndexOf("</Bouquets>");
+    if (insertPosition != -1)
+    {
+        return data.Insert(insertPosition, newFlower);
+    }
+    else
+    {
+        Console.WriteLine("Error: <Bouquets> tag not found.");
+    }
+    return data;
+}
+
+public string AddNewRecentAction(string data,string type, string name, string amountOrRetail, string costOrAmountofItems, string date)//works
+{
+    if(type.Equals("Entry")){
+    string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<Amount>{amountOrRetail}</Amount>" +
+                               $"<Cost>{costOrAmountofItems}</Cost>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        return data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+    else{
+        string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<RetailPrice>{amountOrRetail}</RetailPrice>" +
+                               $"<NumberOfItems>{costOrAmountofItems}</NumberOfItems>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        return data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+    return data;
+}
+
     // Save the recipe (placeholder for logic)
     private void SaveRecipe()
     {
         // Logic to save the recipe
+        var lastItem = Rows.Last(); 
+       
+        WriteTxt(AddNewBouquet(ReadTxt(), BouquetName, LaborCost.ToString(), MiscCost.ToString(), RetailPrice.ToString(), lastItem.selectedFlower2,lastItem.Amount.ToString()));
+         // Print the remaining objects 
+         int amountOfItems = 1;
+         foreach (var r in Rows.Take(Rows.Count - 1)) {
+            amountOfItems +=1;
+             WriteTxt(AddNewBouquetItem(ReadTxt(), BouquetName,r.selectedFlower2, r.Amount.ToString()));
+        }
+        WriteTxt(AddNewRecentAction(ReadTxt(),"BouquetEntry", BouquetName, RetailPrice.ToString(), amountOfItems.ToString(), DateTime.Today.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
 
-        Console.WriteLine($"Labor Cost: {LaborCost}");
-        Console.WriteLine($"Misc Cost: {MiscCost}");
-        Console.WriteLine($"Name: {BouquetName}");
-        Console.WriteLine($"Total: {TotalCost}");
-        Console.WriteLine($"Retail: {RetailPrice}");
-        Console.WriteLine($"Profit: {Profit}");
-         foreach(var r in Rows){
-        Console.WriteLine($"ItemName: {r.selectedFlower2}  Amount: {r.Amount}");
-        } 
-        Console.WriteLine("Done");
+
+
 
         LaborCost = 0;
         MiscCost = 0;
