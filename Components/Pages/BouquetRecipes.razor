@@ -51,9 +51,10 @@
             <p><strong>Misc Loss:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"})</p>
             <p><strong>Total Loaded Cost:</strong> $@(updateTotalCost2(BouquetName) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"}), CultureInfo.InvariantCulture))</p>
             <p><strong>Retail Price:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"})</p>
-            <p><strong>Net Profit:</strong> $@updateNetProfit(BouquetName,GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"}), ((updateTotalCost2(BouquetName) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"}), CultureInfo.InvariantCulture).ToString()) ) )</p>
+            <p><strong>Net Profit:</strong> $@updateNetProfit(BouquetName,GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"}), (updateTotalCost2(BouquetName) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"}), CultureInfo.InvariantCulture)).ToString())</p>
             
             
+
         </div>
     </div>
 
@@ -101,7 +102,10 @@ public string updateNetProfit(string BouquetName2, string retail, string total){
     decimal diff = decimal.Parse(retail) - decimal.Parse(total);
     return diff.ToString(CultureInfo.InvariantCulture);
     }
-    catch{
+    catch(Exception e){
+        Console.WriteLine(e.Message);
+        Console.WriteLine($"Retail: {retail}");
+        Console.WriteLine(total);
         return "Error, Please Delete Bouquet and Remake it";
     }
 }
