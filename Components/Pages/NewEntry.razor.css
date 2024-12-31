@@ -11,3 +11,11 @@ button:hover {
   background-color: #c82e7b;
   cursor: pointer;
 }
+
+.error-red {
+  color: crimson;
+}
+
+.error-green {
+  color: green;
+}

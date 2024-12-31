@@ -662,6 +662,14 @@ button:hover[b-vngcrzk45w] {
   background-color: #c82e7b;
   cursor: pointer;
 }
+
+.error-red[b-vngcrzk45w] {
+  color: crimson;
+}
+
+.error-green[b-vngcrzk45w] {
+  color: green;
+}
 /* _content/Flower/Components/Pages/PriceCompare.razor.rz.scp.css */
 *[b-2ps7cp6ykw] {
     color: #eb3a9b;

@@ -60,7 +60,7 @@
     <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px;" @onclick="SaveEntries">Save</button>
 </div>
 
-<h1 style="color: crimson;">@ErrorMessage</h1>
+<h1 class="@errorClass">@ErrorMessage</h1>
 @using System.Globalization
 
 @code{
@@ -80,6 +80,11 @@
   public string selectedFlower { get; set; } ="";
   public string test { get; set; } = "";
 
+  private string errorClass = "error-red"; 
+  private void ChangeColorToGreen() { errorClass = "error-green"; }
+
+  private void ChangeColorToRed() { errorClass = "error-red"; }
+
   public void ShowFlower(){
     showNewFlowerInput = true;
   }
@@ -91,9 +96,11 @@
     newFlowerType = "";
     newFlowerCost = 0;
     newFlowerUnit = 0;
-     ErrorMessage = "";
+    ChangeColorToGreen();
+    ErrorMessage = "Succesfully Added New Flower To Database";
     }
     else{
+         ChangeColorToRed();
          ErrorMessage = "Not All New Flower Infomation is filled";
     }
   }
@@ -229,9 +236,11 @@ private void HandleChange(ChangeEventArgs e)
         WriteTxt(AddNewFlowerPurchase(ReadTxt(), r.SelectedFlower, r.StemCost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
         WriteTxt(AddNewRecentAction(ReadTxt(),"Entry", r.SelectedFlower, r.Units.ToString(), r.Cost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
         WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",r.SelectedFlower, "StemPrice"}, r.StemCost.ToString()));
-        ErrorMessage = "";
+        ChangeColorToGreen();
+        ErrorMessage = "Succesfully Added Entries To Database";
         }
         else{
+            ChangeColorToRed();
             ErrorMessage = "Missing Infomormation in Entry, Redo Entries";
         }
         }
@@ -240,6 +249,7 @@ private void HandleChange(ChangeEventArgs e)
 
         }
         else{
+            ChangeColorToRed();
             ErrorMessage = "Not All Infomation is filled";
         }
     }
