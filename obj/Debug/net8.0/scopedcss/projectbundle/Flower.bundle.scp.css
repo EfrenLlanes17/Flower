@@ -330,6 +330,15 @@ h1[b-iwixz8xuek] {
     text-align: left;
 }
 
+.error-red[b-iwixz8xuek] {
+    color: crimson;
+  }
+  
+  .error-green[b-iwixz8xuek] {
+    color: green;
+  }
+  
+
 /* Data Rows */
 .data-row[b-iwixz8xuek] {
     display: grid; /* Use grid for consistent alignment */

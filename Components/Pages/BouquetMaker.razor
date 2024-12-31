@@ -65,7 +65,7 @@
         </div>
     </div>
 
-    <h3 style="color: crimson;">@ErrorMessage</h3>
+    <h3 class="@errorClass">@ErrorMessage</h3>
 
     <button @onclick="SaveRecipe">Save To Recipes</button>
 </div>
@@ -75,6 +75,11 @@
 
      public string selectedFlower { get; set; } = "";
   public string test { get; set; } = "";
+
+  private string errorClass = "error-red"; 
+  private void ChangeColorToGreen() { errorClass = "error-green"; }
+
+  private void ChangeColorToRed() { errorClass = "error-red"; }
 
   public string GrabFromData(string data, string[] tags)//Works changed to work with total retail
     {
@@ -399,7 +404,7 @@ public string AddNewRecentAction(string data,string type, string name, string am
          foreach (var r in Rows.Take(Rows.Count - 1)) {
             amountOfItems +=1;
              WriteTxt(AddNewBouquetItem(ReadTxt(), BouquetName,r.selectedFlower2, r.Amount.ToString()));
-             ErrorMessage = "";
+             
         }
         WriteTxt(AddNewRecentAction(ReadTxt(),"BouquetEntry", BouquetName, RetailPrice.ToString(), amountOfItems.ToString(), DateTime.Today.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
         LaborCost = 0;
@@ -407,11 +412,13 @@ public string AddNewRecentAction(string data,string type, string name, string am
         BouquetName = "";
         RetailPrice = 0;
         Rows.Clear();
-        ErrorMessage = "";
+        ChangeColorToGreen();
+        ErrorMessage = "Successfully Created Bouquet";
         //TotalCost = 0;
         Rows.Add(new RowData());
         }
         else{
+            ChangeColorToRed();
             ErrorMessage = "Not All Infomation is filled";
         }
         

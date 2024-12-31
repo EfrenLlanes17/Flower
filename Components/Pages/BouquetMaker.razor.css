@@ -40,6 +40,15 @@ h1 {
     text-align: left;
 }
 
+.error-red {
+    color: crimson;
+  }
+  
+  .error-green {
+    color: green;
+  }
+  
+
 /* Data Rows */
 .data-row {
     display: grid; /* Use grid for consistent alignment */
