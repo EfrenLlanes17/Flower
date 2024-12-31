@@ -47,7 +47,7 @@ catch (Exception ex) {
     {
         try{
         WriteTxt(RemoveRecentAction(ReadTxt(),entry.Name, entry.Quantity, entry.Price, entry.Date));
-        //WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",r.SelectedFlower, "StemPrice"}, r.StemCost.ToString())); does not update stemprice after removal
+        // does not update stemprice after removal
         Entries.Remove(entry);
         StateHasChanged(); 
         // Notify Blazor of the state change
@@ -58,6 +58,39 @@ catch (Exception ex) {
     }
 
      public string UpdateData(string data,string[] tags, string newValue)//works
+{
+    int position = 0;  // Start from the beginning of the data
+    int startValue = -1;
+    int endValue = -1;
+    foreach (string tag in tags)
+    {
+        int start = data.IndexOf("<" + tag + ">", position);
+        int end = data.IndexOf("</" + tag + ">", position);
+        if (start == -1 || end == -1)
+        {
+            Console.WriteLine(tag + " tag not found");
+            return data;
+        }
+        if (tag == tags[tags.Length - 1])  // On the final tag
+        {
+            startValue = start + tag.Length + 2;
+            endValue = end;
+        }
+        else
+        {
+            position = start + tag.Length + 2;  // Move deeper to next tag section
+        }
+    }
+    if (startValue != -1 && endValue != -1)
+    {
+        // Perform the update on the original data
+        return data.Substring(0, startValue) + newValue + data.Substring(endValue);
+       
+    }
+    return data;
+}
+
+ public static string UpdateData2(string data,string[] tags, string newValue)//works
 {
     int position = 0;  // Start from the beginning of the data
     int startValue = -1;
@@ -138,11 +171,27 @@ public void AddNewRecentAction(string data,string type, string name, string amou
     }
 }
 
+ public static string GetPrice(string xml)
+{
+    var startTag = "<Price>";
+    var endTag = "</Price>";
+
+    var startIndex = xml.IndexOf(startTag) + startTag.Length;
+    var endIndex = xml.IndexOf(endTag);
+
+    if (startIndex >= 0 && endIndex > startIndex)
+    {
+        return xml.Substring(startIndex, endIndex - startIndex);
+    }
+    
+    return null; // Or handle as needed
+}
 
 public static string RemoveRecentAction(string xml, string name, string amountOrRetail, string costOrAmountofItems, string date) {
      if (xml.Contains("<Entry><Name>" + name)) {
-                 xml = RemoveFlowerPurchase(xml,name, date); 
-                
+                 xml = RemoveFlowerPurchase(UpdateData2(ReadTxt2(),new string[] {"Flower",name, "StemPrice"}, GetPrice(GetFlowerPurchases2(ReadTxt2(),name).ElementAt(GetFlowerPurchases2(ReadTxt2(),name).Count -2))),name, date); 
+                 //WriteTxt2();
+                 
                  } 
                  else if (xml.Contains("<BouquetEntry><Name>" + name)) {
                 xml = RemoveBouquet(xml,name); 
@@ -162,6 +211,46 @@ public static string RemoveRecentAction(string xml, string name, string amountOr
 
            
               }
+
+
+public static List<string> GetFlowerPurchases2(string data,string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Purchases>");
+    int purchasesEnd = flowerData.IndexOf("</Purchases>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No purchases found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 11, purchasesEnd - (purchasesStart + 11));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Purchase>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Purchase>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 11) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 11;
+    }
+    return purchases;
+}
 
 public static string RemoveFlowerPurchase(string data, string flowerName, string date)//works
 {
@@ -356,6 +445,31 @@ public string GrabFromData(string data, string[] tags)//Works
         return "";
     }
 
+     public static string ReadTxt2()
+    {
+         List<string[]> csvData2 = new List<string[]>();
+        //change this as needed
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string filePath = Path.Combine(desktopPath, fileName);
+        //string filePath = "C:\\Users\\efren\\OneDrive\\Desktop\\FlowerProjectData.txt";
+        //change this
+
+        using (StreamReader reader = new StreamReader(filePath)){
+                string line;
+                while ((line = reader.ReadLine()) != null){
+                    string[] fields = line.Split(',');
+                    csvData2.Add(fields);
+                }
+            }
+
+        foreach (var row in csvData2)
+        {
+            return string.Join(",", row) + "\n";
+        }
+        return "";
+    }
+
 
 public string[] getRecentActionsIntegrate(){
         string[] returnThis = new string[] {};
@@ -369,6 +483,20 @@ public string[] getRecentActionsIntegrate(){
     }
 
  public void WriteTxt(string content){
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string path = Path.Combine(desktopPath, fileName);
+        
+       
+        
+            
+        File.WriteAllText(path, content);
+           
+        
+      
+    }
+
+    public static void WriteTxt2(string content){
         string fileName = "FlowerProjectData.txt"; 
         string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
         string path = Path.Combine(desktopPath, fileName);
