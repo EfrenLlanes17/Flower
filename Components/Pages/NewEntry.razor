@@ -18,7 +18,7 @@
     <input type="text" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field" placeholder="Add New Flower Name" @bind="newFlowerName"> 
     <input type="text" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field" placeholder="Type" @bind="newFlowerType"> 
     <input type="number" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field" placeholder="Units" @bind="newFlowerUnit" min="0"> 
-    <input type="number" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field" placeholder="Cost" @bind="newFlowerCost" min="0" step="0.01">
+    <input type="number" placeholder="Cost" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field"  @bind="newFlowerCost" min="0">
     <button class="input-field" style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; font-weight: bold;" @onclick="AddNewFlowerBtn">
         Save
     </button>
@@ -81,9 +81,9 @@
     private bool showColumnTitles = false;  // Controls visibility of the column titles
   public Boolean showNewFlowerInput = false;
 
-  private decimal _newFlowerCost;
+  private decimal? _newFlowerCost;
 
-public decimal newFlowerCost
+public decimal? newFlowerCost
 {
     get => _newFlowerCost;
     set
@@ -99,9 +99,9 @@ public decimal newFlowerCost
     }
 }
 
-  private decimal _newFlowerUnit;
+  private decimal? _newFlowerUnit;
 
-public decimal newFlowerUnit
+public decimal? newFlowerUnit
 {
     get => _newFlowerUnit;
     set
@@ -112,10 +112,13 @@ public decimal newFlowerUnit
         }
         else
         {
-            _newFlowerUnit = 0.00m;
+            _newFlowerUnit = 0;
         }
     }
 }
+
+
+ 
 
 
   public string newFlowerName { get; set; } = "";
