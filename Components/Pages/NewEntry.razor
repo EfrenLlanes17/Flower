@@ -43,6 +43,7 @@
     <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Stem Cost</h5>
     <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Change Since Last Entry</h5>
 </div>
+@using System.Linq;
 
 <div>
     @foreach (var row in rows)
@@ -50,7 +51,7 @@
         <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 10px;">
             <select style="width: 90%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="row.SelectedFlower">
                 <option value="">Select a flower</option>
-                @foreach (var flower in getFlowerOptions())
+                @foreach (var flower in getFlowerOptions().OrderBy(flower => flower))
                 {
                     <option value="@flower">@flower</option>
                 }

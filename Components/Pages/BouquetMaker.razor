@@ -6,7 +6,7 @@
 
 <h1>Bouquet Maker</h1>
 
-
+@using System.Linq;
 
 <div class="container">
     <div class="headers">
@@ -24,7 +24,7 @@
             <div class="data-row">
                 <select  @bind="row.selectedFlower2">
                     <option value="">Select Flower</option>
-                    @foreach (var option in @GetAllFlowers(ReadTxt()))
+                    @foreach (var option in @GetAllFlowers(ReadTxt()).OrderBy(option => option))
                     {
                         <option>@option</option>
                     }

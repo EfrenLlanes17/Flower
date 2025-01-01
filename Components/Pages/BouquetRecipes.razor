@@ -5,6 +5,8 @@
 @using System
 
 <h1>Bouquet Recipes</h1>
+@using System.Linq;
+
 
 <div class="container">
     <!-- Dropdown -->
@@ -12,7 +14,7 @@
         <label for="recipe-select">Select the bouquet you would like to view</label>
         <select id="recipe-select" @bind="BouquetName">
            <option>Select Bouquet</option>
-                    @foreach (var option in @GetAllBouquets(ReadTxt()))
+                    @foreach (var option in @GetAllBouquets(ReadTxt()).OrderBy(option => option))
                     {
                         <option>@option</option>
                     }
