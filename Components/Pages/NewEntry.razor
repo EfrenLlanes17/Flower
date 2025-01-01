@@ -23,6 +23,23 @@
         Save
     </button>
 }
+<button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; font-weight: bold;" @onclick="deleteFlower">Delete Flower From Database</button>
+
+
+@if (showDeleteFlowerInput)
+{
+     <select style="width: 90%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="selDeleteFlower">
+                <option value="">Select a Flower To Delete</option>
+                @foreach (var flower in getFlowerOptions().OrderBy(flower => flower))
+                {
+                    <option value="@flower">@flower</option>
+                }
+            </select>
+    <button class="input-field" style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; font-weight: bold;" @onclick="deleteFlowerBtn">
+        Delete
+    </button>
+}
+
 
 @if (showColumnTitles)
 {
@@ -81,6 +98,7 @@
 @code{
     private bool showColumnTitles = false;  // Controls visibility of the column titles
   public Boolean showNewFlowerInput = false;
+  public Boolean showDeleteFlowerInput = false;
 
   private decimal? _newFlowerCost;
 
@@ -124,6 +142,8 @@ public decimal? newFlowerUnit
 
   public string newFlowerName { get; set; } = "";
 
+   public string selDeleteFlower { get; set; } = "";
+
    public string newFlowerType { get; set; } = "";
 
   public string ErrorMessage { get; set; } = "";
@@ -140,11 +160,40 @@ public decimal? newFlowerUnit
   public void ShowFlower(){
     showNewFlowerInput = true;
     showColumnTitles = false;
+    showDeleteFlowerInput = false;
   }
+
+  public void deleteFlower(){
+    showNewFlowerInput = false;
+    showDeleteFlowerInput = true;
+    showColumnTitles = false;
+  }
+
+public string RemoveFlower(string data, string flowerName)//works
+{
+    // Find the start and end tag for the specified flower
+    string startTag = $"<{flowerName}>";
+    string endTag = $"</{flowerName}>";
+    int startIndex = data.IndexOf(startTag);
+    int endIndex = data.IndexOf(endTag, startIndex);
+    if (startIndex != -1 && endIndex != -1)
+    {
+        // Calculate the position where the flower data ends (after the closing tag)
+        endIndex += endTag.Length; 
+        // Remove the flower from the data string
+        return data.Remove(startIndex, endIndex - startIndex);
+    }
+    else
+    {
+        return data;
+    }
+}
+
 
   public void AddNewFlowerBtn(){
     if(newFlowerCost != 0 && newFlowerCost != 0 && !string.IsNullOrEmpty(newFlowerName) && !string.IsNullOrEmpty(newFlowerType)){
     WriteTxt(AddNewFlower(ReadTxt(), newFlowerName, newFlowerType, (newFlowerCost/newFlowerUnit).ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+    Console.WriteLine(newFlowerName);
     newFlowerName = "";
     newFlowerType = "";
     newFlowerCost = 0;
@@ -152,11 +201,29 @@ public decimal? newFlowerUnit
     ChangeColorToGreen();
     ErrorMessage = "Successfully Added New Flower To Database";
     showNewFlowerInput = false; // Hide the input form
+    showDeleteFlowerInput = false;
     //showColumnTitles = true;   // Show the column titles
     }
     else{
          ChangeColorToRed();
          ErrorMessage = "Not All New Flower Infomation is filled";
+    }
+  }
+
+  public void deleteFlowerBtn(){
+    if(!string.IsNullOrEmpty(selDeleteFlower)){
+    @* WriteTxt(); *@
+    WriteTxt(RemoveFlower(ReadTxt(),selDeleteFlower));
+    selDeleteFlower = "";
+    ChangeColorToGreen();
+    ErrorMessage = "Successfully Removed Flower From Database";
+    showNewFlowerInput = false; // Hide the input form
+    showDeleteFlowerInput = false;
+    //showColumnTitles = true;   // Show the column titles
+    }
+    else{
+         ChangeColorToRed();
+         ErrorMessage = "Not All Delete Flower Infomation is filled";
     }
   }
 
@@ -501,6 +568,8 @@ public string AddNewFlowerPurchase(string data, string flowerName, string price,
         
       
     }
+
+    
 
   public string UpdateData(string data,string[] tags, string newValue)//works
 {
