@@ -92,7 +92,7 @@ public static string updateTotalCost(string BouquetName2){
 public static decimal updateTotalCost2(string BouquetName2){
     decimal sum = 0; 
     foreach (var bouquetItem in GetBouquetItems2(ReadTxt2(), BouquetName2)) {
-         sum += decimal.Parse(GrabFromData2(ReadTxt2(), new string[] { "Flower", GetItemName(bouquetItem), "RetailPrice" }), CultureInfo.InvariantCulture) * @GetItemAmount(bouquetItem);
+         sum += decimal.Parse(GrabFromData2(ReadTxt2(), new string[] { "Flower", GetItemName(bouquetItem), "StemPrice" }), CultureInfo.InvariantCulture) * @GetItemAmount(bouquetItem);
           } 
           return sum;
 }
