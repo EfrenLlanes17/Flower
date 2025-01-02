@@ -68,6 +68,7 @@
     <h4 style="margin-left:35px; margin-top:10px;"><u>All Entries of @selectedFlower</u></h4>
     var reversedPurchases =  GetFlowerPurchases(ReadTxt(),selectedFlower);
     reversedPurchases.Reverse();
+    Console.WriteLine(DataPoints[0].X);
     foreach (var purchase in reversedPurchases){
         <h3>Price: @GetPrice(purchase) Date: @GetDate(purchase)</h3>
     }
@@ -401,6 +402,8 @@ public string GetDate(string xml)
 
     private string GenerateSvgContent()
     {
+        DataPoints = DataPoints.OrderByDescending(point => point.X).ToList();
+        
         var svgContent = new StringBuilder();
         var minDate = DataPoints.Min(p => p.X);
         var maxDate = DataPoints.Max(p => p.X);
