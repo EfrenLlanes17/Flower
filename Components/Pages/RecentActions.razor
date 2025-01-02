@@ -7,10 +7,11 @@
 
 
 @try{
+
 @foreach (var flower in @getRecentActionsIntegrate())
         {
             
-            Entries.Add(new Entry { Name = RecentActionFirstItem(flower), Quantity = RecentActionSecondItem(flower), Price = RecentActionThirdItem(flower), Date = RecentActionDateItem(flower) });
+            Entries.Insert(0,new Entry { Name = RecentActionFirstItem(flower), Quantity = RecentActionSecondItem(flower), Price = RecentActionThirdItem(flower), Date = RecentActionDateItem(flower) });
         }
 }
 catch (Exception ex) {
@@ -475,6 +476,7 @@ public string[] getRecentActionsIntegrate(){
         string[] returnThis = new string[] {};
         try{
          returnThis = GetRecentActions(ReadTxt()).ToArray();
+         
         }
         catch{
             returnThis = new string[] {"Option1", "Option2","option3"};
