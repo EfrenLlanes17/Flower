@@ -378,8 +378,7 @@ h1[b-iwixz8xuek] {
 }
 
 .additional-costs input[b-iwixz8xuek] {
-    flex: 0.8;
-    width: 150px;
+    width: 20%;
     padding: 5px;
     margin-left: 10px;
     border: 1px solid #8B008B;
@@ -403,8 +402,7 @@ h1[b-iwixz8xuek] {
 }
 
 .totals input[b-iwixz8xuek] {
-    flex: 0.8;
-    width: 150px;
+    width: 20%;
     padding: 5px;
     margin-left: 10px;
     border: 1px solid #8B008B;

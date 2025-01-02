@@ -42,23 +42,23 @@
     <h2>Additional Costs</h2>
     <div class="additional-costs">
         <label>
-            Labor Costs: $<input type="number" min="0" placeholder="0.00" step="0.01" @bind="LaborCost">
+            Labor Costs: $<input style="margin-left: 40px;"type="number" min="0" placeholder="0.00" step="0.01" @bind="LaborCost">
         </label>
         <label>
-            Misc Costs: $<input type="number" min="0" placeholder="0.00" step="0.01" @bind="MiscCost">
+            Misc Costs: $<input style="margin-left: 48px;"type="number" min="0" placeholder="0.00" step="0.01" @bind="MiscCost">
         </label>
     </div>
 
     <h2>Totals</h2>
     <div class="totals">
         <label>
-            Bouquet Name: <input type="text" placeholder="Name" @bind="BouquetName">
+            Bouquet Name: <input style="margin-left: 25px;" type="text" placeholder="Name" @bind="BouquetName">
         </label>
         <div>
             <span>Total Cost: </span>$<span id="totalCostText"> @(getSum(LaborCost)+ LaborCost + MiscCost)</span>
         </div>
         <label>
-            Sales Price: $<input type="number" placeholder="0.00" min="0" step="0.01" @bind="RetailPrice">
+            Sales Price: $<input style="margin-left: 48px;"type="number" placeholder="0.00" min="0" step="0.01" @bind="RetailPrice">
         </label>
         <div>
             <span>Profit: </span>$<span id="profitText">@Profit</span>
