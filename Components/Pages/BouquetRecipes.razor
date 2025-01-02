@@ -148,7 +148,7 @@ public List<string> GetBouquetItems(string data,string flowerName)//works
     int flowerEnd = data.IndexOf("</" + flowerName + ">");
     if (flowerStart == -1 || flowerEnd == -1)
     {
-        Console.WriteLine(flowerName + " not found");
+       
         return purchases;
     }
     // Extract the flower's content
@@ -187,7 +187,7 @@ public static List<string> GetBouquetItems2(string data,string flowerName)//work
     int flowerEnd = data.IndexOf("</" + flowerName + ">");
     if (flowerStart == -1 || flowerEnd == -1)
     {
-        Console.WriteLine(flowerName + " not found");
+       
         return purchases;
     }
     // Extract the flower's content

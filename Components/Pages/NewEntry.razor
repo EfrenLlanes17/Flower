@@ -195,7 +195,6 @@ public string RemoveFlower(string data, string flowerName)//works
     //Does not work if "Flower" is in newFlowerName
     if(newFlowerCost != 0 && newFlowerCost != 0 && !string.IsNullOrEmpty(newFlowerName) && !string.IsNullOrEmpty(newFlowerType)){
     WriteTxt(AddNewFlower(ReadTxt(), newFlowerName, newFlowerType, (newFlowerCost/newFlowerUnit).ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
-    Console.WriteLine(newFlowerName);
     newFlowerName = "";
     newFlowerType = "";
     newFlowerCost = 0;
