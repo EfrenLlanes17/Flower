@@ -52,7 +52,7 @@
             <p><strong>Labor Cost:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"})</p>
             <p><strong>Misc Loss:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"})</p>
             <p><strong>Total Loaded Cost:</strong> $@(updateTotalCost2(BouquetName) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"}), CultureInfo.InvariantCulture))</p>
-            <p><strong>Retail Price:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"})</p>
+            <p><strong>Sales Price:</strong> $@GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"})</p>
             <p><strong>Net Profit:</strong> $@updateNetProfit(BouquetName,GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"RetailPrice"}), (updateTotalCost2(BouquetName) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",BouquetName,"LaborCost"}), CultureInfo.InvariantCulture)).ToString())</p>
             
             
