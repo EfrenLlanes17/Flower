@@ -11,7 +11,7 @@
 
 <input type="date" @bind="selectedDate" style="width: 20%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;">
 
-<button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; font-weight: bold;" @onclick="ShowFlower">Add New Flower To Database</button>
+<button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 13px; margin:10px; font-weight: bold;" @onclick="ShowFlower">Add New Flower To Database</button>
 
 @if (showNewFlowerInput)
 {
@@ -23,12 +23,12 @@
         Save
     </button>
 }
-<button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; font-weight: bold;" @onclick="deleteFlower">Delete Flower From Database</button>
+<button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 13px; margin:10px; font-weight: bold;" @onclick="deleteFlower">Delete Flower From Database</button>
 
 
 @if (showDeleteFlowerInput)
 {
-     <select style="width: 90%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="selDeleteFlower">
+     <select style="width: 20%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="selDeleteFlower">
                 <option value="">Select a Flower To Delete</option>
                 @foreach (var flower in getFlowerOptions().OrderBy(flower => flower))
                 {
