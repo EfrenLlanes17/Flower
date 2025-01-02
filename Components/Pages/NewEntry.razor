@@ -351,6 +351,59 @@ private void HandleChange(ChangeEventArgs e)
         rows.Add(new EntryRow());
     }
 
+    public List<string> GetFlowerPurchases(string data, string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Purchases>");
+    int purchasesEnd = flowerData.IndexOf("</Purchases>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No purchases found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 11, purchasesEnd - (purchasesStart + 11));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Purchase>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Purchase>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 11) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 11;
+    }
+    return purchases;
+}
+
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Linq
+public static string GetMostRecentPrice(List<string> purchases) {
+     var mostRecentPurchase = purchases
+      .Select(purchase => new
+       {
+         Price = XElement.Parse(purchase).Element("Price").Value, 
+         Date = DateTime.Parse(XElement.Parse(purchase).Element("Date").Value) 
+         })
+          .OrderByDescending(p => p.Date)
+           .FirstOrDefault();
+            return mostRecentPurchase?.Price ?? string.Empty;
+}
     private void SaveEntries()
     {
         if(!string.IsNullOrEmpty(rows[0].SelectedFlower) && rows[0].Units.HasValue && rows[0].Cost.HasValue){
@@ -358,7 +411,8 @@ private void HandleChange(ChangeEventArgs e)
         if(!string.IsNullOrEmpty(r.SelectedFlower) && r.Units.HasValue && r.Cost.HasValue){
         WriteTxt(AddNewFlowerPurchase(ReadTxt(), r.SelectedFlower, r.StemCost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
         WriteTxt(AddNewRecentAction(ReadTxt(),"Entry", r.SelectedFlower, r.Units.ToString(), r.Cost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
-        WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",r.SelectedFlower, "StemPrice"}, r.StemCost.ToString()));
+
+        WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",r.SelectedFlower, "StemPrice"}, GetMostRecentPrice(GetFlowerPurchases(ReadTxt(),r.SelectedFlower))));
         ChangeColorToGreen();
         ErrorMessage = "Successfully Added Entries To Database";
         }
