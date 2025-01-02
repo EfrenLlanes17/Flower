@@ -316,7 +316,7 @@ public string RemoveFlower(string data, string flowerName)//works
 
             string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
             
-            if (!tag.Contains("/") && !tag.Contains("Price") && !tag.Contains("Amount") && !tag.Contains("Purchases") && !tag.Contains("Purchase") && !tag.Contains("Date")&& !tag.Contains("Type") && !tag.Contains("Flower"))
+            if (!tag.Contains("/") && !tag.Contains("Price") && !tag.Contains("Amount") && !tag.Contains("Purchases") && !tag.Contains("Purchase") && !tag.Contains("Date")&& !tag.Contains("Type") && !tag.Contains("<Flower>")&& !tag.Contains("</Flower>"))
             {
                 flowerNames.Add(tag);
             }

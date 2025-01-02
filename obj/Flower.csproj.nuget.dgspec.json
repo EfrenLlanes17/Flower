@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\3picP\\OneDrive\\Projects\\flower-project\\Flower\\Flower.csproj": {}
+    "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-5\\Flower.csproj": {}
   },
   "projects": {
-    "C:\\Users\\3picP\\OneDrive\\Projects\\flower-project\\Flower\\Flower.csproj": {
+    "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-5\\Flower.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\3picP\\OneDrive\\Projects\\flower-project\\Flower\\Flower.csproj",
+        "projectUniqueName": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-5\\Flower.csproj",
         "projectName": "Flower",
-        "projectPath": "C:\\Users\\3picP\\OneDrive\\Projects\\flower-project\\Flower\\Flower.csproj",
-        "packagesPath": "C:\\Users\\3picP\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\3picP\\OneDrive\\Projects\\flower-project\\Flower\\obj\\",
+        "projectPath": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-5\\Flower.csproj",
+        "packagesPath": "C:\\Users\\efren\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\efren\\OneDrive\\Desktop\\Code Projects\\Flower\\Flower-5\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\3picP\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\efren\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -61,7 +63,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.402/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
