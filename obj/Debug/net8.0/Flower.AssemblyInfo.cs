@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Flower")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cd1eb5c949f3e8ebc405af20d02d99163e203f20")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b1429559b4a7bff8b772b612824617563bc225d")]
 [assembly: System.Reflection.AssemblyProductAttribute("Flower")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Flower")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
