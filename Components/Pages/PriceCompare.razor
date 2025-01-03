@@ -435,7 +435,7 @@ public string GetDate(string xml)
         {
             var dateLabel = minDate.AddDays((dateRange / 10) * i).ToString("MM/dd/yy");
             svgContent.Append($"<text x=\"{50 + (i * 50)}\" y=\"370\" font-size=\"11.5\" text-anchor=\"middle\">{dateLabel}</text>");
-            svgContent.Append($"<text x=\"40\" y=\"{350 - (i * 30)}\" font-size=\"20\" text-anchor=\"end\">{(minY + i * yRange / 10):0.00}</text>");
+            svgContent.Append($"<text x=\"40\" y=\"{350 - (i * 30)}\" font-size=\"16\" text-anchor=\"end\">{(minY + i * yRange / 10):0.00}</text>");
         }
 
         // Data lines and points
