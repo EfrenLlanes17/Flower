@@ -257,13 +257,51 @@ bool IsItemInBouquet(string xml, string itemName)
 }
 
 
+ public string RemoveEntriesByName(string xml, string name)
+    {
+        int startIndex = 0;
+        string openingTag = "<Entry>";
+        string closingTag = "</Entry>";
+        string resultXml = xml;
 
+        while ((startIndex = resultXml.IndexOf(openingTag, startIndex)) != -1)
+        {
+            int endIndex = resultXml.IndexOf(closingTag, startIndex);
+            if (endIndex == -1) break;
+
+            string entry = resultXml.Substring(startIndex, endIndex - startIndex + closingTag.Length);
+            int nameStartIndex = entry.IndexOf("<Name>") + "<Name>".Length;
+            int nameEndIndex = entry.IndexOf("</Name>");
+            
+            if (nameStartIndex != -1 && nameEndIndex != -1)
+            {
+                string entryName = entry.Substring(nameStartIndex, nameEndIndex - nameStartIndex);
+                if (entryName == name)
+                {
+                    // Remove the entry if name matches
+                    resultXml = resultXml.Remove(startIndex, endIndex - startIndex + closingTag.Length);
+                    startIndex = 0; // Restart search to avoid skipping entries
+                }
+                else
+                {
+                    startIndex = endIndex + closingTag.Length;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return resultXml;
+    }
 
 
   public void deleteFlowerBtn(){
     if(!string.IsNullOrEmpty(selDeleteFlower)){
         if(!IsItemInBouquet(ReadTxt(),selDeleteFlower)){
     WriteTxt(RemoveFlower(ReadTxt(),selDeleteFlower));
+    WriteTxt(RemoveEntriesByName(ReadTxt(),selDeleteFlower));
     selDeleteFlower = "";
     ChangeColorToGreen();
     ErrorMessage = "Successfully Removed Flower From Database";
