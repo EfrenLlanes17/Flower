@@ -316,26 +316,39 @@ public static string RemoveBouquet(string data, string flowerName)//works
     }
 }
 
-public List<string> GetRecentActions(string xml)//works
+public List<string> GetRecentActions(string xml)
 {
     Entries.Clear();
-    List<string> entries = new List<string>(); 
-        int startIndex = 0; 
-        while ((startIndex = xml.IndexOf("<Entry>", startIndex)) != -1) { 
-            int endIndex = xml.IndexOf("</Entry>", startIndex) + "</Entry>".Length;
-             if (endIndex == -1) break; 
-            string entry = xml.Substring(startIndex, endIndex - startIndex);
-             entries.Add(entry); startIndex = endIndex; 
-             } 
-             startIndex = 0;
-              while ((startIndex = xml.IndexOf("<BouquetEntry>", startIndex)) != -1) { 
-                int endIndex = xml.IndexOf("</BouquetEntry>", startIndex) + "</BouquetEntry>".Length;
-                 if (endIndex == -1) break; 
-                 string entry = xml.Substring(startIndex, endIndex - startIndex); 
-                 entries.Add(entry); startIndex = endIndex; 
-                 } 
-                 return entries;
+    List<string> entries = new List<string>();
+
+    int entryIndex = xml.IndexOf("<Entry>");
+    int bouquetIndex = xml.IndexOf("<BouquetEntry>");
+
+    while (entryIndex != -1 || bouquetIndex != -1)
+    {
+        // If <Entry> appears first or there are no more <BouquetEntry> tags
+        if (entryIndex != -1 && (entryIndex < bouquetIndex || bouquetIndex == -1))
+        {
+            int endIndex = xml.IndexOf("</Entry>", entryIndex) + "</Entry>".Length;
+            if (endIndex == -1) break;
+            string entry = xml.Substring(entryIndex, endIndex - entryIndex);
+            entries.Add(entry);
+            entryIndex = xml.IndexOf("<Entry>", endIndex);
+        }
+        // If <BouquetEntry> appears first or there are no more <Entry> tags
+        else if (bouquetIndex != -1)
+        {
+            int endIndex = xml.IndexOf("</BouquetEntry>", bouquetIndex) + "</BouquetEntry>".Length;
+            if (endIndex == -1) break;
+            string entry = xml.Substring(bouquetIndex, endIndex - bouquetIndex);
+            entries.Add(entry);
+            bouquetIndex = xml.IndexOf("<BouquetEntry>", endIndex);
+        }
+    }
+
+    return entries;
 }
+
 
 
 public string RecentActionFirstItem(string entry) {
