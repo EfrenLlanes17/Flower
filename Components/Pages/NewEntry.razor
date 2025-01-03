@@ -232,9 +232,37 @@ else{
     }
   }
 
+
+
+bool IsItemInBouquet(string xml, string itemName)
+{
+    // Locate the start of the Bouquets section
+    int bouquetsStart = xml.IndexOf("<Bouquets>");
+    int bouquetsEnd = xml.IndexOf("</Bouquets>");
+
+    if (bouquetsStart == -1 || bouquetsEnd == -1)
+    {
+        return false;
+    }
+
+    // Extract the Bouquets section
+    string bouquetsSection = xml.Substring(bouquetsStart, (bouquetsEnd - bouquetsStart) + "</Bouquets>".Length);
+
+    if(bouquetsSection.Contains($"<Name>{itemName}</Name>")){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+
+
+
   public void deleteFlowerBtn(){
     if(!string.IsNullOrEmpty(selDeleteFlower)){
-    @* WriteTxt(); *@
+        if(!IsItemInBouquet(ReadTxt(),selDeleteFlower)){
     WriteTxt(RemoveFlower(ReadTxt(),selDeleteFlower));
     selDeleteFlower = "";
     ChangeColorToGreen();
@@ -244,9 +272,15 @@ else{
     //showColumnTitles = true;   // Show the column titles
     }
     else{
+        ChangeColorToRed();
+         ErrorMessage = "Cannot Remove Because Item is in a Saved Bouquet";
+    }
+    }
+    else{
          ChangeColorToRed();
          ErrorMessage = "Not All Delete Flower Infomation is filled";
     }
+    
   }
 
   public string GrabFromData(string data, string[] tags)//Works
