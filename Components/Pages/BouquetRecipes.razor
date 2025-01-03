@@ -131,7 +131,7 @@ public static string BouquetName { get; set; }
             if (endIndex == -1) break;
             string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
             
-            if (!tag.Contains("/") && !tag.Contains("LaborCost") && !tag.Contains("Bouquets") && !tag.Contains("Amount") && !tag.Contains("MiscCost") && !tag.Contains("RetailPrice") && !tag.Contains("Item")&& !tag.Contains("Items") && !tag.Contains("Name"))
+            if (!tag.Contains("/") && tag != "LaborCost" && tag != "Bouquets" && tag != "Bouquet" && tag != "Amount" && tag != "MiscCost" && tag != "RetailPrice" && tag != "Item" && tag != "Items" &&  tag != "Name")
             {
                 flowerNames.Add(tag);
             }
