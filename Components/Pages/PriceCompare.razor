@@ -7,9 +7,9 @@
 
 <h3>Select a Flower or Item</h3>
 
-<!-- Flower Selection Form -->
+<!-- Flower Selection Dropdown -->
 <form style="display: flex; align-items: center; gap: 10px;">
-  <select style="width: 20%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="selectedFlower" >
+  <select style="width: 20%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="selectedFlower">
     <option value="">Select a Flower</option>
     @foreach (var flower in @getFlowerOptions().OrderBy(flower => flower))
     {
@@ -22,7 +22,6 @@
 {
     try
     {
-        <!-- Populate Data Points for Graph -->
         DataPoints.Clear();
         @foreach (var purchase in @GetFlowerPurchases(ReadTxt(), selectedFlower))
         {
@@ -36,12 +35,43 @@
             }
         }
 
-        <div style="display: flex; align-items: baseline; margin-top: 20px; gap: 40px;">
-            <!-- Graph Section -->
-            <div style="flex: 1; min-width: 60%; margin-top: 30px;">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-top: 30px; gap: 20px;">
+            <!-- Left Section: Flower Info -->
+            <div style="flex: 1;">
+                <h1>@selectedFlower</h1>
+                <h3>Stem Price: @GrabFromData(ReadTxt(), new string[] {"Flower", selectedFlower, "StemPrice"})</h3>
+                <h3>Retail Price: @GrabFromData(ReadTxt(), new string[] {"Flower", selectedFlower, "RetailPrice"})</h3>
+
+                <button style="background-color: #eb3a9b; color: white; padding: 10px ; margin-left: 36px; border: none; border-radius: 5px; font-size: 16px; margin-top: 5px; font-weight: bold;" 
+                        @onclick="changeEdtTxtBoxBool">
+                    Edit Retail Price
+                </button>
+
+                @if (showEdtInput)
+                {
+                    <input type="number" style="width: 50%; padding: 5px; margin-top: 10px; border: 1px solid #eb3a9b; border-radius: 5px;" 
+                        class="input-field" placeholder="Retail Price" @bind="newRetailPrice" min="0" step="0.01">
+                    
+                    @if (newRetailPrice < 0)
+                    {
+                        newRetailPrice = 0;
+                    }
+
+                    <button class="input-field" 
+                            style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin-top: 10px; font-weight: bold;" 
+                            @onclick="changeRetailBtn">
+                        Save
+                    </button>
+                }
+
+                <h3>Type: @GrabFromData(ReadTxt(), new string[] {"Flower", selectedFlower, "Type"})</h3>
+            </div>
+
+            <!-- Center Section: Graph -->
+            <div style="flex: 2; text-align: center;">
                 @if (DataPoints.Count > 1)
                 {
-                    <h4 style="margin-left:35px; margin-top:30px; margin-bottom: -10px; font-weight: bold;">Stem Price Change Over Time</h4>
+                    <h4 style="margin-bottom: 10px; font-weight: bold;">Stem Price Change Over Time</h4>
                     <div class="svg-container">
                         @((MarkupString)GenerateSvgContent())
                     </div>
@@ -52,40 +82,12 @@
                 }
             </div>
 
-            <!-- Plant Information and Purchase List Section -->
-            <div style="flex: 1; min-width: 35%;">
-                <h1>@selectedFlower</h1>
-                <h3>Stem Price: @GrabFromData(ReadTxt(), new string[] {"Flower", selectedFlower, "StemPrice"})</h3>
-                <h3>Retail Price: @GrabFromData(ReadTxt(), new string[] {"Flower", selectedFlower, "RetailPrice"})</h3>
-                
-                <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin: 10px; font-weight: bold;" 
-                        @onclick="changeEdtTxtBoxBool">
-                    Edit Retail Price
-                </button>
-
-                @if (showEdtInput)
-                {
-                    <input type="number" style="width: 30%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" 
-                        class="input-field" placeholder="Retail Price" @bind="newRetailPrice" min="0" step="0.01">
-
-                    @if (newRetailPrice < 0)
-                    {
-                        newRetailPrice = 0;
-                    }
-
-                    <button class="input-field" 
-                            style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; font-weight: bold;" 
-                            @onclick="changeRetailBtn">
-                        Save
-                    </button>
-                }
-
-                <h3>Type: @GrabFromData(ReadTxt(), new string[] {"Flower", selectedFlower, "Type"})</h3>
-
-                <h4 style="margin-top: 30px;"><u>All Entries of @selectedFlower</u></h4>
+            <!-- Right Section: Purchase List -->
+            <div style="flex: 1;">
+                <h4 style=" font-size: 20px;"><u>All Entries of @selectedFlower</u></h4>
                 @foreach (var purchase in DataPoints)
                 {
-                    <h3>Price: @purchase.Y.ToString() Date: @purchase.X.ToShortDateString()</h3>
+                    <h3 style=" font-size: 15px;">Price: @purchase.Y.ToString() Date: @purchase.X.ToShortDateString()</h3>
                 }
             </div>
         </div>
@@ -95,7 +97,6 @@
         <h1>Database not found</h1>
     }
 }
-
 
 
 <!-- Graph goes here >-->
