@@ -392,10 +392,21 @@ public string AddNewRecentAction(string data,string type, string name, string am
 }
 
     // Save the recipe (placeholder for logic)
+
+public Boolean isInDatabase(string database, string checkingForThis){
+if(database.Contains(checkingForThis)){
+    return true;
+}
+else{
+    return false;
+}
+}
+
     private void SaveRecipe()
     {
         if(!string.IsNullOrEmpty(Rows[0].selectedFlower2) && !string.IsNullOrEmpty(BouquetName) && RetailPrice != 0){
         // Logic to save the recipe
+        if(!isInDatabase(ReadTxt(),BouquetName)){
         var lastItem = Rows.Last(); 
        
         WriteTxt(AddNewBouquet(ReadTxt(), BouquetName, LaborCost.ToString(), MiscCost.ToString(), RetailPrice.ToString(), lastItem.selectedFlower2,lastItem.Amount.ToString()));
@@ -416,6 +427,11 @@ public string AddNewRecentAction(string data,string type, string name, string am
         ErrorMessage = "Successfully Created Bouquet";
         //TotalCost = 0;
         Rows.Add(new RowData());
+        }
+        else{
+            ChangeColorToRed();
+            ErrorMessage = "Invalid Name for Bouquet";
+        }
         }
         else{
             ChangeColorToRed();
