@@ -189,11 +189,22 @@ public string RemoveFlower(string data, string flowerName)//works
     }
 }
 
+public Boolean isInDatabase(string database, string checkingForThis){
+if(database.Contains(checkingForThis)){
+    return true;
+}
+else{
+    return false;
+}
+}
+
 
   public void AddNewFlowerBtn(){
 
-    //Does not work if "Flower" is in newFlowerName
-    if(newFlowerCost != 0 && newFlowerCost != 0 && !string.IsNullOrEmpty(newFlowerName) && !string.IsNullOrEmpty(newFlowerType)){
+    
+    if(newFlowerCost != 0 && !string.IsNullOrEmpty(newFlowerName) && !string.IsNullOrEmpty(newFlowerType) ){
+        if(!isInDatabase(ReadTxt(),newFlowerName)){
+          if(newFlowerType != "Flower"){  
     WriteTxt(AddNewFlower(ReadTxt(), newFlowerName, newFlowerType, (newFlowerCost/newFlowerUnit).ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
     newFlowerName = "";
     newFlowerType = "";
@@ -204,6 +215,16 @@ public string RemoveFlower(string data, string flowerName)//works
     showNewFlowerInput = false; // Hide the input form
     showDeleteFlowerInput = false;
     //showColumnTitles = true;   // Show the column titles
+    }
+    else{
+        ChangeColorToRed();
+         ErrorMessage = "Invalid Type for Flower";
+    }
+    }
+    else{
+        ChangeColorToRed();
+         ErrorMessage = "Invalid Name for Flower";
+    }
     }
     else{
          ChangeColorToRed();
