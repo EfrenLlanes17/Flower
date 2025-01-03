@@ -253,7 +253,7 @@ public decimal newRetailPrice
 
             string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
             
-            if (!tag.Contains("/") && !tag.Contains("Price") && !tag.Contains("Amount") && !tag.Contains("Purchases") && !tag.Contains("Purchase") && !tag.Contains("Date")&& !tag.Contains("Type") && !tag.Contains("Flower"))
+            if (!tag.Contains("/") && tag != "Price" && tag != "Amount" && tag != "Purchases" && tag != "Purchase" && tag != "Date" && tag != "Type" && tag != "Flower" && tag != "RetailPrice" && tag != "StemPrice")
             {
                 flowerNames.Add(tag);
             }
