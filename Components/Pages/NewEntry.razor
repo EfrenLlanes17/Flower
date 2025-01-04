@@ -17,7 +17,7 @@
 {
     <input type="text" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field" placeholder="Flower Name" @bind="newFlowerName"> 
     <input type="text" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field" placeholder="Type" @bind="newFlowerType"> 
-    <input type="number" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field" placeholder="Quantity" @bind="newFlowerUnit" min="0"> 
+    <input type="number" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field" placeholder="Amount" @bind="newFlowerUnit" min="0"> 
     <input type="number" placeholder="Total" style="width: 10%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" class="input-field"  @bind="newFlowerCost" min="0">
     <button class="input-field" style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; font-weight: bold;" @onclick="AddNewFlowerBtn">
         Save
@@ -46,7 +46,7 @@
     <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 20px;">
         <!-- Column Titles -->
         <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Flowers</h3>
-        <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Quantities</h3>
+        <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Amounts</h3>
         <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Totals</h3>
         <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Stem Cost</h5>
         <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Change Since Last Entry</h5>
@@ -55,7 +55,7 @@
 <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 20px;">
     <!-- Column Titles -->
     <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Flowers</h3>
-    <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Quantities</h3>
+    <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Amounts</h3>
     <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Totals</h3>
     <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Stem Cost</h5>
     <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Change Since Last Entry</h5>
@@ -74,7 +74,7 @@
                 }
             </select>
 
-            <input type="number" placeholder="Quantity" style="width: 70%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="row.Units">
+            <input type="number" placeholder="Amount" style="width: 70%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="row.Units">
             <input type="number" placeholder="Total" style="width: 70%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="row.Cost">
             <h6 style="text-align: center; color: #eb3a9b; margin: 0;">@row.StemCost.ToString("0.00")</h6>
             <h6 style="text-align: center; color: #eb3a9b; margin: 0;">@row.ChangeSinceLastEntry.ToString("0%")</h6>
