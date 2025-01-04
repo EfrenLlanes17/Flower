@@ -409,7 +409,7 @@ bool IsItemInBouquet(string xml, string itemName)
 
             string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
             
-            if (!tag.Contains("/") && tag != "Price" && tag != "Amount" && tag != "Purchases" && tag != "Purchase" && tag != "Date" && tag != "Type" && tag != "Flower" && tag != "RetailPrice" && tag != "StemPrice")
+            if (tag.Substring(0,1) != "/" && !tag.Contains("</") && tag != "Price" && tag != "Amount" && tag != "Purchases" && tag != "Purchase" && tag != "Date" && tag != "Type" && tag != "Flower" && tag != "RetailPrice" && tag != "StemPrice")
             {
                 flowerNames.Add(tag);
             }
