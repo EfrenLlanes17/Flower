@@ -19,9 +19,12 @@ catch (Exception ex) {
 
 <h1>Recent Actions</h1>
 <div id="entries">
+
+    
     
     @foreach (var entry in Entries)
     {
+        if(isInFlower(ReadTxt(),entry.Name)){
         <div class="entry">
             <button class="undo-button" style="background-color: #eb3a9b; color: white; padding: 8px 15px; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; margin-left:35px; margin-top:15px;" @onclick="() => RemoveEntry(entry)">Undo</button>
             <span class="flower-name">@entry.Name</span>
@@ -29,6 +32,16 @@ catch (Exception ex) {
             <span class="price">@entry.Price</span>
             <span class="date">@entry.Date</span>
         </div>
+        }
+        else{
+            <div class="entry">
+            <button class="undo-button" style="background-color: #eb3a9b; color: white; padding: 8px 15px; border: none; border-radius: 5px; font-weight: bold; font-size: 14px; margin-left:35px; margin-top:15px;" @onclick="() => RemoveEntry(entry)">Undo</button>
+            <span class="flower-name">@entry.Name.Substring(1)</span>
+            <span class="quantity">@entry.Quantity</span>
+            <span class="price">@entry.Price</span>
+            <span class="date">@entry.Date</span>
+        </div>
+        }
     }
 </div>
 
@@ -57,6 +70,26 @@ catch (Exception ex) {
             
         }
     }
+
+    public Boolean isInFlower(string database, string checkingForThis){
+
+    int bouquetsStart = database.IndexOf("<Flower>");
+    int bouquetsEnd = database.IndexOf("</Flower>");
+
+    if (bouquetsStart == -1 || bouquetsEnd == -1)
+    {
+        return false;
+    }
+
+    // Extract the Bouquets section
+    database = database.Substring(bouquetsStart, (bouquetsEnd - bouquetsStart) + "</Flower>".Length);
+if(database.Contains(checkingForThis)){
+    return true;
+}
+else{
+    return false;
+}
+}
 
      public string UpdateData(string data,string[] tags, string newValue)//works
 {
