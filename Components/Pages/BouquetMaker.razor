@@ -65,12 +65,15 @@
         </div>
     </div>
 
+    Add to QuickView<input style="margin-left: 48px;"type="checkbox" @bind="isQuickView">
+
     <h3 class="@errorClass">@ErrorMessage</h3>
 
     <button @onclick="SaveRecipe">Save To Recipes</button>
 </div>
 
 @code{
+    public Boolean isQuickView { get; set; }
     public string ErrorMessage { get; set; } = "";
 
      public string selectedFlower { get; set; } = "";
@@ -404,7 +407,9 @@ else{
 
     private void SaveRecipe()
     {
+        Console.WriteLine(isQuickView.ToString());
         if(!string.IsNullOrEmpty(Rows[0].selectedFlower2) && !string.IsNullOrEmpty(BouquetName) && RetailPrice != 0){
+            BouquetName = "$" + BouquetName;
         // Logic to save the recipe
         if(!isInDatabase(ReadTxt(),BouquetName)){
         var lastItem = Rows.Last(); 

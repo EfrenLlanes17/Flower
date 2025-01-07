@@ -1,0 +1,118 @@
+@page "/bouquetquickview"
+@rendermode InteractiveServer
+
+<PageTitle>Quick View</PageTitle>
+@using System
+
+<h1>Bouquet Quick View</h1>
+
+
+
+@foreach (var flower in @GetAllBouquets(ReadTxt()))
+        {
+            
+            Entries.Insert(0,new Entry { Name = flower, Price = GrabFromData(ReadTxt(),new string[] {"Bouquets",flower,"RetailPrice"}) });
+        }
+
+
+
+<div id="entries">
+    
+    @foreach (var entry in Entries)
+    {
+        <div class="entry">
+            <h4 class="flower-name">@entry.Name.Substring(1)</h4>
+            <h4 class="price">$@entry.Price</h4>
+           
+        </div>
+    }
+</div>
+
+
+
+@code{
+    public class Entry
+    {
+        public string Name { get; set; }
+        public string Price { get; set; }
+       
+    }
+
+public List<Entry> Entries = new List<Entry>
+    {
+        @* 
+        new Entry { Name = "Rose", Price = "$4.23"} *@
+        // Add more entries here
+    };
+
+
+    public List<string> GetAllBouquets(string data)//works
+    {
+        int startIndex2 = data.IndexOf("<Bouquets>");
+        int endIndex2 = data.IndexOf("</Bouquets>") + "</Bouquets>".Length; // End after </Object>
+        string usingData = data;
+        
+    
+        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
+        List<string> flowerNames = new List<string>();
+        int startIndex = 0;
+        
+        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
+        {
+            int endIndex = usingData.IndexOf(">", startIndex);
+            if (endIndex == -1) break;
+            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
+            
+            if (tag.Substring(0,1) != "/" && !tag.Contains("</") && tag != "LaborCost" && tag != "Bouquets" && tag != "Bouquet" && tag != "Amount" && tag != "MiscCost" && tag != "RetailPrice" && tag != "Item" && tag != "Items" &&  tag != "Name")
+            {
+                flowerNames.Add(tag);
+            }
+            startIndex = endIndex + 1;
+        }
+        return flowerNames;
+    }
+
+
+    public string ReadTxt()
+    {
+         List<string[]> csvData2 = new List<string[]>();
+        //change this as needed
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string filePath = Path.Combine(desktopPath, fileName);
+        //change this
+
+        using (StreamReader reader = new StreamReader(filePath)){
+                string line;
+                while ((line = reader.ReadLine()) != null){
+                    string[] fields = line.Split(',');
+                    csvData2.Add(fields);
+                }
+            }
+
+        foreach (var row in csvData2)
+        {
+            return string.Join(",", row) + "\n";
+        }
+        return "";
+    }
+
+    public string GrabFromData(string data, string[] tags)//Works changed to work with total retail
+    {
+        string currentData = data;
+
+        foreach (string tag in tags)
+        {
+            int start = currentData.IndexOf("<" + tag + ">");
+            int end = currentData.IndexOf("</" + tag + ">");
+
+            if (start == -1 || end == -1)
+                return "0";
+
+            currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
+        }
+        
+        return currentData;
+    }
+
+}

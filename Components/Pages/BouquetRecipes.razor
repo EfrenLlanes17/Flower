@@ -16,7 +16,7 @@
            <option>Select Bouquet</option>
                     @foreach (var option in @GetAllBouquets(ReadTxt()).OrderBy(option => option))
                     {
-                        <option>@option</option>
+                        <option value="@option">@option.Substring(1)</option>
                     }
         </select>
     </div>
