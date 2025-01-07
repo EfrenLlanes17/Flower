@@ -407,9 +407,15 @@ else{
 
     private void SaveRecipe()
     {
-        Console.WriteLine(isQuickView.ToString());
+        
         if(!string.IsNullOrEmpty(Rows[0].selectedFlower2) && !string.IsNullOrEmpty(BouquetName) && RetailPrice != 0){
-            BouquetName = "$" + BouquetName;
+            if(isQuickView){
+                BouquetName = "$" + BouquetName;
+            }
+            else{
+                 BouquetName = "#" + BouquetName;
+            }
+            
         // Logic to save the recipe
         if(!isInDatabase(ReadTxt(),BouquetName)){
         var lastItem = Rows.Last(); 

@@ -20,11 +20,13 @@
     
     @foreach (var entry in Entries)
     {
+        if(@entry.Name.Substring(0,1) == "$"){
         <div class="entry">
             <h4 class="flower-name">@entry.Name.Substring(1)</h4>
             <h4 class="price">$@entry.Price</h4>
            
         </div>
+        }
     }
 </div>
 
