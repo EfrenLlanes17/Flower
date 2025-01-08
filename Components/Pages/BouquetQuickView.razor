@@ -10,28 +10,28 @@
 
 @foreach (var flower in @GetAllBouquets(ReadTxt()))
         {
-            
-            Entries.Insert(0,new Entry { Name = flower, Price = GrabFromData(ReadTxt(),new string[] {"Bouquets",flower,"RetailPrice"}) });
+             ;
+            Entries.Insert(0,new Entry { Name = flower, Price = (updateTotalCost2(flower) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",flower,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",flower,"LaborCost"}), CultureInfo.InvariantCulture)).ToString() });
             Entries = Entries.OrderBy(e => decimal.Parse(e.Price.TrimStart('$'))).ToList();
         }
 
 
-
+<h3>Name   Price</h3>
 <div id="entries">
     
     @foreach (var entry in Entries)
     {
         if(@entry.Name.Substring(0,1) == "$"){
         <div class="entry">
-            <h4 class="flower-name">@entry.Name.Substring(1)</h4>
-            <h4 class="price">$@entry.Price</h4>
+            <h4 class="flower-name"> @entry.Name.Substring(1)  $@entry.Price</h4>
+            <h4 class="price"></h4>
            
         </div>
         }
     }
 </div>
 
-
+@using System.Globalization
 
 @code{
     public class Entry
@@ -41,6 +41,69 @@
        
     }
 
+    public static decimal updateTotalCost2(string BouquetName2){
+    decimal sum = 0; 
+    foreach (var bouquetItem in GetBouquetItems2(ReadTxt2(), BouquetName2)) {
+         sum += decimal.Parse(GrabFromData2(ReadTxt2(), new string[] { "Flower", GetItemName(bouquetItem), "StemPrice" }), CultureInfo.InvariantCulture) * @GetItemAmount(bouquetItem);
+          } 
+          return sum;
+}
+
+public static int GetItemAmount(string xml)
+{
+    string startTag = "<Amount>";
+    string endTag = "</Amount>";
+
+    int startIndex = xml.IndexOf(startTag) + startTag.Length;
+    int endIndex = xml.IndexOf(endTag);
+
+    if (startIndex >= 0 && endIndex > startIndex)
+    {
+        string amountString = xml.Substring(startIndex, endIndex - startIndex);
+        if (int.TryParse(amountString, out int amount))
+        {
+            return amount;
+        }
+    }
+
+    return 0; // Return a default value in case of an error
+}
+
+public static string GetItemName(string xml)
+{
+    string startTag = "<Name>";
+    string endTag = "</Name>";
+
+    int startIndex = xml.IndexOf(startTag) + startTag.Length;
+    int endIndex = xml.IndexOf(endTag);
+
+    if (startIndex >= 0 && endIndex > startIndex)
+    {
+        return xml.Substring(startIndex, endIndex - startIndex);
+    }
+
+    return null;
+}
+
+
+public static string GrabFromData2(string data, string[] tags)//Works changed to work with total retail
+    {
+        string currentData = data;
+
+        foreach (string tag in tags)
+        {
+            int start = currentData.IndexOf("<" + tag + ">");
+            int end = currentData.IndexOf("</" + tag + ">");
+
+            if (start == -1 || end == -1)
+                return "0";
+
+            currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
+        }
+        
+        return currentData;
+    }
+
 public List<Entry> Entries = new List<Entry>
     {
         @* 
@@ -48,7 +111,68 @@ public List<Entry> Entries = new List<Entry>
         // Add more entries here
     };
 
+    public static string ReadTxt2()
+    {
+         List<string[]> csvData2 = new List<string[]>();
+        //change this as needed
+        string fileName = "FlowerProjectData.txt"; 
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
+        string filePath = Path.Combine(desktopPath, fileName);
+        //change this
 
+        using (StreamReader reader = new StreamReader(filePath)){
+                string line;
+                while ((line = reader.ReadLine()) != null){
+                    string[] fields = line.Split(',');
+                    csvData2.Add(fields);
+                }
+            }
+
+        foreach (var row in csvData2)
+        {
+            return string.Join(",", row) + "\n";
+        }
+        return "";
+    }
+
+public static List<string> GetBouquetItems2(string data,string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+       
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Items>");
+    int purchasesEnd = flowerData.IndexOf("</Items>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No Items found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 7, purchasesEnd - (purchasesStart + 7));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Item>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Item>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 7) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 7;
+    }
+    return purchases;
+}
     public List<string> GetAllBouquets(string data)//works
     {
         int startIndex2 = data.IndexOf("<Bouquets>");
