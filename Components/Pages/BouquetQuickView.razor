@@ -12,6 +12,7 @@
         {
             
             Entries.Insert(0,new Entry { Name = flower, Price = GrabFromData(ReadTxt(),new string[] {"Bouquets",flower,"RetailPrice"}) });
+            Entries = Entries.OrderBy(e => decimal.Parse(e.Price.TrimStart('$'))).ToList();
         }
 
 
