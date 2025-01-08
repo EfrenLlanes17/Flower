@@ -417,7 +417,7 @@ else{
             }
             
         // Logic to save the recipe
-        if(!isInDatabase(ReadTxt(),BouquetName)){
+        if(!isInDatabase(ReadTxt(),BouquetName.Substring(1))){
         var lastItem = Rows.Last(); 
        
         WriteTxt(AddNewBouquet(ReadTxt(), BouquetName, LaborCost.ToString(), MiscCost.ToString(), RetailPrice.ToString(), lastItem.selectedFlower2,lastItem.Amount.ToString()));
