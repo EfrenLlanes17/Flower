@@ -15,8 +15,14 @@
             Entries = Entries.OrderBy(e => decimal.Parse(e.TotalCost.TrimStart('$'))).ToList();
         }
 
+<div style="display: flex; justify-content: space-around;" >
+    <h3>Name</h3>
+    <h3>Total</h3>
+    <h3>Cost</h3>
+    <h3>Retial</h3>
+    <h3>Price</h3>
+</div>
 
-<h3>Name   TotalCost  RetailPrice</h3>
 <div id="entries">
     
     @foreach (var entry in Entries)

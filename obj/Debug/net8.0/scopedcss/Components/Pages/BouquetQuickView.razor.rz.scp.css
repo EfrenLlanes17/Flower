@@ -1,0 +1,11 @@
+*[b-bd4thjswmy] {
+    color: #eb3a9b;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1[b-bd4thjswmy] {
+    font-weight: bold;
+    margin: 35px;
+    text-align: left;
+}
