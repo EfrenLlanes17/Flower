@@ -3,6 +3,7 @@
 
 <PageTitle>Recent Actions</PageTitle>
 
+@using System.Xml.Linq;
 
 
 
@@ -69,7 +70,14 @@ catch (Exception ex) {
         if(!GetAllBouquets(ReadTxt()).Contains(entry.Name) ){
          if( GetFlowerPurchases(ReadTxt(),entry.Name).Count != 1){
          
-        WriteTxt(RemoveRecentAction(ReadTxt(),entry.Name, entry.Quantity, entry.Price, entry.Date));
+        WriteTxt(RemoveRecentAction(ReadTxt(),entry.Name, entry.Quantity, entry.Price, entry.Date));//fix error
+        WriteTxt(RemoveFlowerPurchase(UpdateData2(ReadTxt2(),new string[] {"Flower",entry.Name, "StemPrice"}, GetPrice(GetFlowerPurchases2(ReadTxt2(),entry.Name).OrderBy(purchase =>
+        {
+            var xml = XElement.Parse(purchase);
+            var dateString = xml.Element("Date")?.Value; // Extract the date string
+            return DateTime.Parse(dateString);          // Parse it as a DateTime
+        }).ToList().ElementAt(GetFlowerPurchases2(ReadTxt2(),entry.Name).Count -1))),entry.Name, entry.Date) );
+
         // does not update stemprice after removal
         Entries.Remove(entry);
         StateHasChanged(); 
@@ -452,7 +460,7 @@ public static string RemoveFlowerPurchase(string data, string flowerName, string
         }
         purchaseStart = purchaseEnd + 11;
     }
-    Console.WriteLine("Purchase with date " + date + " not found for " + flowerName + ".");
+    //Console.WriteLine("Purchase with date " + date + " not found for " + flowerName + ".");
     return data;
 }
 
