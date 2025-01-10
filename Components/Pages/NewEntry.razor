@@ -502,7 +502,7 @@ public static string GetMostRecentPrice(List<string> purchases) {
         if(!string.IsNullOrEmpty(rows[0].SelectedFlower) && rows[0].Units.HasValue && rows[0].Cost.HasValue){
         foreach(var r in rows){
         if(!string.IsNullOrEmpty(r.SelectedFlower) && r.Units.HasValue && r.Cost.HasValue){
-        WriteTxt(AddNewFlowerPurchase(ReadTxt(), r.SelectedFlower, r.StemCost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+        WriteTxt(AddNewFlowerPurchase(ReadTxt(), r.SelectedFlower, Math.Round(r.StemCost,2).ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
         WriteTxt(AddNewRecentAction(ReadTxt(),"Entry", r.SelectedFlower, r.Units.ToString(), r.Cost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
 
         WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",r.SelectedFlower, "StemPrice"}, GetMostRecentPrice(GetFlowerPurchases(ReadTxt(),r.SelectedFlower))));
