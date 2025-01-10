@@ -205,7 +205,9 @@ else{
     if(newFlowerCost != 0 && !string.IsNullOrEmpty(newFlowerName) && !string.IsNullOrEmpty(newFlowerType) ){
         if(!isInDatabase(ReadTxt(),newFlowerName)){
           if(newFlowerType != "Flower"){  
-    WriteTxt(AddNewFlower(ReadTxt(), newFlowerName, newFlowerType, (newFlowerCost/newFlowerUnit).ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+    WriteTxt(AddNewFlower(ReadTxt(), newFlowerName, newFlowerType, Math.Round((newFlowerCost/newFlowerUnit).Value,2).ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+    WriteTxt(AddNewRecentAction(ReadTxt(),"Entry", newFlowerName, newFlowerUnit.ToString(), newFlowerCost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+
     newFlowerName = "";
     newFlowerType = "";
     newFlowerCost = 0;

@@ -18,6 +18,20 @@ h1 {
     color: white;
 }
 
+.error-red {
+    font-weight: bold;
+    size: 45px;
+    padding: 10px;
+    color: crimson;
+  }
+  
+  .error-green {
+    font-weight: bold;
+    size: 45px;
+    padding: 10px;
+    color: green;
+  }
+
 #entry {
     font-size: 22px;
     margin-left: 35px;

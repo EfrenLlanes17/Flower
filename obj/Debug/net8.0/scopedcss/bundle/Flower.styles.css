@@ -752,6 +752,20 @@ h1[b-xb6q8nrcee] {
     color: white;
 }
 
+.error-red[b-xb6q8nrcee] {
+    font-weight: bold;
+    size: 45px;
+    padding: 10px;
+    color: crimson;
+  }
+  
+  .error-green[b-xb6q8nrcee] {
+    font-weight: bold;
+    size: 45px;
+    padding: 10px;
+    color: green;
+  }
+
 #entry[b-xb6q8nrcee] {
     font-size: 22px;
     margin-left: 35px;

@@ -18,6 +18,8 @@ catch (Exception ex) {
      }
 
 <h1>Recent Actions</h1>
+
+<h2 class="@errorClass">@ErrorMessage</h2>
 <div id="entries">
 
     
@@ -48,6 +50,10 @@ catch (Exception ex) {
 
 @code {
     public Entry selectedEntry = null;
+
+    private string errorClass = "error-red"; 
+
+    public string ErrorMessage { get; set; } = "";
     
     public List<Entry> Entries = new List<Entry>
     {
@@ -60,16 +66,101 @@ catch (Exception ex) {
     private void RemoveEntry(Entry entry)
     {
         try{
+        if(!GetAllBouquets(ReadTxt()).Contains(entry.Name) ){
+         if( GetFlowerPurchases(ReadTxt(),entry.Name).Count != 1){
+         
         WriteTxt(RemoveRecentAction(ReadTxt(),entry.Name, entry.Quantity, entry.Price, entry.Date));
         // does not update stemprice after removal
         Entries.Remove(entry);
         StateHasChanged(); 
         // Notify Blazor of the state change
         }
+        else{
+            ChangeColorToRed();
+         ErrorMessage= "Cannot Remove Only Purchase of Flower, Add New Flower Purchase or Delete flower";
+        }
+
+        }
+        else{
+            WriteTxt(RemoveRecentAction(ReadTxt(),entry.Name, entry.Quantity, entry.Price, entry.Date));
+        // does not update stemprice after removal
+        Entries.Remove(entry);
+        StateHasChanged(); 
+        }
+        }
         catch{
             
         }
     }
+
+    public List<string> GetFlowerPurchases(string data,string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Purchases>");
+    int purchasesEnd = flowerData.IndexOf("</Purchases>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No purchases found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 11, purchasesEnd - (purchasesStart + 11));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Purchase>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Purchase>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 11) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 11;
+    }
+    return purchases;
+}
+
+public List<string> GetAllBouquets(string data)//works
+    {
+        int startIndex2 = data.IndexOf("<Bouquets>");
+        int endIndex2 = data.IndexOf("</Bouquets>") + "</Bouquets>".Length; // End after </Object>
+        string usingData = data;
+        
+    
+        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
+        List<string> flowerNames = new List<string>();
+        int startIndex = 0;
+        
+        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
+        {
+            int endIndex = usingData.IndexOf(">", startIndex);
+            if (endIndex == -1) break;
+            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
+            
+            if (tag.Substring(0,1) != "/" && !tag.Contains("</") && tag != "LaborCost" && tag != "Bouquets" && tag != "Bouquet" && tag != "Amount" && tag != "MiscCost" && tag != "RetailPrice" && tag != "Item" && tag != "Items" &&  tag != "Name")
+            {
+                flowerNames.Add(tag);
+            }
+            startIndex = endIndex + 1;
+        }
+        return flowerNames;
+    }
+
+      private void ChangeColorToGreen() { errorClass = "error-green"; }
+
+  private void ChangeColorToRed() { errorClass = "error-red"; }
 
     public Boolean isInFlower(string database, string checkingForThis){
 
@@ -282,6 +373,45 @@ public static List<string> GetFlowerPurchases2(string data,string flowerName)//w
         
         // Move to next potential purchase
         purchaseStart = purchaseEnd + 11;
+    }
+    return purchases;
+}
+
+public List<string> GetBouquetItems(string data,string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+       
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Items>");
+    int purchasesEnd = flowerData.IndexOf("</Items>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No Items found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 7, purchasesEnd - (purchasesStart + 7));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Item>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Item>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 7) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 7;
     }
     return purchases;
 }
