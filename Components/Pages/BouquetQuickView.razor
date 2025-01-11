@@ -12,14 +12,14 @@
         {
              
             Entries.Insert(0,new Entry { Name = flower, TotalCost = (updateTotalCost2(flower) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",flower,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",flower,"LaborCost"}), CultureInfo.InvariantCulture)).ToString() , RetailPrice = GrabFromData2(ReadTxt2(), new string[] { "Bouquets", flower, "RetailPrice" }) });
-            Entries = Entries.OrderBy(e => decimal.Parse(e.TotalCost.TrimStart('$'))).ToList();
+            Entries = Entries.OrderBy(e => decimal.Parse(e.RetailPrice.TrimStart('$'))).ToList();
         }
 
 <div style="display: flex; justify-content: space-around;" >
     <h3>Name</h3>
     <h3>Total</h3>
     <h3>Cost</h3>
-    <h3>Retial</h3>
+    <h3>Retail</h3>
     <h3>Price</h3>
 </div>
 
