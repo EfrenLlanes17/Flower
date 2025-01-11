@@ -9,3 +9,19 @@ h1[b-bd4thjswmy] {
     margin: 35px;
     text-align: left;
 }
+
+.grid-container[b-bd4thjswmy] {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr; /* Three equal-width columns */
+    gap: 10px; /* Adjust spacing between grid items */
+    text-align: center; /* Center align the text */
+}
+
+.grid-header[b-bd4thjswmy] {
+    font-weight: bold;
+    border-bottom: 2px solid #000; /* Optional: add a border for separation */
+}
+
+.entry[b-bd4thjswmy] {
+    display: contents; /* Makes child elements align with the grid structure */
+}

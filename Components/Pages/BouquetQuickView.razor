@@ -14,26 +14,25 @@
             Entries.Insert(0,new Entry { Name = flower, TotalCost = (updateTotalCost2(flower) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",flower,"MiscCost"}), CultureInfo.InvariantCulture) + decimal.Parse(GrabFromData(ReadTxt(),new string[] {"Bouquets",flower,"LaborCost"}), CultureInfo.InvariantCulture)).ToString() , RetailPrice = GrabFromData2(ReadTxt2(), new string[] { "Bouquets", flower, "RetailPrice" }) });
             Entries = Entries.OrderBy(e => decimal.Parse(e.RetailPrice.TrimStart('$'))).ToList();
         }
-
-<div style="display: flex; justify-content: space-around;" >
-    <h3>Name</h3>
-    <h3>Total Cost</h3>
-    <h3>Retail Price</h3>
+<div style="display: grid; grid-template-columns: repeat(3, 0.15fr);text-align: center; gap: 1px; margin-bottom: 5px;">
+    <h3><b>Name</b></h3>
+    <h3><b>Total Cost</b></h3>
+    <h3><b>Retail Price</b></h3>
 </div>
 
 <div id="entries">
-    
     @foreach (var entry in Entries)
     {
         if(@entry.Name.Substring(0,1) == "$"){
-        <div class="entry">
-            <h4 class="flower-name"> @entry.Name.Substring(1)  $@entry.TotalCost  $@entry.RetailPrice</h4>
-            <h4 class="price"></h4>
-           
+        <div style="display: grid; grid-template-columns: repeat(3, 0.15fr); text-align: center; gap: 1px;" class="entry">
+            <h4 class="flower-name"> @entry.Name.Substring(1)</h4>
+            <h4 class="total-cost"> $@entry.TotalCost </h4>
+            <h4 class="retail-price"> $@entry.RetailPrice </h4>
         </div>
         }
     }
 </div>
+
 
 @using System.Globalization
 
