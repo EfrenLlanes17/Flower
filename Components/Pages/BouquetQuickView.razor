@@ -119,25 +119,32 @@ public List<Entry> Entries = new List<Entry>
     public static string ReadTxt2()
     {
          List<string[]> csvData2 = new List<string[]>();
-        //change this as needed
-        string fileName = "FlowerProjectData.txt"; 
-        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
-        string filePath = Path.Combine(desktopPath, fileName);
-        //change this
 
-        using (StreamReader reader = new StreamReader(filePath)){
-                string line;
-                while ((line = reader.ReadLine()) != null){
-                    string[] fields = line.Split(',');
-                    csvData2.Add(fields);
-                }
-            }
+    // Locate the Documents folder
+    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+    // Build the path to the Petalytics folder and the text file
+    string petalyticsFolderPath = Path.Combine(documentsPath, "Petalytics");
+    string fileName = "FlowerProjectData.txt"; // File name
+    string filePath = Path.Combine(petalyticsFolderPath, fileName);
 
-        foreach (var row in csvData2)
+    // Read the file and process its contents
+    using (StreamReader reader = new StreamReader(filePath))
+    {
+        string line;
+        while ((line = reader.ReadLine()) != null)
         {
-            return string.Join(",", row) + "\n";
+            string[] fields = line.Split(',');
+            csvData2.Add(fields);
         }
-        return "";
+    }
+
+    // Combine the data into a single string for return
+    foreach (var row in csvData2)
+    {
+        return string.Join(",", row) + "\n";
+    }
+
+    return "";
     }
 
 public static List<string> GetBouquetItems2(string data,string flowerName)//works
@@ -207,26 +214,33 @@ public static List<string> GetBouquetItems2(string data,string flowerName)//work
 
     public string ReadTxt()
     {
-         List<string[]> csvData2 = new List<string[]>();
-        //change this as needed
-        string fileName = "FlowerProjectData.txt"; 
-        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); 
-        string filePath = Path.Combine(desktopPath, fileName);
-        //change this
+        List<string[]> csvData2 = new List<string[]>();
 
-        using (StreamReader reader = new StreamReader(filePath)){
-                string line;
-                while ((line = reader.ReadLine()) != null){
-                    string[] fields = line.Split(',');
-                    csvData2.Add(fields);
-                }
-            }
+    // Locate the Documents folder
+    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+    // Build the path to the Petalytics folder and the text file
+    string petalyticsFolderPath = Path.Combine(documentsPath, "Petalytics");
+    string fileName = "FlowerProjectData.txt"; // File name
+    string filePath = Path.Combine(petalyticsFolderPath, fileName);
 
-        foreach (var row in csvData2)
+    // Read the file and process its contents
+    using (StreamReader reader = new StreamReader(filePath))
+    {
+        string line;
+        while ((line = reader.ReadLine()) != null)
         {
-            return string.Join(",", row) + "\n";
+            string[] fields = line.Split(',');
+            csvData2.Add(fields);
         }
-        return "";
+    }
+
+    // Combine the data into a single string for return
+    foreach (var row in csvData2)
+    {
+        return string.Join(",", row) + "\n";
+    }
+
+    return "";
     }
 
     public string GrabFromData(string data, string[] tags)//Works changed to work with total retail
