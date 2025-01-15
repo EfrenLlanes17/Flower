@@ -52,13 +52,24 @@
     <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px;" @onclick="SaveEntries">Get Order</button>
 </div>
 
+
+
 <h1 class="@errorClass">@ErrorMessage</h1>
+
+@if(showOrder){
+    @* possibly checks here *@
+    foreach(var row in rows){
+        <h5>@row.SelectedFlower</h5>
+    }
+}
 @using System.Globalization
 
 @code{
     private bool showColumnTitles = false;  // Controls visibility of the column titles
   public Boolean showNewFlowerInput = false;
   public Boolean showDeleteFlowerInput = false;
+
+   public Boolean showOrder = false;
 
   private decimal? _newFlowerCost;
 
@@ -495,29 +506,24 @@ public static string GetMostRecentPrice(List<string> purchases) {
 }
     private void SaveEntries()
     {
-        if(!string.IsNullOrEmpty(rows[0].SelectedFlower) && rows[0].Units.HasValue && rows[0].Cost.HasValue){
-        foreach(var r in rows){
-        if(!string.IsNullOrEmpty(r.SelectedFlower) && r.Units.HasValue && r.Cost.HasValue){
-        WriteTxt(AddNewFlowerPurchase(ReadTxt(), r.SelectedFlower, Math.Round(r.StemCost,2).ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
-        WriteTxt(AddNewRecentAction(ReadTxt(),"Entry", r.SelectedFlower, r.Units.ToString(), r.Cost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
-
-        WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",r.SelectedFlower, "StemPrice"}, GetMostRecentPrice(GetFlowerPurchases(ReadTxt(),r.SelectedFlower))));
+        
+        @* foreach(var r in rows){
+        if(!string.IsNullOrEmpty(r.SelectedFlower) && r.Units.HasValue){
         ChangeColorToGreen();
         ErrorMessage = "Successfully Added Entries To Database";
         }
         else{
             ChangeColorToRed();
-            ErrorMessage = "Missing Information in Entry, Redo Entries";
-        }
-        }
-        rows.Clear();
-        rows.Add(new EntryRow());
-
-        }
-        else{
-            ChangeColorToRed();
             ErrorMessage = "Not All Information is filled";
         }
+        }
+         rows.Clear(); //remove these
+        rows.Add(new EntryRow()); 
+
+        } *@
+        //add checks
+        showOrder = true;
+        
     }
 
 public string AddNewRecentAction(string data,string type, string name, string amountOrRetail, string costOrAmountofItems, string date)//works
