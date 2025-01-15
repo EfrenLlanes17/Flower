@@ -1,0 +1,762 @@
+@page "/orderaid"
+@rendermode InteractiveServer
+<PageTitle>Order Aid</PageTitle>
+
+
+
+<h1 style="color: #eb3a9b; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:35px; font-weight: bold; padding-top: 10px; text-align: left;">Order Aid</h1>
+
+@if (showColumnTitles)
+{
+    <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 20px;">
+        <!-- Column Titles -->
+        <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Bouquets</h3>
+        <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Amounts</h3>
+        <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Stem Cost</h5>
+        <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Change Since Last Entry</h5>
+    </div>
+}
+<div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 20px;">
+    <!-- Column Titles -->
+    <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Bouquets</h3>
+    <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Amounts</h3>
+
+    <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Stem Cost</h5>
+    <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Change Since Last Entry</h5>
+</div>
+@using System.Linq;
+
+<div>
+    @foreach (var row in rows)
+    {
+        <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 10px;">
+            <select style="width: 90%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="row.SelectedFlower">
+                <option value="">Select a Bouquet</option>
+                @foreach (var flower in GetAllBouquets(ReadTxt()).OrderBy(flower => flower))
+                {
+                    <option value="@flower">@flower.Substring(1)</option>
+                }
+            </select>
+
+            <input type="number" placeholder="Amount" style="width: 70%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="row.Units">
+            <h6 style="text-align: center; color: #eb3a9b; margin: 0;">@row.StemCost.ToString("0.00")</h6>
+            <h6 style="text-align: center; color: #eb3a9b; margin: 0;">@row.ChangeSinceLastEntry.ToString("0%")</h6>
+        </div>
+    }
+</div>
+
+<!-- New Line Button -->
+<div style="text-align: left;">
+    <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px; margin-top:20px;" @onclick="AddNewRow">New Line</button>
+</div>
+
+<!-- Save Button -->
+<div style="text-align: left;">
+    <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px;" @onclick="SaveEntries">Get Order</button>
+</div>
+
+<h1 class="@errorClass">@ErrorMessage</h1>
+@using System.Globalization
+
+@code{
+    private bool showColumnTitles = false;  // Controls visibility of the column titles
+  public Boolean showNewFlowerInput = false;
+  public Boolean showDeleteFlowerInput = false;
+
+  private decimal? _newFlowerCost;
+
+public decimal? newFlowerCost
+{
+    get => _newFlowerCost;
+    set
+    {
+        if (value >= 0)
+        {
+            _newFlowerCost = value;
+        }
+        else
+        {
+            _newFlowerCost = 0;
+        }
+    }
+}
+
+  private int? _newFlowerUnit;
+
+public int? newFlowerUnit
+{
+    get => _newFlowerUnit;
+    set
+    {
+        if (value >= 0)
+        {
+            _newFlowerUnit = value;
+        }
+        else
+        {
+            _newFlowerUnit = 0;
+        }
+    }
+}
+
+
+ 
+
+
+  public string newFlowerName { get; set; } = "";
+
+   public string selDeleteFlower { get; set; } = "";
+
+   public string newFlowerType { get; set; } = "";
+
+  public string ErrorMessage { get; set; } = "";
+
+  public DateTime selectedDate { get; set; } = DateTime.Today;
+  public string selectedFlower { get; set; } ="";
+  public string test { get; set; } = "";
+
+  private string errorClass = "error-red"; 
+  private void ChangeColorToGreen() { errorClass = "error-green"; }
+
+  private void ChangeColorToRed() { errorClass = "error-red"; }
+
+
+public List<string> GetAllBouquets(string data)//works
+    {
+        int startIndex2 = data.IndexOf("<Bouquets>");
+        int endIndex2 = data.IndexOf("</Bouquets>") + "</Bouquets>".Length; // End after </Object>
+        string usingData = data;
+        
+    
+        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
+        List<string> flowerNames = new List<string>();
+        int startIndex = 0;
+        
+        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
+        {
+            int endIndex = usingData.IndexOf(">", startIndex);
+            if (endIndex == -1) break;
+            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
+            
+            if (tag.Substring(0,1) != "/" && !tag.Contains("</") && tag != "LaborCost" && tag != "Bouquets" && tag != "Bouquet" && tag != "Amount" && tag != "MiscCost" && tag != "RetailPrice" && tag != "Item" && tag != "Items" &&  tag != "Name")
+            {
+                flowerNames.Add(tag);
+            }
+            startIndex = endIndex + 1;
+        }
+        return flowerNames;
+    }
+
+
+  public void ShowFlower(){
+    showNewFlowerInput = true;
+    showColumnTitles = false;
+    showDeleteFlowerInput = false;
+  }
+
+  public void deleteFlower(){
+    showNewFlowerInput = false;
+    showDeleteFlowerInput = true;
+    showColumnTitles = false;
+  }
+
+public string RemoveFlower(string data, string flowerName)//works
+{
+    // Find the start and end tag for the specified flower
+    string startTag = $"<{flowerName}>";
+    string endTag = $"</{flowerName}>";
+    int startIndex = data.IndexOf(startTag);
+    int endIndex = data.IndexOf(endTag, startIndex);
+    if (startIndex != -1 && endIndex != -1)
+    {
+        // Calculate the position where the flower data ends (after the closing tag)
+        endIndex += endTag.Length; 
+        // Remove the flower from the data string
+        return data.Remove(startIndex, endIndex - startIndex);
+    }
+    else
+    {
+        return data;
+    }
+}
+
+public Boolean isInDatabase(string database, string checkingForThis){
+if(database.Contains(checkingForThis)){
+    return true;
+}
+else{
+    return false;
+}
+}
+
+
+  public void AddNewFlowerBtn(){
+
+    
+    if(newFlowerCost != 0 && !string.IsNullOrEmpty(newFlowerName) && !string.IsNullOrEmpty(newFlowerType) ){
+        if(!isInDatabase(ReadTxt(),newFlowerName)){
+          if(newFlowerType != "Flower"){  
+    WriteTxt(AddNewFlower(ReadTxt(), newFlowerName, newFlowerType, Math.Round((newFlowerCost/newFlowerUnit).Value,2).ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+    WriteTxt(AddNewRecentAction(ReadTxt(),"Entry", newFlowerName, newFlowerUnit.ToString(), newFlowerCost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+
+    newFlowerName = "";
+    newFlowerType = "";
+    newFlowerCost = 0;
+    newFlowerUnit = 0;
+    ChangeColorToGreen();
+    ErrorMessage = "Successfully Added New Flower To Database";
+    showNewFlowerInput = false; // Hide the input form
+    showDeleteFlowerInput = false;
+    //showColumnTitles = true;   // Show the column titles
+    }
+    else{
+        ChangeColorToRed();
+         ErrorMessage = "Invalid Type for Flower";
+    }
+    }
+    else{
+        ChangeColorToRed();
+         ErrorMessage = "Invalid Name for Flower";
+    }
+    }
+    else{
+         ChangeColorToRed();
+         ErrorMessage = "Not All New Flower Infomation is filled";
+    }
+  }
+
+
+
+bool IsItemInBouquet(string xml, string itemName)
+{
+    // Locate the start of the Bouquets section
+    int bouquetsStart = xml.IndexOf("<Bouquets>");
+    int bouquetsEnd = xml.IndexOf("</Bouquets>");
+
+    if (bouquetsStart == -1 || bouquetsEnd == -1)
+    {
+        return false;
+    }
+
+    // Extract the Bouquets section
+    string bouquetsSection = xml.Substring(bouquetsStart, (bouquetsEnd - bouquetsStart) + "</Bouquets>".Length);
+
+    if(bouquetsSection.Contains($"<Name>{itemName}</Name>")){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+
+ public string RemoveEntriesByName(string xml, string name)
+    {
+        int startIndex = 0;
+        string openingTag = "<Entry>";
+        string closingTag = "</Entry>";
+        string resultXml = xml;
+
+        while ((startIndex = resultXml.IndexOf(openingTag, startIndex)) != -1)
+        {
+            int endIndex = resultXml.IndexOf(closingTag, startIndex);
+            if (endIndex == -1) break;
+
+            string entry = resultXml.Substring(startIndex, endIndex - startIndex + closingTag.Length);
+            int nameStartIndex = entry.IndexOf("<Name>") + "<Name>".Length;
+            int nameEndIndex = entry.IndexOf("</Name>");
+            
+            if (nameStartIndex != -1 && nameEndIndex != -1)
+            {
+                string entryName = entry.Substring(nameStartIndex, nameEndIndex - nameStartIndex);
+                if (entryName == name)
+                {
+                    // Remove the entry if name matches
+                    resultXml = resultXml.Remove(startIndex, endIndex - startIndex + closingTag.Length);
+                    startIndex = 0; // Restart search to avoid skipping entries
+                }
+                else
+                {
+                    startIndex = endIndex + closingTag.Length;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+
+        return resultXml;
+    }
+
+
+  public void deleteFlowerBtn(){
+    if(!string.IsNullOrEmpty(selDeleteFlower)){
+        if(!IsItemInBouquet(ReadTxt(),selDeleteFlower)){
+    WriteTxt(RemoveFlower(ReadTxt(),selDeleteFlower));
+    WriteTxt(RemoveEntriesByName(ReadTxt(),selDeleteFlower));
+    selDeleteFlower = "";
+    ChangeColorToGreen();
+    ErrorMessage = "Successfully Removed Flower From Database";
+    showNewFlowerInput = false; // Hide the input form
+    showDeleteFlowerInput = false;
+    //showColumnTitles = true;   // Show the column titles
+    }
+    else{
+        ChangeColorToRed();
+         ErrorMessage = "Cannot Remove Because Item is in a Saved Bouquet";
+    }
+    }
+    else{
+         ChangeColorToRed();
+         ErrorMessage = "Not All Delete Flower Infomation is filled";
+    }
+    
+  }
+
+  public string GrabFromData(string data, string[] tags)//Works
+    {
+        string currentData = data;
+
+        foreach (string tag in tags)
+        {
+            int start = currentData.IndexOf("<" + tag + ">");
+            int end = currentData.IndexOf("</" + tag + ">");
+
+            if (start == -1 || end == -1)
+                return "1";
+
+            currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
+        }
+        
+        return currentData;
+    }
+
+  public string AddNewFlower(string data, string flowerName, string type, string price, string date)     //Works
+{
+    string newFlower = $"<{flowerName}>" +
+                       $"<RetailPrice>{price}</RetailPrice>" + //Retail price is initally set as the lastest price
+                       $"<StemPrice>{price}</StemPrice>" +      //Stem price is initally set as the lastest price
+                       $"<Type>{type}</Type>" +
+                       $"<Purchases>" +
+                           $"<Purchase>" +
+                               $"<Price>{price}</Price>" +
+                               $"<Date>{date}</Date>" +
+                           $"</Purchase>" +
+                       $"</Purchases>" +
+                       $"</{flowerName}>";
+    // Insert the new flower before the closing </Flower> tag
+    int insertPosition = data.IndexOf("</Flower>");
+    if (insertPosition != -1)
+    {
+        return data.Insert(insertPosition, newFlower);
+    }
+    else
+    {
+        return data;
+    }
+}
+
+public string ReadTxt()
+{
+    List<string[]> csvData2 = new List<string[]>();
+
+    // Locate the Documents folder
+    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+    // Build the path to the Petalytics folder and the text file
+    string petalyticsFolderPath = Path.Combine(documentsPath, "Petalytics");
+    string fileName = "FlowerProjectData.txt"; // File name
+    string filePath = Path.Combine(petalyticsFolderPath, fileName);
+
+    // Read the file and process its contents
+    using (StreamReader reader = new StreamReader(filePath))
+    {
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            string[] fields = line.Split(',');
+            csvData2.Add(fields);
+        }
+    }
+
+    // Combine the data into a single string for return
+    foreach (var row in csvData2)
+    {
+        return string.Join(",", row) + "\n";
+    }
+
+    return "";
+}
+
+ public List<string> GetAllFlowers(string data)//works
+    {
+
+        int startIndex2 = data.IndexOf("<Flower>");
+        int endIndex2 = data.IndexOf("</Flower>") + "</Flower>".Length; // End after </Object>
+        string usingData = data;
+        
+    
+        usingData = data.Substring(startIndex2, endIndex2 - startIndex2);
+
+        List<string> flowerNames = new List<string>();
+        int startIndex = 0;
+        
+        while ((startIndex = usingData.IndexOf("<", startIndex)) != -1)
+        {
+            int endIndex = usingData.IndexOf(">", startIndex);
+            if (endIndex == -1) break;
+
+            string tag = usingData.Substring(startIndex + 1, endIndex - startIndex - 1);
+            
+            if (tag.Substring(0,1) != "/" && !tag.Contains("</") && tag != "Price" && tag != "Amount" && tag != "Purchases" && tag != "Purchase" && tag != "Date" && tag != "Type" && tag != "Flower" && tag != "RetailPrice" && tag != "StemPrice")
+            {
+                flowerNames.Add(tag);
+            }
+            startIndex = endIndex + 1;
+        }
+
+        return flowerNames;
+    }
+public string[] getFlowerOptions(){
+        string[] returnThis = new string[] {};
+        try{
+         returnThis = GetAllFlowers(ReadTxt()).ToArray();
+        }
+        catch (Exception ex){
+            returnThis = new string[] {"Option1", "Option2","option3"};
+        }
+        return returnThis;
+    }
+
+private void HandleChange(ChangeEventArgs e)
+    {
+        selectedFlower = e.Value.ToString();
+        StateHasChanged();
+    }
+
+
+@code {
+    private List<EntryRow> rows = new List<EntryRow> { new EntryRow() };
+
+    private void AddNewRow()
+    {
+        rows.Add(new EntryRow());
+    }
+
+    public List<string> GetFlowerPurchases(string data, string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Purchases>");
+    int purchasesEnd = flowerData.IndexOf("</Purchases>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No purchases found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 11, purchasesEnd - (purchasesStart + 11));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Purchase>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Purchase>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 11) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 11;
+    }
+    return purchases;
+}
+
+@using System.Collections.Generic
+@using System.Linq
+@using System.Xml.Linq
+public static string GetMostRecentPrice(List<string> purchases) {
+     var mostRecentPurchase = purchases
+      .Select(purchase => new
+       {
+         Price = XElement.Parse(purchase).Element("Price").Value, 
+         Date = DateTime.Parse(XElement.Parse(purchase).Element("Date").Value) 
+         })
+          .OrderByDescending(p => p.Date)
+           .FirstOrDefault();
+            return mostRecentPurchase?.Price ?? string.Empty;
+}
+    private void SaveEntries()
+    {
+        if(!string.IsNullOrEmpty(rows[0].SelectedFlower) && rows[0].Units.HasValue && rows[0].Cost.HasValue){
+        foreach(var r in rows){
+        if(!string.IsNullOrEmpty(r.SelectedFlower) && r.Units.HasValue && r.Cost.HasValue){
+        WriteTxt(AddNewFlowerPurchase(ReadTxt(), r.SelectedFlower, Math.Round(r.StemCost,2).ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+        WriteTxt(AddNewRecentAction(ReadTxt(),"Entry", r.SelectedFlower, r.Units.ToString(), r.Cost.ToString(), selectedDate.ToString("MM/dd/yy", CultureInfo.InvariantCulture)));
+
+        WriteTxt(UpdateData(ReadTxt(),new string[] {"Flower",r.SelectedFlower, "StemPrice"}, GetMostRecentPrice(GetFlowerPurchases(ReadTxt(),r.SelectedFlower))));
+        ChangeColorToGreen();
+        ErrorMessage = "Successfully Added Entries To Database";
+        }
+        else{
+            ChangeColorToRed();
+            ErrorMessage = "Missing Information in Entry, Redo Entries";
+        }
+        }
+        rows.Clear();
+        rows.Add(new EntryRow());
+
+        }
+        else{
+            ChangeColorToRed();
+            ErrorMessage = "Not All Information is filled";
+        }
+    }
+
+public string AddNewRecentAction(string data,string type, string name, string amountOrRetail, string costOrAmountofItems, string date)//works
+{
+    if(type.Equals("Entry")){
+    string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<Amount>{amountOrRetail}</Amount>" +
+                               $"<Cost>{costOrAmountofItems}</Cost>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        return data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+    else{
+        string newObject = $"<{type}>" +
+                               $"<Name>{name}</Name>" +
+                               $"<RetailPrice>{amountOrRetail}</RetailPrice>" +
+                               $"<NumberOfItems>{costOrAmountofItems}</NumberOfItems>" +
+                               $"<Date>{date}</Date>" +
+                       $"</{type}>";
+    
+    int insertPosition = data.IndexOf("</RecentActions>");
+    if (insertPosition != -1)
+    {
+        return data.Insert(insertPosition, newObject);
+    }
+    else
+    {
+        Console.WriteLine("Error: <RecentActions> tag not found.");
+    }
+    }
+    return data;
+}
+
+    private IEnumerable<string> getsFlowerOptions()
+    {
+        return new List<string> { "Rose", "Tulip", "Lily", "Daisy" };
+    }
+
+    
+
+    private class EntryRow
+    {
+        public string? SelectedFlower { get; set; }
+
+        private int? units;
+
+        public int? Units
+        {
+            get => units;
+            set
+            {
+                if (value >= 0)
+                {
+                    units = value;
+                }
+                else
+                {
+                    units = 0;
+                }
+            }
+        }
+
+        
+
+
+        private decimal? cost;
+
+                public decimal? Cost
+                {
+                    get => cost;
+                    set
+                    {
+                        if (value >= 0)
+                        {
+                            cost = value;
+                        }
+                        else
+                        {
+                            cost = 0;
+                        }
+                    }
+                }
+
+        public decimal StemCost => Units.HasValue && Cost.HasValue ? Cost.Value / Units.Value : 0;
+        public decimal ChangeSinceLastEntry => Units.HasValue && Cost.HasValue && !string.IsNullOrEmpty(SelectedFlower)? ((StemCost/decimal.Parse(GrabFromData2(ReadTxt2(),new string[] {"Flower",SelectedFlower,"StemPrice"}), CultureInfo.InvariantCulture)-1)) : 0;// Placeholder for actual calculation
+
+        
+
+    }
+
+public static string GrabFromData2(string data, string[] tags)//Works
+    {
+        try{
+        string currentData = data;
+
+        foreach (string tag in tags)
+        {
+            int start = currentData.IndexOf("<" + tag + ">");
+            int end = currentData.IndexOf("</" + tag + ">");
+ 
+            if (start == -1 || end == -1)
+                return "1";
+
+            currentData = currentData.Substring(start + tag.Length + 2, end - (start + tag.Length + 2));
+        }
+        
+        return currentData;
+        }
+        catch{
+            return "1.0";
+        }
+    }
+
+
+public string AddNewFlowerPurchase(string data, string flowerName, string price, string date)//works
+{
+    // Build the new purchase entry
+    //Needs to update retail price
+    string newPurchase = $"<Purchase><Price>{price}</Price><Date>{date}</Date></Purchase>";
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+        Console.WriteLine(flowerName + " not found");
+        return data;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases tag within the flower
+    int purchasesStart = flowerData.IndexOf("<Purchases>");
+    int purchasesEnd = flowerData.IndexOf("</Purchases>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("Purchases section not found for " + flowerName);
+        return data;
+    }
+    // Insert the new purchase before </Purchases>
+    string updatedFlowerData = flowerData.Insert(purchasesEnd, newPurchase);
+    // Update the main data string
+    return data.Substring(0, flowerStart) + updatedFlowerData + data.Substring(flowerEnd + flowerName.Length + 3);
+}
+
+  public static string ReadTxt2()
+    {List<string[]> csvData2 = new List<string[]>();
+
+    // Locate the Documents folder
+    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+    // Build the path to the Petalytics folder and the text file
+    string petalyticsFolderPath = Path.Combine(documentsPath, "Petalytics");
+    string fileName = "FlowerProjectData.txt"; // File name
+    string filePath = Path.Combine(petalyticsFolderPath, fileName);
+
+    // Read the file and process its contents
+    using (StreamReader reader = new StreamReader(filePath))
+    {
+        string line;
+        while ((line = reader.ReadLine()) != null)
+        {
+            string[] fields = line.Split(',');
+            csvData2.Add(fields);
+        }
+    }
+
+    // Combine the data into a single string for return
+    foreach (var row in csvData2)
+    {
+        return string.Join(",", row) + "\n";
+    }
+
+    return "";
+    }
+
+ public void WriteTxt(string lines)
+{
+    // Locate the Documents folder
+    string documentsPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+    // Build the path to the Petalytics folder and the text file
+    string petalyticsFolderPath = Path.Combine(documentsPath, "Petalytics");
+    string fileName = "FlowerProjectData.txt";
+    string filePath = Path.Combine(petalyticsFolderPath, fileName);
+
+    // Write the lines to the file
+    using (StreamWriter writer = new StreamWriter(filePath, append: false)) // Set append to true to add to the file
+    {
+        
+            writer.WriteLine(lines);
+        
+    }
+}
+
+
+    
+
+  public string UpdateData(string data,string[] tags, string newValue)//works
+{
+    int position = 0;  // Start from the beginning of the data
+    int startValue = -1;
+    int endValue = -1;
+    foreach (string tag in tags)
+    {
+        int start = data.IndexOf("<" + tag + ">", position);
+        int end = data.IndexOf("</" + tag + ">", position);
+        if (start == -1 || end == -1)
+        {
+            Console.WriteLine(tag + " tag not found");
+            return data;
+        }
+        if (tag == tags[tags.Length - 1])  // On the final tag
+        {
+            startValue = start + tag.Length + 2;
+            endValue = end;
+        }
+        else
+        {
+            position = start + tag.Length + 2;  // Move deeper to next tag section
+        }
+    }
+    if (startValue != -1 && endValue != -1)
+    {
+        // Perform the update on the original data
+        return data.Substring(0, startValue) + newValue + data.Substring(endValue);
+       
+    }
+    return data;
+}
+    
+    }
+}

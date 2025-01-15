@@ -491,3 +491,4 @@ C:\Users\efren\OneDrive\Documents\Petalytics\Flower\obj\Debug\net8.0\refint\Flow
 C:\Users\efren\OneDrive\Documents\Petalytics\Flower\obj\Debug\net8.0\Flower.pdb
 C:\Users\efren\OneDrive\Documents\Petalytics\Flower\obj\Debug\net8.0\Flower.genruntimeconfig.cache
 C:\Users\efren\OneDrive\Documents\Petalytics\Flower\obj\Debug\net8.0\ref\Flower.dll
+C:\Users\efren\OneDrive\Documents\Petalytics\Flower\obj\Debug\net8.0\scopedcss\Components\Pages\BouquetOrderAid.razor.rz.scp.css

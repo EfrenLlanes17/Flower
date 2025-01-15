@@ -1,0 +1,28 @@
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    color: #eb3a9b;
+  }
+  input::placeholder {
+    color: #eb3a9b;
+  }
+  button:hover {
+   
+    background-color: #c82e7b;
+    cursor: pointer;
+  }
+  
+  .error-red {
+    font-weight: bold;
+    size: 45px;
+    padding: 10px;
+    color: crimson;
+  }
+  
+  .error-green {
+    font-weight: bold;
+    size: 45px;
+    padding: 10px;
+    color: green;
+  }
+  

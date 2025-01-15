@@ -463,6 +463,35 @@ button:hover[b-iwixz8xuek] {
         font-size: 0.9rem;
     }
 }
+/* _content/Flower/Components/Pages/BouquetOrderAid.razor.rz.scp.css */
+*[b-tcdo8aank8] {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-sizing: border-box;
+    color: #eb3a9b;
+  }
+  input[b-tcdo8aank8]::placeholder {
+    color: #eb3a9b;
+  }
+  button:hover[b-tcdo8aank8] {
+   
+    background-color: #c82e7b;
+    cursor: pointer;
+  }
+  
+  .error-red[b-tcdo8aank8] {
+    font-weight: bold;
+    size: 45px;
+    padding: 10px;
+    color: crimson;
+  }
+  
+  .error-green[b-tcdo8aank8] {
+    font-weight: bold;
+    size: 45px;
+    padding: 10px;
+    color: green;
+  }
+  
 /* _content/Flower/Components/Pages/BouquetQuickView.razor.rz.scp.css */
 *[b-bd4thjswmy] {
     color: #eb3a9b;
