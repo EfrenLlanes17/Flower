@@ -12,8 +12,7 @@
         <!-- Column Titles -->
         <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Bouquets</h3>
         <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Amounts</h3>
-        <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Stem Cost</h5>
-        <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Change Since Last Entry</h5>
+        <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Cost</h5>
     </div>
 }
 <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 20px;">
@@ -21,8 +20,7 @@
     <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Bouquets</h3>
     <h3 style="margin: 0; text-align: center; color: #eb3a9b;">Amounts</h3>
 
-    <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Stem Cost</h5>
-    <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Change Since Last Entry</h5>
+    <h5 style="margin: 0; text-align: center; color: #eb3a9b;">Cost</h5>
 </div>
 @using System.Linq;
 
@@ -39,8 +37,7 @@
             </select>
 
             <input type="number" placeholder="Amount" style="width: 70%; padding: 5px; border: 1px solid #eb3a9b; border-radius: 5px;" @bind="row.Units">
-            <h6 style="text-align: center; color: #eb3a9b; margin: 0;">@row.StemCost.ToString("0.00")</h6>
-            <h6 style="text-align: center; color: #eb3a9b; margin: 0;">@row.ChangeSinceLastEntry.ToString("0%")</h6>
+            <h6 style="text-align: center; color: #eb3a9b; margin: 0;">$@row.StemCost.ToString("0.00")</h6>
         </div>
     }
 </div>
@@ -614,9 +611,8 @@ public string AddNewRecentAction(string data,string type, string name, string am
                     }
                 }
 
-        public decimal StemCost => Units.HasValue && Cost.HasValue ? Cost.Value / Units.Value : 0;
-        public decimal ChangeSinceLastEntry => Units.HasValue && Cost.HasValue && !string.IsNullOrEmpty(SelectedFlower)? ((StemCost/decimal.Parse(GrabFromData2(ReadTxt2(),new string[] {"Flower",SelectedFlower,"StemPrice"}), CultureInfo.InvariantCulture)-1)) : 0;// Placeholder for actual calculation
-
+        public decimal StemCost => Units.HasValue && SelectedFlower != ""? decimal.Parse(GrabFromData2(ReadTxt2(), new string[] {"Bouquets",SelectedFlower,"RetailPrice"})) * Units.Value : 0;
+        //change from retail Price
         
 
     }
@@ -643,6 +639,8 @@ public static string GrabFromData2(string data, string[] tags)//Works
             return "1.0";
         }
     }
+
+    
 
 
 public string AddNewFlowerPurchase(string data, string flowerName, string price, string date)//works
