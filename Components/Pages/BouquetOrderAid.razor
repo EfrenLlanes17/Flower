@@ -6,6 +6,8 @@
 
 <h1 style="color: #eb3a9b; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:35px; font-weight: bold; padding-top: 10px; text-align: left;">Order Aid</h1>
 
+<input style="font-size: 25px; width: 30%;" type="text" placeholder="Order Name" @bind="BouquetName">
+
 @if (showColumnTitles)
 {
     <div style="display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr; gap: 10px; align-items: center; width: 100%; box-sizing: border-box; margin-top: 20px;">
@@ -75,6 +77,7 @@
   public Boolean showNewFlowerInput = false;
   public Boolean showDeleteFlowerInput = false;
 
+public string BouquetName { get; set; } = string.Empty;
    public Boolean showOrder = false;
 
   private decimal? _newFlowerCost;
@@ -138,7 +141,8 @@ public int? newFlowerUnit
     {
         // Get desktop path
         string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-        string docxPath = Path.Combine(desktopPath, "ManualDoc.docx");
+        
+        string docxPath = Path.Combine(desktopPath, $"{BouquetName}.docx");
 
         // Create a temporary folder to store files before zipping
         string tempFolder = Path.Combine(Path.GetTempPath(), "ManualDoc");
@@ -150,16 +154,29 @@ public int? newFlowerUnit
         Directory.CreateDirectory(Path.Combine(tempFolder, "word/_rels"));
 
         // 1. Create the main document.xml
-        string documentXml = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
+       StringBuilder sb = new StringBuilder();
+
+        sb.Append(@"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
         <w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
-            <w:body>
+            <w:body>");
+
+        foreach (var row in rows)
+        {
+            foreach(var t in GetBouquetItems(ReadTxt(),row.SelectedFlower)){
+            sb.Append($@"
                 <w:p>
                     <w:r>
-                        <w:t>Hello, this is a manually created .docx file!</w:t>
+                        <w:t> Flower: {GetItemName(t)} Amount: {GetItemAmount(t)} </w:t>
                     </w:r>
-                </w:p>
+                </w:p>");
+                }
+        }
+
+        sb.Append(@"
             </w:body>
-        </w:document>";
+        </w:document>");
+
+        string documentXml = sb.ToString();
 
         File.WriteAllText(Path.Combine(tempFolder, "word/document.xml"), documentXml, Encoding.UTF8);
 
@@ -199,6 +216,82 @@ public int? newFlowerUnit
 
         Console.WriteLine($"DOCX created at: {docxPath}");
     }
+
+public static string GetItemName(string xml)
+{
+    string startTag = "<Name>";
+    string endTag = "</Name>";
+
+    int startIndex = xml.IndexOf(startTag) + startTag.Length;
+    int endIndex = xml.IndexOf(endTag);
+
+    if (startIndex >= 0 && endIndex > startIndex)
+    {
+        return xml.Substring(startIndex, endIndex - startIndex);
+    }
+
+    return null;
+}
+
+public static int GetItemAmount(string xml)
+{
+    string startTag = "<Amount>";
+    string endTag = "</Amount>";
+
+    int startIndex = xml.IndexOf(startTag) + startTag.Length;
+    int endIndex = xml.IndexOf(endTag);
+
+    if (startIndex >= 0 && endIndex > startIndex)
+    {
+        string amountString = xml.Substring(startIndex, endIndex - startIndex);
+        if (int.TryParse(amountString, out int amount))
+        {
+            return amount;
+        }
+    }
+
+    return 0; // Return a default value in case of an error
+}
+
+
+    public List<string> GetBouquetItems(string data,string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+       
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Items>");
+    int purchasesEnd = flowerData.IndexOf("</Items>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No Items found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 7, purchasesEnd - (purchasesStart + 7));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Item>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Item>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 7) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 7;
+    }
+    return purchases;
+}
 
 public List<string> GetAllBouquets(string data)//works
     {
