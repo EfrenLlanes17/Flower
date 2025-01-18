@@ -154,22 +154,45 @@ public int? newFlowerUnit
         Directory.CreateDirectory(Path.Combine(tempFolder, "word/_rels"));
 
         // 1. Create the main document.xml
-       StringBuilder sb = new StringBuilder();
+       //StringBuilder sb = new StringBuilder();
 
+        Dictionary<string, int> flowerCounts = new Dictionary<string, int>();
+
+        foreach (var row in rows)
+        {
+            foreach (var t in GetBouquetItems(ReadTxt(), row.SelectedFlower))
+            {
+                string flowerName = GetItemName(t);
+                int flowerAmount = GetItemAmount(t);
+
+                if (flowerCounts.ContainsKey(flowerName))
+                {
+                    // If the flower already exists, add to its count
+                    flowerCounts[flowerName] += flowerAmount;
+                }
+                else
+                {
+                    // Otherwise, add the flower to the dictionary
+                    flowerCounts[flowerName] = flowerAmount;
+                }
+            }
+        }
+
+        // Build the XML document
+        StringBuilder sb = new StringBuilder();
         sb.Append(@"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
         <w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
             <w:body>");
 
-        foreach (var row in rows)
+        // Loop through the dictionary to generate unique flower entries
+        foreach (var entry in flowerCounts)
         {
-            foreach(var t in GetBouquetItems(ReadTxt(),row.SelectedFlower)){
             sb.Append($@"
                 <w:p>
                     <w:r>
-                        <w:t> Flower: {GetItemName(t)} Amount: {GetItemAmount(t)} </w:t>
+                        <w:t> Flower: {entry.Key} Amount: {entry.Value} </w:t>
                     </w:r>
                 </w:p>");
-                }
         }
 
         sb.Append(@"
