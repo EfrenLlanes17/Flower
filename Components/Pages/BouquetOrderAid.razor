@@ -4,7 +4,7 @@
 
 
 
-<h1 style="color: #eb3a9b; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin:35px; font-weight: bold; padding-top: 10px; text-align: left;">Order Aid</h1>
+<h1 style="color: #eb3a9b; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin-bottom:30px; font-weight: bold; padding-top: 10px; text-align: left;">Order Aid</h1>
 
 <input style="font-size: 25px; width: 30%;" type="text" placeholder="Order Name" @bind="BouquetName">
 
@@ -180,9 +180,26 @@ public int? newFlowerUnit
 
         // Build the XML document
         StringBuilder sb = new StringBuilder();
-        sb.Append(@"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
-        <w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
-            <w:body>");
+        sb.Append($@"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
+<w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
+    <w:body>
+
+        <!-- Title -->
+        <w:p>
+            <w:pPr>
+                <w:jc w:val=""center""/> <!-- Center alignment -->
+            </w:pPr>
+            <w:r>
+                <w:rPr>
+                    <w:b/> <!-- Bold -->
+                    <w:sz w:val=""36""/> <!-- Font size (36 = 18pt) -->
+                </w:rPr>
+                <w:t>Order Name: {BouquetName}</w:t>
+            </w:r>
+        </w:p>
+
+        <!-- Empty line for spacing -->
+        <w:p><w:r><w:t></w:t></w:r></w:p>");
 
         // Loop through the dictionary to generate unique flower entries
         foreach (var entry in flowerCounts)
@@ -190,7 +207,7 @@ public int? newFlowerUnit
             sb.Append($@"
                 <w:p>
                     <w:r>
-                        <w:t> Flower: {entry.Key} Amount: {entry.Value} </w:t>
+                        <w:t>Item: {entry.Key}     Stem Count: {entry.Value} </w:t>
                     </w:r>
                 </w:p>");
         }
@@ -200,9 +217,10 @@ public int? newFlowerUnit
         </w:document>");
 
         string documentXml = sb.ToString();
-
+        
         File.WriteAllText(Path.Combine(tempFolder, "word/document.xml"), documentXml, Encoding.UTF8);
-
+        ChangeColorToGreen();
+        ErrorMessage = "Successfully Created Order Document On Desktop";
         // 2. Create [Content_Types].xml
         string contentTypesXml = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
         <Types xmlns=""http://schemas.openxmlformats.org/package/2006/content-types"">
