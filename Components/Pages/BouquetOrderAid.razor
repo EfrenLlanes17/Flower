@@ -139,6 +139,7 @@ public int? newFlowerUnit
 
  public void CreateDocx()
     {
+        if(!string.IsNullOrEmpty(BouquetName) && !string.IsNullOrEmpty(rows[0].SelectedFlower) && rows[0].Units != 0){
         // Get desktop path
         string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
         
@@ -275,7 +276,11 @@ public int? newFlowerUnit
         // Cleanup temp files
         Directory.Delete(tempFolder, true);
 
-        
+        }
+        else{
+        ChangeColorToRed();
+        ErrorMessage = "Not All Information Is Filled";
+        }
     }
 
 public static string GetItemName(string xml)
