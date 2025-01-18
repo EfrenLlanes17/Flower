@@ -275,7 +275,7 @@ public int? newFlowerUnit
         // Cleanup temp files
         Directory.Delete(tempFolder, true);
 
-        Console.WriteLine($"DOCX created at: {docxPath}");
+        
     }
 
 public static string GetItemName(string xml)
@@ -842,11 +842,58 @@ public string AddNewRecentAction(string data,string type, string name, string am
                     }
                 }
 
-        public decimal StemCost => Units.HasValue && SelectedFlower != ""? decimal.Parse(GrabFromData2(ReadTxt2(), new string[] {"Bouquets",SelectedFlower,"RetailPrice"})) * Units.Value : 0;
+        public decimal StemCost => Units.HasValue && SelectedFlower != ""? (decimal)(updateTotalCost2(SelectedFlower)  * Units) : 0;
         //change from retail Price
         
 
     }
+
+    public static decimal updateTotalCost2(string BouquetName2){
+    decimal sum = 0; 
+    foreach (var bouquetItem in GetBouquetItems2(ReadTxt2(), BouquetName2)) {
+         sum += decimal.Parse(GrabFromData2(ReadTxt2(), new string[] { "Flower", GetItemName(bouquetItem), "StemPrice" }), CultureInfo.InvariantCulture) * @GetItemAmount(bouquetItem);
+          } 
+          return sum;
+}
+
+public static List<string> GetBouquetItems2(string data,string flowerName)//works
+{
+    List<string> purchases = new List<string>();
+    // Find the flower tag
+    int flowerStart = data.IndexOf("<" + flowerName + ">");
+    int flowerEnd = data.IndexOf("</" + flowerName + ">");
+    if (flowerStart == -1 || flowerEnd == -1)
+    {
+       
+        return purchases;
+    }
+    // Extract the flower's content
+    string flowerData = data.Substring(flowerStart, (flowerEnd + flowerName.Length + 3) - flowerStart);
+    // Find the Purchases section
+    int purchasesStart = flowerData.IndexOf("<Items>");
+    int purchasesEnd = flowerData.IndexOf("</Items>");
+    if (purchasesStart == -1 || purchasesEnd == -1)
+    {
+        Console.WriteLine("No Items found for " + flowerName);
+        return purchases;
+    }
+    // Extract the Purchases section
+    string purchasesSection = flowerData.Substring(purchasesStart + 7, purchasesEnd - (purchasesStart + 7));
+    // Loop to find all <Purchase> tags
+    int purchaseStart = 0;
+    while ((purchaseStart = purchasesSection.IndexOf("<Item>", purchaseStart)) != -1)
+    {
+        int purchaseEnd = purchasesSection.IndexOf("</Item>", purchaseStart);
+        if (purchaseEnd == -1) break;
+        // Extract the individual purchase
+        string purchase = purchasesSection.Substring(purchaseStart, (purchaseEnd + 7) - purchaseStart);
+        purchases.Add(purchase);
+        
+        // Move to next potential purchase
+        purchaseStart = purchaseEnd + 7;
+    }
+    return purchases;
+}
 
 public static string GrabFromData2(string data, string[] tags)//Works
     {
