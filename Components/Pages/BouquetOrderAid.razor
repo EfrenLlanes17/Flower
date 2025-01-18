@@ -157,9 +157,11 @@ public int? newFlowerUnit
        //StringBuilder sb = new StringBuilder();
 
         Dictionary<string, int> flowerCounts = new Dictionary<string, int>();
+        decimal totalPrice = 0;
 
         foreach (var row in rows)
         {
+            totalPrice += row.StemCost;
             foreach (var t in GetBouquetItems(ReadTxt(), row.SelectedFlower))
             {
                 string flowerName = GetItemName(t);
@@ -178,6 +180,7 @@ public int? newFlowerUnit
             }
         }
 
+        string todayDate = DateTime.Today.ToString("MM/dd/yy", CultureInfo.InvariantCulture);
         // Build the XML document
         StringBuilder sb = new StringBuilder();
         sb.Append($@"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
@@ -194,7 +197,7 @@ public int? newFlowerUnit
                     <w:b/> <!-- Bold -->
                     <w:sz w:val=""36""/> <!-- Font size (36 = 18pt) -->
                 </w:rPr>
-                <w:t>Order Name: {BouquetName}</w:t>
+                <w:t>Order Name: {BouquetName}   Date: {todayDate}</w:t>
             </w:r>
         </w:p>
 
@@ -212,9 +215,26 @@ public int? newFlowerUnit
                 </w:p>");
         }
 
-        sb.Append(@"
-            </w:body>
-        </w:document>");
+        sb.Append($@"
+    <!-- Empty line for spacing -->
+    <w:p><w:r><w:t></w:t></w:r></w:p>
+
+    <!-- Total Price -->
+    <w:p>
+        <w:pPr>
+            <w:jc w:val=""center""/> <!-- Align to the center -->
+        </w:pPr>
+        <w:r>
+            <w:rPr>
+                <w:b/> <!-- Bold -->
+                <w:sz w:val=""28""/> <!-- Font size (28 = 14pt) -->
+            </w:rPr>
+            <w:t>Total Estimated Price: ${totalPrice:F2}</w:t>
+        </w:r>
+    </w:p>
+    
+    </w:body>
+</w:document>");
 
         string documentXml = sb.ToString();
         
