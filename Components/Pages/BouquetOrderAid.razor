@@ -49,8 +49,9 @@
 
 <!-- Save Button -->
 <div style="text-align: left;">
-    <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px;" @onclick="SaveEntries">Get Order</button>
+    <button style="background-color: #eb3a9b; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 16px; margin:10px;" @onclick="CreateDocx">Get Order</button>
 </div>
+@* SaveEntries *@
 
 
 
@@ -62,6 +63,11 @@
         <h5>@row.SelectedFlower</h5>
     }
 }
+@using System;
+@using System.IO;
+@using System.IO.Compression;
+@using System.Text;
+
 @using System.Globalization
 
 @code{
@@ -128,6 +134,71 @@ public int? newFlowerUnit
 
   private void ChangeColorToRed() { errorClass = "error-red"; }
 
+ public void CreateDocx()
+    {
+        // Get desktop path
+        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+        string docxPath = Path.Combine(desktopPath, "ManualDoc.docx");
+
+        // Create a temporary folder to store files before zipping
+        string tempFolder = Path.Combine(Path.GetTempPath(), "ManualDoc");
+        if (Directory.Exists(tempFolder))
+            Directory.Delete(tempFolder, true);
+        Directory.CreateDirectory(tempFolder);
+        Directory.CreateDirectory(Path.Combine(tempFolder, "_rels"));
+        Directory.CreateDirectory(Path.Combine(tempFolder, "word"));
+        Directory.CreateDirectory(Path.Combine(tempFolder, "word/_rels"));
+
+        // 1. Create the main document.xml
+        string documentXml = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
+        <w:document xmlns:w=""http://schemas.openxmlformats.org/wordprocessingml/2006/main"">
+            <w:body>
+                <w:p>
+                    <w:r>
+                        <w:t>Hello, this is a manually created .docx file!</w:t>
+                    </w:r>
+                </w:p>
+            </w:body>
+        </w:document>";
+
+        File.WriteAllText(Path.Combine(tempFolder, "word/document.xml"), documentXml, Encoding.UTF8);
+
+        // 2. Create [Content_Types].xml
+        string contentTypesXml = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
+        <Types xmlns=""http://schemas.openxmlformats.org/package/2006/content-types"">
+            <Default Extension=""rels"" ContentType=""application/vnd.openxmlformats-package.relationships+xml""/>
+            <Default Extension=""xml"" ContentType=""application/xml""/>
+            <Override PartName=""/word/document.xml"" ContentType=""application/vnd.openxmlformats-officedocument.wordprocessingml.document.main+xml""/>
+        </Types>";
+
+        File.WriteAllText(Path.Combine(tempFolder, "[Content_Types].xml"), contentTypesXml, Encoding.UTF8);
+
+        // 3. Create _rels/.rels (Relationships file)
+        string relsXml = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
+        <Relationships xmlns=""http://schemas.openxmlformats.org/package/2006/relationships"">
+            <Relationship Id=""rId1"" Type=""http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument"" Target=""word/document.xml""/>
+        </Relationships>";
+
+        File.WriteAllText(Path.Combine(tempFolder, "_rels/.rels"), relsXml, Encoding.UTF8);
+
+        // 4. Create word/_rels/document.xml.rels
+        string wordRelsXml = @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>
+        <Relationships xmlns=""http://schemas.openxmlformats.org/package/2006/relationships"">
+        </Relationships>";
+
+        File.WriteAllText(Path.Combine(tempFolder, "word/_rels/document.xml.rels"), wordRelsXml, Encoding.UTF8);
+
+        // Zip the contents into a .docx file
+        if (File.Exists(docxPath))
+            File.Delete(docxPath);
+
+        ZipFile.CreateFromDirectory(tempFolder, docxPath);
+
+        // Cleanup temp files
+        Directory.Delete(tempFolder, true);
+
+        Console.WriteLine($"DOCX created at: {docxPath}");
+    }
 
 public List<string> GetAllBouquets(string data)//works
     {
